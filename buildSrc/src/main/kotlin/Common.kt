@@ -1,21 +1,28 @@
 import sp.kx.gradle.entity.dependency
 import sp.kx.gradle.entity.plugin
 
+object Maven {
+    const val groupId = "com.github.kepocnhh"
+    const val artifactId = "AndroidExtension.UserInterface"
+}
+
 object Version {
-//    const val jacoco = "0.7.9"
-//    const val jacoco = "0.8.4"
     const val jacoco = "0.8.7"
-    const val kotlin = "1.4.31"
-//    const val kotlin = "1.5.21"
+    const val jvmTarget = "1.8"
+    const val kotlin = "1.5.21"
+    const val name = "0.0.1"
 
     object Android {
-//        const val toolsBuildGradle = "4.2.2"
         const val toolsBuildGradle = "7.0.2"
         const val compileSdk = 30
         const val buildTools = "30.0.3"
         const val minSdk = 16
         const val targetSdk = 30
     }
+}
+
+object BuildType {
+    const val snapshot = "snapshot"
 }
 
 private object Group {

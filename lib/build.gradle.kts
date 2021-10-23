@@ -40,6 +40,62 @@ fun setCoverage(variant: com.android.build.gradle.api.LibraryVariant) {
     }
 }
 
+fun getOutputFileName(
+    prefix: String,
+    versionName: String,
+    fileExtension: String
+): String {
+    return "$prefix-$versionName.$fileExtension"
+}
+
+fun setSnapshot(variant: com.android.build.gradle.api.LibraryVariant) {
+    val output = variant.outputs.single()
+    check(output is com.android.build.gradle.internal.api.LibraryVariantOutputImpl)
+    val versionName = Version.name + "-SNAPSHOT"
+    output.outputFileName = getOutputFileName(
+        prefix = Maven.artifactId,
+        versionName = versionName,
+        fileExtension = "aar"
+    )
+    tasks.getByName("assemble${variant.name.capitalize()}") {
+        doLast {
+            checkFileExists(output.outputFile)
+            val resultFile = File(buildDir, "libs/" + output.outputFileName)
+            if (resultFile.exists()) resultFile.delete()
+            output.outputFile.copyTo(resultFile)
+        }
+    }
+    val mainSourceSets = android.sourceSets["main"]!!
+    task<Jar>("assemble${variant.name.capitalize()}Source") {
+        archiveBaseName.set(Maven.artifactId)
+        archiveVersion.set(versionName)
+        archiveClassifier.set("sources")
+        from(mainSourceSets.java.srcDirs)
+    }
+    task("assemble${variant.name.capitalize()}Pom") {
+        doLast {
+            val parent = File(buildDir, "libs")
+            if (!parent.exists()) parent.mkdirs()
+            val file = File(parent, getOutputFileName(
+                prefix = Maven.artifactId,
+                versionName = versionName,
+                fileExtension = "pom"
+            ))
+            if (file.exists()) file.delete()
+            file.createNewFile()
+            checkFileExists(file)
+            val text = MavenUtil.pom(
+                modelVersion = "4.0.0",
+                groupId = Maven.groupId,
+                artifactId = Maven.artifactId,
+                version = versionName,
+                packaging = "aar"
+            )
+            file.writeText(text)
+        }
+    }
+}
+
 android {
     compileSdk = Version.Android.compileSdk
     buildToolsVersion = Version.Android.buildTools
@@ -50,12 +106,13 @@ android {
     }
 
     buildTypes {
-        debug {
+        create(BuildType.snapshot) {
             isTestCoverageEnabled = true
-            testCoverage {
-                jacocoVersion = Version.jacoco
-            }
         }
+    }
+
+    testCoverage {
+        jacocoVersion = Version.jacoco
     }
 
     sourceSets.getByName("main") {
@@ -64,6 +121,17 @@ android {
 
     libraryVariants.all {
         setCoverage(this)
+        val capitalize = name.capitalize()
+        val taskCompileKotlin = tasks.getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compile${capitalize}Kotlin")
+        taskCompileKotlin.kotlinOptions {
+            jvmTarget = Version.jvmTarget
+            freeCompilerArgs = freeCompilerArgs + setOf("-module-name", Maven.groupId + ":" + Maven.artifactId)
+        }
+        when (buildType.name) {
+            BuildType.snapshot -> {
+                setSnapshot(this)
+            }
+        }
     }
 }
 
