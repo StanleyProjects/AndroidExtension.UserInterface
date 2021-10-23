@@ -4,9 +4,14 @@ buildscript {
         google()
     }
 
-    dependencies(classpath = setOf(D.kotlinGradlePlugin, D.Android.toolsBuildGradle))
+    dependencies(
+        classpath = setOf(
+            D.kotlinGradlePlugin,
+            D.Android.toolsBuildGradle
+        )
+    )
 }
 
 task<Delete>("clean") {
-    delete = setOf(rootProject.buildDir)
+    delete = setOf(buildDir, file("buildSrc/build"))
 }

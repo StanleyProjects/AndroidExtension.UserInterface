@@ -2,12 +2,15 @@ import sp.kx.gradle.entity.dependency
 import sp.kx.gradle.entity.plugin
 
 object Version {
+//    const val jacoco = "0.7.9"
+//    const val jacoco = "0.8.4"
     const val jacoco = "0.8.7"
-    const val jupiter = "5.6.2"
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.4.31"
+//    const val kotlin = "1.5.21"
 
     object Android {
-        const val toolsBuildGradle = "4.2.2"
+//        const val toolsBuildGradle = "4.2.2"
+        const val toolsBuildGradle = "7.0.2"
         const val compileSdk = 30
         const val buildTools = "30.0.3"
         const val minSdk = 16
@@ -18,7 +21,6 @@ object Version {
 private object Group {
     const val android = "com.android"
     const val jetbrains = "org.jetbrains"
-    const val jupiter = "org.junit.jupiter"
     const val kotlin = "$jetbrains.kotlin"
 }
 
@@ -34,19 +36,6 @@ object D {
             group = Group.android + ".tools.build",
             name = "gradle",
             version = Version.Android.toolsBuildGradle
-        )
-    }
-
-    object Jupiter {
-        val api = dependency(
-            group = Group.jupiter,
-            name = "junit-jupiter-api",
-            version = Version.jupiter
-        )
-        val engine = dependency(
-            group = Group.jupiter,
-            name = "junit-jupiter-engine",
-            version = Version.jupiter
         )
     }
 }

@@ -11,12 +11,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Version.Android.compileSdk)
-    buildToolsVersion(Version.Android.buildTools)
+    compileSdk = Version.Android.compileSdk
+    buildToolsVersion = Version.Android.buildTools
 
     defaultConfig {
-        minSdkVersion(Version.Android.minSdk)
-        targetSdkVersion(Version.Android.targetSdk)
+        minSdk = Version.Android.minSdk
+        targetSdk = Version.Android.targetSdk
         applicationId = "sp.ax.sample"
         versionCode = 1
         versionName = "0.0.$versionCode"
