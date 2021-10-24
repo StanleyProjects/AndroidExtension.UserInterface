@@ -10,7 +10,7 @@ object Version {
     const val jacoco = "0.8.7"
     const val jvmTarget = "1.8"
     const val kotlin = "1.5.21"
-    const val name = "0.0.1"
+    const val name = "0.0.2"
 
     object Android {
         const val toolsBuildGradle = "7.0.2"
