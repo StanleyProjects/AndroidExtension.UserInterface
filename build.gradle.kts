@@ -33,3 +33,36 @@ task("getArtifactId") {
         println(Maven.artifactId)
     }
 }
+
+task("verifyReadme") {
+    doLast {
+        val file = File(rootDir, "README.md")
+        val text = file.requireFilledText()
+        val projectCommon = MarkdownUtil.table(
+            heads = listOf("Android project common", "version"),
+            dividers = listOf("-", "-:"),
+            rows = listOf(
+                listOf("build gradle", "`${Version.Android.toolsBuildGradle}`"),
+                listOf("compile sdk", "`${Version.Android.compileSdk}`"),
+                listOf("build tools", "`${Version.Android.buildTools}`"),
+                listOf("min sdk", "`${Version.Android.minSdk}`"),
+                listOf("target sdk", "`${Version.Android.targetSdk}`")
+            )
+        )
+        setOf(projectCommon).forEach {
+            check(text.contains(it)) { "File by path ${file.absolutePath} must contains \"$it\"!" }
+        }
+        val lines = text.split(SystemUtil.newLine)
+        val versionBadge = MarkdownUtil.image(
+            text = "version",
+            url = BadgeUtil.url(
+                label = "version",
+                message = Version.name,
+                color = "2962ff"
+            )
+        )
+        setOf(versionBadge).forEach {
+            check(lines.contains(it)) { "File by path ${file.absolutePath} must contains \"$it\" line!" }
+        }
+    }
+}
