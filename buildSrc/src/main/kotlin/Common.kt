@@ -10,6 +10,7 @@ object Version {
     const val jacoco = "0.8.7"
     const val jvmTarget = "1.8"
     const val kotlin = "1.5.21"
+    const val kotlinLint = "0.42.1"
     const val name = "0.0.2"
 
     object Android {
@@ -29,14 +30,24 @@ private object Group {
     const val android = "com.android"
     const val jetbrains = "org.jetbrains"
     const val kotlin = "$jetbrains.kotlin"
+    const val pinterest = "com.pinterest"
 }
 
 object D {
-    val kotlinGradlePlugin = dependency(
-        group = Group.kotlin,
-        name = "kotlin-gradle-plugin",
-        version = Version.kotlin
-    )
+    object Kotlin {
+        val gradlePlugin = dependency(
+            group = Group.kotlin,
+            name = "kotlin-gradle-plugin",
+            version = Version.kotlin
+        )
+
+        val lint = dependency(
+            group = Group.pinterest,
+            name = "ktlint",
+            version = Version.kotlinLint
+        )
+
+    }
 
     object Android {
         val toolsBuildGradle = dependency(

@@ -1,8 +1,8 @@
 package sp.ax.ui.entity
 
-import java.util.concurrent.atomic.AtomicInteger
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicInteger
 
 class PaddingTest {
     companion object {

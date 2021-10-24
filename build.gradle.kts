@@ -6,7 +6,7 @@ buildscript {
 
     dependencies(
         classpath = setOf(
-            D.kotlinGradlePlugin,
+            D.Kotlin.gradlePlugin,
             D.Android.toolsBuildGradle
         )
     )
@@ -65,4 +65,32 @@ task("verifyReadme") {
             check(lines.contains(it)) { "File by path ${file.absolutePath} must contains \"$it\" line!" }
         }
     }
+}
+
+val kotlinLint: Configuration by configurations.creating
+
+dependencies {
+    kotlinLint(D.Kotlin.lint.notation()) {
+        attributes {
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+        }
+    }
+}
+repositories.mavenCentral() // com.pinterest.ktlint
+
+task<JavaExec>("verifyCodeStyle") {
+    classpath = kotlinLint
+    main = "com.pinterest.ktlint.Main"
+    args(
+        "build.gradle.kts",
+        "settings.gradle.kts",
+        "buildSrc/src/main/kotlin/**/*.kt",
+        "buildSrc/build.gradle.kts",
+        "lib/src/main/kotlin/**/*.kt",
+        "lib/src/test/kotlin/**/*.kt",
+        "lib/build.gradle.kts",
+        "sample/src/main/kotlin/**/*.kt",
+        "sample/build.gradle.kts",
+        "--reporter=html,output=${File(buildDir, "reports/analysis/style/html/report.html").absolutePath}"
+    )
 }

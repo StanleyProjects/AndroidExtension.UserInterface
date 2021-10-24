@@ -76,11 +76,12 @@ fun setSnapshot(variant: com.android.build.gradle.api.LibraryVariant) {
         doLast {
             val parent = File(buildDir, "libs")
             if (!parent.exists()) parent.mkdirs()
-            val file = File(parent, getOutputFileName(
+            val outputFileName = getOutputFileName(
                 prefix = Maven.artifactId,
                 versionName = versionName,
                 fileExtension = "pom"
-            ))
+            )
+            val file = File(parent, outputFileName)
             if (file.exists()) file.delete()
             file.createNewFile()
             checkFileExists(file)

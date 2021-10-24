@@ -3,13 +3,13 @@ package sp.ax.ui.view
 import android.content.Context
 import android.view.View
 import androidx.test.core.app.ApplicationProvider
-import java.util.concurrent.atomic.AtomicInteger
-import org.junit.Test
 import org.junit.Assert.assertEquals
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import sp.ax.ui.entity.padding
+import java.util.concurrent.atomic.AtomicInteger
 
 @Config(manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
