@@ -67,6 +67,16 @@ task("verifyReadme") {
     }
 }
 
+task("verifyLicense") {
+    doLast {
+        val file = File(rootDir, "README.md")
+        val text = file.requireFilledText()
+        // todo
+    }
+}
+
+repositories.mavenCentral() // com.pinterest.ktlint
+
 val kotlinLint: Configuration by configurations.creating
 
 dependencies {
@@ -76,7 +86,6 @@ dependencies {
         }
     }
 }
-repositories.mavenCentral() // com.pinterest.ktlint
 
 task<JavaExec>("verifyCodeStyle") {
     classpath = kotlinLint
@@ -91,6 +100,6 @@ task<JavaExec>("verifyCodeStyle") {
         "lib/build.gradle.kts",
         "sample/src/main/kotlin/**/*.kt",
         "sample/build.gradle.kts",
-        "--reporter=html,output=${File(buildDir, "reports/analysis/style/html/report.html").absolutePath}"
+        "--reporter=html,output=${File(buildDir, "reports/analysis/style/html/report.html")}"
     )
 }

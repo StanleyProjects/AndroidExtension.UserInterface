@@ -12,7 +12,23 @@ private class PaddingImpl(
     override val top: Int,
     override val right: Int,
     override val bottom: Int
-) : Padding
+) : Padding {
+    override fun equals(other: Any?): Boolean {
+        return when (other) {
+            is Padding -> {
+                left == other.left &&
+                    top == other.top &&
+                    right == other.right &&
+                    bottom == other.bottom
+            }
+            else -> false
+        }
+    }
+
+    override fun hashCode(): Int {
+        return listOf(left, top, right, bottom).fold(17) { acc, it -> 31 * acc + it }
+    }
+}
 
 fun padding(
     left: Int = 0,

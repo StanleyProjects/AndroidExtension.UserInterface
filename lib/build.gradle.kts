@@ -100,10 +100,13 @@ fun setSnapshot(variant: com.android.build.gradle.api.LibraryVariant) {
 android {
     compileSdk = Version.Android.compileSdk
     buildToolsVersion = Version.Android.buildTools
+    testOptions.unitTests.isIncludeAndroidResources = true // sdk >= 29
 
     defaultConfig {
         minSdk = Version.Android.minSdk
         targetSdk = Version.Android.targetSdk
+        buildConfigField("int", "MIN_SDK", "$minSdk")
+        buildConfigField("int", "TARGET_SDK", "$targetSdk")
     }
 
     buildTypes {
@@ -137,9 +140,9 @@ android {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.13")
+    testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.4.0")
-    testImplementation("org.robolectric:robolectric:4.6")
+    testImplementation("org.robolectric:robolectric:4.7.2")
 }
 
 jacoco {

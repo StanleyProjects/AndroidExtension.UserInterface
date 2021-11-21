@@ -11,7 +11,7 @@ object Version {
     const val jvmTarget = "1.8"
     const val kotlin = "1.5.21"
     const val kotlinLint = "0.42.1"
-    const val name = "0.0.2"
+    const val name = "0.0.3"
 
     object Android {
         const val toolsBuildGradle = "7.0.2"
