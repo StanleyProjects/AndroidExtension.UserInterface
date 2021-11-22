@@ -1,3 +1,5 @@
+import java.net.URL
+
 repositories {
     mavenCentral()
     google()
@@ -9,6 +11,7 @@ plugins {
         P.Android.kotlin
     )
     id("org.gradle.jacoco")
+    id("org.jetbrains.dokka") version "1.5.31"
 }
 
 fun setCoverage(variant: com.android.build.gradle.api.LibraryVariant) {
@@ -147,4 +150,20 @@ dependencies {
 
 jacoco {
     toolVersion = Version.jacoco
+}
+
+task<org.jetbrains.dokka.gradle.DokkaTask>("assembleDocumentation") {
+    outputDirectory.set(File(buildDir, "documentation"))
+    moduleName.set(Maven.artifactId)
+    dokkaSourceSets {
+        named("main") {
+            reportUndocumented.set(false)
+            sourceLink {
+                val path = "src/main/kotlin"
+                localDirectory.set(file(path))
+                val owner = "StanleyProjects"
+                remoteUrl.set(URL("https://github.com/$owner/${Maven.artifactId}/tree/dev/lib/$path"))
+            }
+        }
+    }
 }
