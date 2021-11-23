@@ -7,10 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import sp.ax.ui.entity.Padding
 import sp.ax.ui.entity.Visibility
-import sp.ax.ui.entity.asViewValue
+import sp.ax.ui.entity.Visibility.Companion.toInt
 import sp.ax.ui.entity.padding
 import sp.ax.ui.view.group.wrapped
 
+/**
+ * @return An instance of [Padding] by [View.getPaddingLeft], [View.getPaddingTop], [View.getPaddingRight] and [View.getPaddingBottom] values.
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
 fun View.getPadding(): Padding {
     return padding(
         left = paddingLeft,
@@ -20,6 +25,11 @@ fun View.getPadding(): Padding {
     )
 }
 
+/**
+ * Calls [View.setPadding] with values of [padding].
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
 fun View.setPadding(padding: Padding) {
     setPadding(
         padding.left,
@@ -29,6 +39,11 @@ fun View.setPadding(padding: Padding) {
     )
 }
 
+/**
+ * Calls [View.setPadding] with values of [left], [top], [right] and [bottom] or default [View.getPaddingLeft], [View.getPaddingTop], [View.getPaddingRight] and [View.getPaddingBottom] respectively.
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
 fun View.updatePadding(
     left: Int = paddingLeft,
     top: Int = paddingTop,
@@ -72,7 +87,7 @@ internal fun View.configure(
     this.id = id
     this.layoutParams = layoutParams
     this.background = background
-    this.visibility = visibility.asViewValue()
+    this.visibility = visibility.toInt()
     setPadding(padding)
     if (onClick !== UNSPECIFIED_ON_CLICK) {
         setOnClickListener { onClick() }
@@ -85,6 +100,20 @@ internal fun View.configure(
     this.keepScreenOn = keepScreenOn
 }
 
+/**
+ * Builds an instance of [View] by [context] and parameters or default. Sample:
+ * ```
+ * fun foo(context: Context): View {
+ *     return view(
+ *         context = context,
+ *         layoutParams = ViewGroup::class.layoutParams(size = 5),
+ *         background = ColorDrawable(Color.GREEN)
+ *     )
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
 fun view(
     context: Context,
     layoutParams: ViewGroup.LayoutParams = ViewDefault.layoutParams,

@@ -12,6 +12,7 @@ plugins {
     )
     id("org.gradle.jacoco")
     id("org.jetbrains.dokka") version "1.5.31"
+    id("io.gitlab.arturbosch.detekt") version "1.19.0-RC2"
 }
 
 fun setCoverage(variant: com.android.build.gradle.api.LibraryVariant) {
@@ -165,5 +166,17 @@ task<org.jetbrains.dokka.gradle.DokkaTask>("assembleDocumentation") {
                 remoteUrl.set(URL("https://github.com/$owner/${Maven.artifactId}/tree/dev/lib/$path"))
             }
         }
+    }
+}
+
+task<io.gitlab.arturbosch.detekt.Detekt>("verifyDocumentation") {
+    jvmTarget = "1.8"
+    setSource(files("src/main/kotlin"))
+    config.setFrom(File(rootProject.rootDir, "buildSrc/src/main/resources/detekt/config/documentation.yml"))
+    reports {
+        html.required.set(true)
+        xml.required.set(false)
+        txt.required.set(false)
+        sarif.required.set(false)
     }
 }

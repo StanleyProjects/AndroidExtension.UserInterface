@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import sp.ax.ui.BuildConfig
-import sp.ax.ui.entity.asViewValue
+import sp.ax.ui.entity.Visibility.Companion.toInt
 import sp.ax.ui.entity.padding
 import sp.ax.ui.onFields
 import java.util.concurrent.atomic.AtomicInteger
@@ -141,7 +141,7 @@ class ViewUtilTest {
                 "visibility" -> {
                     assertEquals(
                         "\"" + field.name + "\" is not default!",
-                        ViewDefault.visibility.asViewValue(),
+                        ViewDefault.visibility.toInt(),
                         view.visibility
                     )
                 }
@@ -218,10 +218,10 @@ class ViewUtilTest {
 
     @Test
     fun viewDefaultClickTest() {
-        assertThrows(Throwable::class.java) {
+        assertThrows(IllegalStateException::class.java) {
             ViewDefault.onClick()
         }
-        assertThrows(Throwable::class.java) {
+        assertThrows(IllegalStateException::class.java) {
             ViewDefault.onLongClick()
         }
     }

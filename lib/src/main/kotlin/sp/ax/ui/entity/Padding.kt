@@ -1,9 +1,26 @@
 package sp.ax.ui.entity
 
+/**
+ * A type to represent paddings of some view.
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
 interface Padding {
+    /**
+     * Represent the value from [android.view.View.getPaddingLeft].
+     */
     val left: Int
+    /**
+     * Represent the value from [android.view.View.getPaddingTop].
+     */
     val top: Int
+    /**
+     * Represent the value from [android.view.View.getPaddingRight].
+     */
     val right: Int
+    /**
+     * Represent the value from [android.view.View.getPaddingBottom].
+     */
     val bottom: Int
 }
 
@@ -30,6 +47,11 @@ private class PaddingImpl(
     }
 }
 
+/**
+ * @return An instance of [Padding] by [left], [top], [right] and [bottom] values or default zeros.
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
 fun padding(
     left: Int = 0,
     top: Int = 0,
