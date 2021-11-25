@@ -12,7 +12,7 @@ docker build --no-cache \
 
 if test $CODE -ne 0; then
   echo "Build error $CODE!"
-  return 11
+  exit 11
 fi
 
 echo "verify success"

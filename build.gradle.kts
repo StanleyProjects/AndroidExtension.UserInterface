@@ -48,6 +48,12 @@ task("verifyService") {
                 check(filtered.size == 1) { "Script by path ${file.absolutePath} $errorPostfix!" }
             }
         }
+        val forbiddenFileNames = setOf(".DS_Store")
+        rootDir.onFileRecurse {
+            if (!it.isDirectory) check(!forbiddenFileNames.contains(it.name)) {
+                "File by path ${it.absolutePath} is forbidden!"
+            }
+        }
     }
 }
 
