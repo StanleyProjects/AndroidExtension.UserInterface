@@ -25,9 +25,9 @@ fun setCoverage(variant: com.android.build.gradle.api.LibraryVariant) {
         classDirectories.from(File("$buildDir/tmp/kotlin-classes/" + variant.name))
         executionData(taskTest)
         reports {
-            csv.isEnabled = false
-            html.isEnabled = true
-            xml.isEnabled = false
+            csv.required.set(false)
+            html.required.set(true)
+            xml.required.set(false)
         }
     }
     task<JacocoCoverageVerification>("test${capitalize}CoverageVerification") {
@@ -133,7 +133,7 @@ android {
         val taskCompileKotlin = tasks.getByName<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compile${capitalize}Kotlin")
         taskCompileKotlin.kotlinOptions {
             jvmTarget = Version.jvmTarget
-            freeCompilerArgs = freeCompilerArgs + setOf("-module-name", Maven.groupId + ":" + Maven.artifactId)
+            freeCompilerArgs = freeCompilerArgs + listOf("-module-name", Maven.groupId + ":" + Maven.artifactId)
         }
         when (buildType.name) {
             BuildType.snapshot -> {

@@ -34,6 +34,23 @@ task("getArtifactId") {
     }
 }
 
+task("verifyService") {
+    doLast {
+        File(rootDir, "buildSrc/build.gradle.kts").also { file ->
+            val text = file.requireFilledText()
+            val lines = text.split(SystemUtil.newLine)
+            setOf(
+                "id(\"${P.kotlinDsl.name}\") version \"${P.kotlinDsl.version}\"" to "do not apply plugin \"${P.kotlinDsl.name}\"",
+                "targetCompatibility = \"${Version.jvmTarget}\"" to "do not set jvm target to \"${Version.jvmTarget}\"",
+                "kotlinOptions.jvmTarget = \"${Version.jvmTarget}\"" to "do not set kotlin jvm target to \"${Version.jvmTarget}\""
+            ).forEach { (string, errorPostfix) ->
+                val filtered = lines.filter { it.contains(string) }
+                check(filtered.size == 1) { "Script by path ${file.absolutePath} $errorPostfix!" }
+            }
+        }
+    }
+}
+
 task("verifyReadme") {
     doLast {
         val file = File(rootDir, "README.md")
@@ -89,7 +106,7 @@ dependencies {
 
 task<JavaExec>("verifyCodeStyle") {
     classpath = kotlinLint
-    main = "com.pinterest.ktlint.Main"
+    mainClass.set("com.pinterest.ktlint.Main")
     args(
         "build.gradle.kts",
         "settings.gradle.kts",

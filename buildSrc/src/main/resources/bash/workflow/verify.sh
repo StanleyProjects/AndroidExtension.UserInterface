@@ -17,4 +17,4 @@ fi
 
 echo "verify success"
 
-return 0
+exit 0

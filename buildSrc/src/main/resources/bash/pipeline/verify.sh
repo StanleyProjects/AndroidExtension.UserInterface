@@ -11,7 +11,8 @@ if test $CODE -ne 0; then
   exit 11
 fi
 
-gradle verifyReadme && \
+gradle verifyService && \
+  gradle verifyReadme && \
   gradle verifyLicense && \
   gradle verifyCodeStyle && \
   gradle lib:verifyDocumentation; CODE=$?

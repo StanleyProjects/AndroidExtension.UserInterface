@@ -9,7 +9,9 @@ object Maven {
 object Version {
     const val jacoco = "0.8.7"
     const val jvmTarget = "1.8"
+//    const val jvmTarget = "12"
     const val kotlin = "1.5.21"
+    const val kotlinDsl = "2.1.7"
     const val kotlinLint = "0.42.1"
     const val name = "0.0.4"
 
@@ -59,6 +61,8 @@ object D {
 }
 
 object P {
+    val kotlinDsl = plugin(name = "org.gradle.kotlin.kotlin-dsl", version = Version.kotlinDsl)
+
     object Android {
         val application = plugin(name = Group.android + ".application")
         val kotlin = plugin(
