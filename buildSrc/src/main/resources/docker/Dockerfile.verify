@@ -1,4 +1,4 @@
-FROM kepocnhh/dex-rabbit:0.0.1
+FROM kepocnhh/dex-parrot:0.0.1
 
 COPY . /build
 WORKDIR /build

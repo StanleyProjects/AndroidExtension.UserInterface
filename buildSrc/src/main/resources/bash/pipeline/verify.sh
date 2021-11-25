@@ -2,20 +2,35 @@
 
 echo "verify start..."
 
+CODE=0
+
+gradle clean; CODE=$?
+
+if test $CODE -ne 0; then
+  echo "gradle clean error"
+  exit 11
+fi
+
+gradle verifyReadme && \
+  gradle verifyLicense && \
+  gradle verifyCodeStyle && \
+  gradle lib:verifyDocumentation; CODE=$?
+
+if test $CODE -ne 0; then
+  echo "gradle verify error"
+  exit 12
+fi
+
 BUILD_TYPE="Snapshot"
 BUILD_VARIANT="$BUILD_TYPE"
 
-gradle verifyReadme && \
-gradle verifyLicense && \
-gradle verifyCodeStyle && \
-gradle lib:verifyDocumentation && \
 gradle lib:test${BUILD_VARIANT}UnitTest && \
-gradle lib:test${BUILD_VARIANT}CoverageReport && \
-gradle lib:test${BUILD_VARIANT}CoverageVerification; CODE=$?
+  gradle lib:test${BUILD_VARIANT}CoverageReport && \
+  gradle lib:test${BUILD_VARIANT}CoverageVerification; CODE=$?
 
 if test $CODE -ne 0; then
-  echo "gradle error"
-  exit 1
+  echo "gradle test error"
+  exit 13
 fi
 
 echo "verify success"
