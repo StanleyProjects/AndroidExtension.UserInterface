@@ -4,15 +4,14 @@ echo "verify start..."
 
 CODE=0
 
-docker image prune -f
-export DOCKER_IMAGE_NAME=docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}_image
 docker build --no-cache \
-  -t $DOCKER_IMAGE_NAME \
-  -f $RESOURCES_PATH/docker/Dockerfile.verify .; CODE=$?
+ -t "${DOCKER_IMAGE_NAME}.verified" \
+ --build-arg IMAGE_SOURCE="${DOCKER_IMAGE_NAME}.prepared" \
+ -f $RESOURCES_PATH/docker/Dockerfile.verify .; CODE=$?
 
 if test $CODE -ne 0; then
-  echo "Build error $CODE!"
-  exit 11
+ echo "Build error $CODE!"
+ exit 11
 fi
 
 echo "verify success"

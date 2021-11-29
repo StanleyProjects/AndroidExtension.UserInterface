@@ -1,6 +1,5 @@
-FROM kepocnhh/dex-parrot:0.0.1
+arg DOCKER_IMAGE_NAME
+from $IMAGE_SOURCE
 
-COPY . /build
-WORKDIR /build
-
-RUN ./buildSrc/src/main/resources/bash/pipeline/verify.sh
+run /bin/bash buildSrc/src/main/resources/bash/pipeline/verify.sh
+run /bin/bash buildSrc/src/main/resources/bash/pipeline/test.sh

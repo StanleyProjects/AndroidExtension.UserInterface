@@ -1,0 +1,6 @@
+from kepocnhh/dex-parrot:0.0.1
+
+copy . /repository
+workdir /repository
+
+run gradle clean

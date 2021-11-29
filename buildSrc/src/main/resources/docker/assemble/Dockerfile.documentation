@@ -1,0 +1,4 @@
+arg DOCKER_IMAGE_NAME
+from $IMAGE_SOURCE
+
+run /bin/bash buildSrc/src/main/resources/bash/pipeline/assemble/documentation.sh
