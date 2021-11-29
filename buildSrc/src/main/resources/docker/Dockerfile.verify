@@ -1,4 +1,4 @@
-arg DOCKER_IMAGE_NAME
+arg IMAGE_SOURCE
 from $IMAGE_SOURCE
 
 run /bin/bash buildSrc/src/main/resources/bash/pipeline/verify.sh
