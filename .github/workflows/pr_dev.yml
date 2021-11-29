@@ -15,12 +15,12 @@ jobs:
       telegram_bot_id: ${{secrets.TELEGRAM_BOT_ID}}
       telegram_bot_token: ${{secrets.TELEGRAM_BOT_TOKEN}}
       telegram_chat_id: ${{secrets.TELEGRAM_CHAT_ID_COMMON}}
-      DOCKER_IMAGE_NAME: docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}_image
-      DOCKER_CONTAINER_NAME: docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}_container
-      ASSEMBLY_PATH: assembly_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}
       RESOURCES_PATH: buildSrc/src/main/resources
     steps:
       - run: |
+          echo "DOCKER_IMAGE_NAME=docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}_image" >> $GITHUB_ENV
+          echo "DOCKER_CONTAINER_NAME=docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}_container" >> $GITHUB_ENV
+          echo "ASSEMBLY_PATH=assembly_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}" >> $GITHUB_ENV
           echo "PR_NUMBER=$(jq -r .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "PR_SOURCE_BRANCH=$(jq -r .pull_request.base.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "GIT_SOURCE_BRANCH=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
