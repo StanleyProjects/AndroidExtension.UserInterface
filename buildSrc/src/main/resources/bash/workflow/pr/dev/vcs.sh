@@ -4,7 +4,7 @@ echo "dev vcs start..."
 
 CODE=0
 
-VERSION="$(cat ${ASSEMBLY_PATH}/common.json | jq -r .version | base64 -d)"
+VERSION="$(cat ${ASSEMBLY_PATH}/common.json | jq -r .version)"
 if test -z "$VERSION"; then
  echo "Version is empty!"
  exit 11
@@ -13,7 +13,6 @@ fi
 TAG="intermediate/$VERSION"
 
 /bin/bash $RESOURCES_PATH/bash/workflow/vcs/tag_test.sh "$TAG"; CODE=$?
-
 if test $CODE -ne 0; then
  echo "Test of $TAG failed!"
  exit 21

@@ -44,8 +44,8 @@ task("saveCommonInfo") {
             "artifactId" to Maven.artifactId
         )
         val result = org.json.JSONObject().also {
-            map.forEach { (key, raw: String) ->
-                it.put(key, java.util.Base64.getEncoder().encodeToString(raw.toByteArray(Charsets.UTF_8)))
+            map.forEach { (key, value) ->
+                it.put(key, value)
             }
         }.toString()
         file.delete()

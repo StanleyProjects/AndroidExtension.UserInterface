@@ -40,7 +40,7 @@ if [ ! -f "$DST_PATH/common.json" ]; then
  exit 31
 fi
 
-ARTIFACT_ID="$(cat ${ASSEMBLY_PATH}/common.json | jq -r .artifactId | base64 -d)"
+ARTIFACT_ID="$(cat ${ASSEMBLY_PATH}/common.json | jq -r .artifactId)"
 if test -z "$ARTIFACT_ID"; then
  echo "Artifact id is empty!"
  exit 41

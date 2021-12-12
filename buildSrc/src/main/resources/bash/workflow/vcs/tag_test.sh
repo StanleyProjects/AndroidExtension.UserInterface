@@ -22,7 +22,7 @@ rm -f file
 CODE=$(curl -w %{http_code} -o file \
   -s https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/git/$REF)
 case $CODE in
- 404) echo "Tag $TAG does not exist yet in $GITHUB_OWNER/$GITHUB_REPO."; exit 0;;
+ 404) echo "The tag $TAG does not exist yet in $GITHUB_OWNER/$GITHUB_REPO."; exit 0;;
  200) true;; # ignored
  *) echo "Request error with response code $code!"; exit 21;;
 esac
@@ -50,6 +50,6 @@ for ((i = 0; i < SIZE; i++)); do
  fi
 done
 
-echo "tag test success"
+echo "The tag $TAG test success."
 
 exit 0
