@@ -34,6 +34,25 @@ task("getArtifactId") {
     }
 }
 
+task("saveCommonInfo") {
+    doLast {
+        if (!buildDir.exists()) buildDir.mkdirs()
+        val file = File(buildDir, "common.json")
+        val map = mapOf(
+            "version" to Version.name,
+            "groupId" to Maven.groupId,
+            "artifactId" to Maven.artifactId
+        )
+        val result = org.json.JSONObject().also {
+            map.forEach { (key, value) ->
+                it.put(key, value)
+            }
+        }.toString()
+        file.delete()
+        file.writeText(result)
+    }
+}
+
 task("verifyService") {
     doLast {
         File(rootDir, "buildSrc/build.gradle.kts").also { file ->
@@ -46,6 +65,12 @@ task("verifyService") {
             ).forEach { (string, errorPostfix) ->
                 val filtered = lines.filter { it.contains(string) }
                 check(filtered.size == 1) { "Script by path ${file.absolutePath} $errorPostfix!" }
+            }
+        }
+        val forbiddenFileNames = setOf(".DS_Store")
+        rootDir.onFileRecurse {
+            if (!it.isDirectory) check(!forbiddenFileNames.contains(it.name)) {
+                "File by path ${it.absolutePath} is forbidden!"
             }
         }
     }
