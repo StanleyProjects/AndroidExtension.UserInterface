@@ -4,11 +4,15 @@ echo "assemble common start..."
 
 CODE=0
 
-VERSION=$(gradle -q saveCommonInfo)
+gradle saveCommonInfo; CODE=$?
+if test $CODE -ne 0; then
+ echo "Save common info error $CODE!"
+ exit 11
+fi
 
-if test -z "$VERSION"; then
-  echo "version error"
-  exit 11
+if [ ! -f "$(pwd)/build/common.json" ]; then
+ echo "$(pwd)/build/common.json does not exist."
+ exit 21
 fi
 
 echo "assemble common success"
