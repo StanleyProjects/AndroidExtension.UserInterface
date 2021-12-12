@@ -18,7 +18,7 @@ if test $CODE -ne 0; then
  exit 21
 fi
 
-REPOSITORY="~/gh-pages"
+REPOSITORY="$HOME/gh-pages"
 mkdir "${REPOSITORY}" || exit 1 # todo
 git clone -q --depth=1 --branch=gh-pages https://$GITHUB_PAT@github.com/$GITHUB_OWNER/$GITHUB_REPO.git "${REPOSITORY}"
 WORKER_NAME="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .name)"
