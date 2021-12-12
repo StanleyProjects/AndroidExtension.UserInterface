@@ -19,9 +19,10 @@ jobs:
       RESOURCES_PATH: buildSrc/src/main/resources
     steps:
       - run: |
+          echo "HOME=$(echo ~)" >> $GITHUB_ENV
           echo "DOCKER_IMAGE_NAME=docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}_image" >> $GITHUB_ENV
           echo "DOCKER_CONTAINER_NAME=docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}_container" >> $GITHUB_ENV
-          echo "ASSEMBLY_PATH=~/assembly_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}" >> $GITHUB_ENV
+          echo "ASSEMBLY_PATH=$HOME/assembly_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}" >> $GITHUB_ENV
           echo "PR_NUMBER=$(jq -r .pull_request.number $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "PR_SOURCE_BRANCH=$(jq -r .pull_request.base.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "GIT_SOURCE_BRANCH=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
