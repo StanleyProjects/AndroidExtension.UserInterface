@@ -34,6 +34,25 @@ task("getArtifactId") {
     }
 }
 
+task("saveCommonInfo") {
+    doLast {
+        if (!buildDir.exists()) buildDir.mkdirs()
+        val file = File(buildDir, "common.json")
+        val map = mapOf(
+            "version" to Version.name,
+            "groupId" to Maven.groupId,
+            "artifactId" to Maven.artifactId
+        )
+        val result = org.json.JSONObject().also {
+            map.forEach { (key, raw: String) ->
+                it.put(key, java.util.Base64.getEncoder().encodeToString(raw.toByteArray(Charsets.UTF_8)))
+            }
+        }.toString()
+        file.delete()
+        file.writeText(result)
+    }
+}
+
 task("verifyService") {
     doLast {
         File(rootDir, "buildSrc/build.gradle.kts").also { file ->

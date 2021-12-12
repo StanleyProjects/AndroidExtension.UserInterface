@@ -15,6 +15,7 @@ jobs:
       telegram_bot_id: ${{secrets.TELEGRAM_BOT_ID}}
       telegram_bot_token: ${{secrets.TELEGRAM_BOT_TOKEN}}
       telegram_chat_id: ${{secrets.TELEGRAM_CHAT_ID_COMMON}}
+      GITHUB_PAT: ${{secrets.PERSONAL_ACCESS_TOKEN}}
       RESOURCES_PATH: buildSrc/src/main/resources
     steps:
       - run: |
