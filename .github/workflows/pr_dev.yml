@@ -32,7 +32,7 @@ jobs:
       - run: ls -al
       - run: echo $HOME/repository
       - run: ls -al $HOME/repository
-      - working-directory: $HOME/repository
+      - working-directory: ${{env.HOME}}/repository
         run: pwd
       - working-directory: $HOME/repository
         run: ls -al
