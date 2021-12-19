@@ -1,9 +1,26 @@
 package sp.ax.ui.entity
 
+/**
+ * The type holds four integer offsets which describe changes to the four edges of a rectangle.
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
 interface Insets {
+    /**
+     * Holds integer offset which describe the `left` edge of a rectangle.
+     */
     val left: Int
+    /**
+     * Holds integer offset which describe the `top` edge of a rectangle.
+     */
     val top: Int
+    /**
+     * Holds integer offset which describe the `right` edge of a rectangle.
+     */
     val right: Int
+    /**
+     * Holds integer offset which describe the `bottom` edge of a rectangle.
+     */
     val bottom: Int
 }
 
@@ -17,9 +34,9 @@ private class InsetsImpl(
         return when (other) {
             is Insets -> {
                 left == other.left &&
-                        top == other.top &&
-                        right == other.right &&
-                        bottom == other.bottom
+                    top == other.top &&
+                    right == other.right &&
+                    bottom == other.bottom
             }
             else -> false
         }
@@ -30,6 +47,11 @@ private class InsetsImpl(
     }
 }
 
+/**
+ * @return An instance of [Insets] by [left], [top], [right] and [bottom] values or default zeros.
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
 fun insets(
     left: Int = 0,
     top: Int = 0,
