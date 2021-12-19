@@ -7,9 +7,9 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicInteger
 
-class PaddingTest {
+class InsetsTest {
     companion object {
-        private fun Padding.assert(
+        private fun Insets.assert(
             left: Int,
             top: Int,
             right: Int,
@@ -22,51 +22,51 @@ class PaddingTest {
                 "bottom" to (bottom to this.bottom),
             ).forEach { (key, value) ->
                 val (expected, actual) = value
-                assertEquals("Padding $key is not $expected!", expected, actual)
+                assertEquals("Insets $key is not $expected!", expected, actual)
             }
         }
     }
 
     @Test
-    fun paddingTest() {
+    fun insetsTest() {
         val value = AtomicInteger()
         value.also {
             val left = it.getAndIncrement()
             val top = it.getAndIncrement()
             val right = it.getAndIncrement()
             val bottom = it.getAndIncrement()
-            padding(left = left, top = top, right = right, bottom = bottom)
+            insets(left = left, top = top, right = right, bottom = bottom)
                 .assert(left = left, top = top, right = right, bottom = bottom)
         }
         value.also {
             val left = it.getAndIncrement()
-            padding(left = left).assert(left = left, top = 0, right = 0, bottom = 0)
+            insets(left = left).assert(left = left, top = 0, right = 0, bottom = 0)
         }
         value.also {
             val left = it.getAndIncrement()
             val right = it.getAndIncrement()
-            padding(left = left, right = right)
+            insets(left = left, right = right)
                 .assert(left = left, top = 0, right = right, bottom = 0)
         }
         value.also {
             val top = it.getAndIncrement()
             val bottom = it.getAndIncrement()
-            padding(top = top, bottom = bottom)
+            insets(top = top, bottom = bottom)
                 .assert(left = 0, top = top, right = 0, bottom = bottom)
         }
     }
 
     @Test
-    fun paddingEqualsTest() {
+    fun insetsEqualsTest() {
         val value = AtomicInteger(1)
         val left = value.getAndIncrement()
         val top = value.getAndIncrement()
         val right = value.getAndIncrement()
         val bottom = value.getAndIncrement()
-        val actual = padding(left = left, top = top, right = right, bottom = bottom)
+        val actual = insets(left = left, top = top, right = right, bottom = bottom)
         listOf(left, top, right, bottom).forEachIndexed { index, it ->
             val values = arrayOf(left, top, right, bottom)
-            padding(
+            insets(
                 left = values[0],
                 top = values[1],
                 right = values[2],
@@ -76,7 +76,7 @@ class PaddingTest {
             }
             values[index] = value.get()
             assertNotEquals(it, values[index])
-            padding(
+            insets(
                 left = values[0],
                 top = values[1],
                 right = values[2],
@@ -90,8 +90,8 @@ class PaddingTest {
     }
 
     @Test
-    fun paddingHashCodeTest() {
-        assertTrue(padding().hashCode() > 0)
-        assertTrue(padding(left = 1, top = 2, right = 3, bottom = 4).hashCode() > 0)
+    fun insetsHashCodeTest() {
+        assertTrue(insets().hashCode() > 0)
+        assertTrue(insets(left = 1, top = 2, right = 3, bottom = 4).hashCode() > 0)
     }
 }
