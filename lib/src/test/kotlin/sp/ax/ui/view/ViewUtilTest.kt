@@ -14,8 +14,9 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import sp.ax.ui.BuildConfig
+import sp.ax.ui.entity.Insets
 import sp.ax.ui.entity.Visibility.Companion.toInt
-import sp.ax.ui.entity.padding
+import sp.ax.ui.entity.insets
 import sp.ax.ui.onFields
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -58,7 +59,7 @@ class ViewUtilTest {
             paddingBottom
         )
         view.assertPadding(left = paddingLeft, top = paddingTop, right = paddingRight, bottom = paddingBottom)
-        val padding = view.getPadding()
+        val padding: Insets = view.getPadding()
         view.assertPadding(left = padding.left, top = padding.top, right = padding.right, bottom = padding.bottom)
     }
 
@@ -72,7 +73,7 @@ class ViewUtilTest {
         val right = value.getAndIncrement()
         val bottom = value.getAndIncrement()
         view.setPadding(
-            padding(
+            insets(
                 left = left,
                 top = top,
                 right = right,
