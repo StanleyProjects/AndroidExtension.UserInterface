@@ -4,7 +4,7 @@ echo "pull request to dev start..."
 
 CODE=0
 
-ARRAY=(prepare verify assemble/common assemble/documentation assemble/vcs pr/dev/vcs)
+ARRAY=(assemble/vcs prepare verify assemble/common assemble/documentation pr/dev/vcs)
 SIZE=${#ARRAY[*]}
 for ((i=0; i<SIZE; i++)); do
  it="${ARRAY[i]}"

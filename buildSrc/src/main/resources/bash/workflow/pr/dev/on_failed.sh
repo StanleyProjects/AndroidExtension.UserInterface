@@ -10,8 +10,10 @@ CODE=$(curl -w %{http_code} -o /dev/null -X PATCH \
 if test $CODE -ne 200; then
  echo "Pull request #$PR_NUMBER rejecting error!"
  echo "Request error with response code $CODE!"
- return 11
+ exit 11
 fi
+
+echo "The pull request #$PR_NUMBER closed."
 
 REQUEST_BODY="{\"body\":\"\
 Closed by GitHub build \
@@ -26,7 +28,7 @@ CODE=$(curl -w %{http_code} -o /dev/null -X POST \
 if test $CODE -ne 201; then
  echo "Post comment to pr #$PR_NUMBER error!"
  echo "Request error with response code $CODE!"
- return 12
+ exit 12
 fi
 
 AUTHOR_NAME="$(cat ${ASSEMBLY_PATH}/vcs/author.json | jq -r .name)"
