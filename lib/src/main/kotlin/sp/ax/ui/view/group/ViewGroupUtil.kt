@@ -79,7 +79,7 @@ fun ViewGroup.MarginLayoutParams.setMargin(margin: Insets) {
  *     return ViewGroup::class.layoutParams(height = 5, width = 6, margin(right = 7, left = 8))
  * }
  * ```
- * @return An instance of [ViewGroup.MarginLayoutParams] using its constructor with [ViewGroup.MarginLayoutParams.setMargins].
+ * @return An instance of [ViewGroup.MarginLayoutParams] using its constructor with [setMargin].
  * @author Stanley Wintergreen
  * @since 0.0.5
  */
