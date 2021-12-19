@@ -1,6 +1,8 @@
 package sp.ax.ui.view.group
 
 import android.view.ViewGroup
+import sp.ax.ui.entity.Insets
+import sp.ax.ui.entity.insets
 import kotlin.reflect.KClass
 
 /**
@@ -54,4 +56,28 @@ fun KClass<ViewGroup.LayoutParams>.wrapped(): ViewGroup.LayoutParams {
  */
 fun KClass<ViewGroup.LayoutParams>.matched(): ViewGroup.LayoutParams {
     return ViewGroup::class.layoutParams(size = ViewGroup.LayoutParams.MATCH_PARENT)
+}
+
+fun ViewGroup.MarginLayoutParams.setMargin(margin: Insets) {
+    setMargins(
+        margin.left,
+        margin.top,
+        margin.right,
+        margin.bottom
+    )
+}
+
+fun KClass<ViewGroup>.layoutParams(width: Int, height: Int, margin: Insets): ViewGroup.MarginLayoutParams {
+    val result = ViewGroup.MarginLayoutParams(width, height)
+    result.setMargin(margin)
+    return result
+}
+
+fun ViewGroup.MarginLayoutParams.getMargin(): Insets {
+    return insets(
+        left = leftMargin,
+        top = topMargin,
+        right = rightMargin,
+        bottom = bottomMargin
+    )
 }

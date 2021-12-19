@@ -5,19 +5,19 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
-import sp.ax.ui.entity.Padding
+import sp.ax.ui.entity.Insets
 import sp.ax.ui.entity.Visibility
 import sp.ax.ui.entity.Visibility.Companion.toInt
-import sp.ax.ui.entity.padding
+import sp.ax.ui.entity.insets
 import sp.ax.ui.view.group.wrapped
 
 /**
- * @return An instance of [Padding] by [View.getPaddingLeft], [View.getPaddingTop], [View.getPaddingRight] and [View.getPaddingBottom] values.
+ * @return An instance of [Insets] by [View.getPaddingLeft], [View.getPaddingTop], [View.getPaddingRight] and [View.getPaddingBottom] values.
  * @author Stanley Wintergreen
- * @since 0.0.3
+ * @since 0.0.5
  */
-fun View.getPadding(): Padding {
-    return padding(
+fun View.getPadding(): Insets {
+    return insets(
         left = paddingLeft,
         top = paddingTop,
         right = paddingRight,
@@ -28,9 +28,9 @@ fun View.getPadding(): Padding {
 /**
  * Calls [View.setPadding] with values of [padding].
  * @author Stanley Wintergreen
- * @since 0.0.3
+ * @since 0.0.5
  */
-fun View.setPadding(padding: Padding) {
+fun View.setPadding(padding: Insets) {
     setPadding(
         padding.left,
         padding.top,
@@ -66,7 +66,7 @@ internal object ViewDefault {
     val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams::class.wrapped()
     val background: Drawable = ColorDrawable(0)
     val visibility: Visibility = Visibility.VISIBLE
-    val padding: Padding = padding()
+    val padding: Insets = insets()
     val onClick: () -> Unit = UNSPECIFIED_ON_CLICK
     val onLongClick: () -> Boolean = UNSPECIFIED_ON_LONG_CLICK
     const val keepScreenOn: Boolean = false
@@ -77,7 +77,7 @@ internal fun View.configure(
     id: Int,
     background: Drawable,
     visibility: Visibility,
-    padding: Padding,
+    padding: Insets,
     onClick: () -> Unit,
     onLongClick: () -> Boolean,
     isClickable: Boolean,
@@ -112,7 +112,7 @@ internal fun View.configure(
  * }
  * ```
  * @author Stanley Wintergreen
- * @since 0.0.3
+ * @since 0.0.5
  */
 fun view(
     context: Context,
@@ -120,7 +120,7 @@ fun view(
     id: Int = ViewDefault.id,
     background: Drawable = ViewDefault.background,
     visibility: Visibility = ViewDefault.visibility,
-    padding: Padding = ViewDefault.padding,
+    padding: Insets = ViewDefault.padding,
     onClick: () -> Unit = ViewDefault.onClick,
     onLongClick: () -> Boolean = ViewDefault.onLongClick,
     isClickable: Boolean = onClick !== ViewDefault.onClick,
