@@ -24,8 +24,6 @@ pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER)"
 
 /bin/bash $RESOURCES_PATH/bash/workflow/telegram_send_message.sh "${MESSAGE@E}"
 
-exit 1 # todo
-
 echo "pull request to dev success"
 
 exit 0

@@ -10,7 +10,9 @@ for ((i=0; i<SIZE; i++)); do
  it="${ARRAY[i]}"
  /bin/bash $RESOURCES_PATH/bash/workflow/${it}.sh; CODE=$?
  if test $CODE -ne 0; then
-  echo "Task $it failed!"; exit $((100+i))
+  echo "Task $it failed!"
+  /bin/bash $RESOURCES_PATH/bash/workflow/pr/dev/on_failed.sh
+  exit $((100+i))
  fi
 done
 # todo merge pr
