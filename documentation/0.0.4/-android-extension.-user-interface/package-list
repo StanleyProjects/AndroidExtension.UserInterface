@@ -1,0 +1,30 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:sp.ax.ui.entity////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/index.html
+$dokka.location:sp.ax.ui.entity//padding/#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/padding.html
+$dokka.location:sp.ax.ui.entity/Padding///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-padding/index.html
+$dokka.location:sp.ax.ui.entity/Padding/bottom/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-padding/bottom.html
+$dokka.location:sp.ax.ui.entity/Padding/left/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-padding/left.html
+$dokka.location:sp.ax.ui.entity/Padding/right/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-padding/right.html
+$dokka.location:sp.ax.ui.entity/Padding/top/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-padding/top.html
+$dokka.location:sp.ax.ui.entity/Visibility.Companion///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-companion/index.html
+$dokka.location:sp.ax.ui.entity/Visibility.Companion/fromInt/#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-companion/from-int.html
+$dokka.location:sp.ax.ui.entity/Visibility.Companion/toInt/sp.ax.ui.entity.Visibility#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-companion/to-int.html
+$dokka.location:sp.ax.ui.entity/Visibility.GONE///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-g-o-n-e/index.html
+$dokka.location:sp.ax.ui.entity/Visibility.INVISIBLE///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-i-n-v-i-s-i-b-l-e/index.html
+$dokka.location:sp.ax.ui.entity/Visibility.VISIBLE///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-v-i-s-i-b-l-e/index.html
+$dokka.location:sp.ax.ui.entity/Visibility///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/index.html
+$dokka.location:sp.ax.ui.view.group////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/index.html
+$dokka.location:sp.ax.ui.view.group//layoutParams/kotlin.reflect.KClass[android.view.ViewGroup]#kotlin.Int#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/layout-params.html
+$dokka.location:sp.ax.ui.view.group//layoutParams/kotlin.reflect.KClass[android.view.ViewGroup]#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/layout-params.html
+$dokka.location:sp.ax.ui.view.group//matched/kotlin.reflect.KClass[android.view.ViewGroup.LayoutParams]#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/matched.html
+$dokka.location:sp.ax.ui.view.group//wrapped/kotlin.reflect.KClass[android.view.ViewGroup.LayoutParams]#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/wrapped.html
+$dokka.location:sp.ax.ui.view////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/index.html
+$dokka.location:sp.ax.ui.view//getPadding/android.view.View#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/get-padding.html
+$dokka.location:sp.ax.ui.view//setPadding/android.view.View#sp.ax.ui.entity.Padding/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/set-padding.html
+$dokka.location:sp.ax.ui.view//updatePadding/android.view.View#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/update-padding.html
+$dokka.location:sp.ax.ui.view//view/#android.content.Context#android.view.ViewGroup.LayoutParams#kotlin.Int#android.graphics.drawable.Drawable#sp.ax.ui.entity.Visibility#sp.ax.ui.entity.Padding#kotlin.Function0[kotlin.Unit]#kotlin.Function0[kotlin.Boolean]#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#kotlin.Function1[android.view.View,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/view.html
+sp.ax.ui.entity
+sp.ax.ui.view
+sp.ax.ui.view.group
+
