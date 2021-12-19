@@ -27,6 +27,6 @@ jobs:
           echo "PR_SOURCE_BRANCH=$(jq -r .pull_request.base.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "GIT_SOURCE_BRANCH=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "GIT_COMMIT_SHA=$(jq -r .pull_request.head.sha $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
-      - run: git clone -q --depth=1 --branch=$GIT_SOURCE_BRANCH https://github.com/$GITHUB_OWNER/$GITHUB_REPO.git $HOME/repository
+      - run: git clone --depth=1 --branch=$GIT_SOURCE_BRANCH https://github.com/$GITHUB_OWNER/$GITHUB_REPO.git $HOME/repository
       - working-directory: ${{env.HOME}}/repository
         run: /bin/bash $RESOURCES_PATH/bash/workflow/pr/dev/main.sh

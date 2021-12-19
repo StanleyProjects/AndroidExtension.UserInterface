@@ -2,12 +2,12 @@
 
 echo "on success pull request to dev start..."
 
-AUTHOR_NAME="$(echo "$(<$DST_PATH/author.json)" | jq -r .name)"
+AUTHOR_NAME="$(echo "$(<$ASSEMBLY_PATH/vcs/author.json)" | jq -r .name)"
 if test -z "$AUTHOR_NAME"; then
  echo "Author name is empty!"
  exit 11
 fi
-AUTHOR_URL="$(echo "$(<$DST_PATH/author.json)" | jq -r .html_url)"
+AUTHOR_URL="$(echo "$(<$ASSEMBLY_PATH/vcs/author.json)" | jq -r .html_url)"
 if test -z "$AUTHOR_URL"; then
  echo "Author url is empty!"
  exit 12
