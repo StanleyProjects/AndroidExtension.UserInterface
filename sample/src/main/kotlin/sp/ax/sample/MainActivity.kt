@@ -2,21 +2,21 @@ package sp.ax.sample
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.ViewGroup
-import sp.ax.ui.entity.insets
-import sp.ax.ui.view.group.layoutParams
-import sp.ax.ui.view.view
+import sp.ax.ui.view.group.linearLayout
+import sp.ax.ui.view.group.view
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val view = view(
-            layoutParams = ViewGroup::class.layoutParams(
+        val root = linearLayout(this) {
+            view(
                 width = 256,
                 height = 128,
-                margin = insets(left = 16, right = 16)
-            ),
-            context = this
-        )
+                onClick = {
+                    // todo
+                }
+            )
+        }
+        setContentView(root)
     }
 }

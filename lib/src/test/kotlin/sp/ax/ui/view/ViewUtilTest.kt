@@ -1,8 +1,10 @@
 package sp.ax.ui.view
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -18,6 +20,7 @@ import sp.ax.ui.entity.Insets
 import sp.ax.ui.entity.Visibility.Companion.toInt
 import sp.ax.ui.entity.insets
 import sp.ax.ui.onFields
+import sp.ax.ui.view.group.ViewGroupUtilTest.Companion.assertEquals
 import java.util.concurrent.atomic.AtomicInteger
 
 @Config(manifest = Config.NONE, minSdk = BuildConfig.MIN_SDK, maxSdk = BuildConfig.TARGET_SDK)
@@ -38,6 +41,88 @@ class ViewUtilTest {
             ).forEach { (key, value) ->
                 val (expected, actual) = value
                 assertEquals("Padding $key is not $expected!", expected, actual)
+            }
+        }
+
+        internal fun View.assert(
+            layoutParams: ViewGroup.LayoutParams,
+            id: Int,
+            background: Drawable,
+            visibility: Int,
+            paddingLeft: Int,
+            paddingRight: Int,
+            paddingTop: Int,
+            paddingBottom: Int,
+            isClickable: Boolean,
+            isLongClickable: Boolean,
+            keepScreenOn: Boolean
+        ) {
+            this.layoutParams.assertEquals(expected = layoutParams)
+            assertEquals("Id is not expected!", id, this.id)
+            assertEquals("Background is not expected!", background, this.background)
+            assertEquals("Visibility is not expected!", visibility, this.visibility)
+            assertPadding(left = paddingLeft, right = paddingRight, top = paddingTop, bottom = paddingBottom)
+            assertEquals("Property \"isClickable\" is not expected!", isClickable, this.isClickable)
+            assertEquals("Property \"isLongClickable\" is not expected!", isLongClickable, this.isLongClickable)
+            assertEquals("Property \"keepScreenOn\" is not expected!", keepScreenOn, this.keepScreenOn)
+        }
+
+        internal fun View.assert(expected: View) {
+            assert(
+                layoutParams = expected.layoutParams,
+                id = expected.id,
+                background = expected.background,
+                visibility = expected.visibility,
+                paddingLeft = expected.paddingLeft,
+                paddingRight = expected.paddingRight,
+                paddingTop = expected.paddingTop,
+                paddingBottom = expected.paddingBottom,
+                isClickable = expected.isClickable,
+                isLongClickable = expected.isLongClickable,
+                keepScreenOn = expected.keepScreenOn
+            )
+        }
+
+        internal fun View.assertDefault(layoutParams: ViewGroup.LayoutParams) {
+            ViewDefault::class.onFields { field ->
+                when (field.name) {
+                    "id" -> {
+                        assertEquals("\"" + field.name + "\" is not default!", ViewDefault.id, this.id)
+                    }
+                    "layoutParams" -> {
+                        this.layoutParams.assertEquals(expected = layoutParams)
+                    }
+                    "background" -> {
+                        assertEquals("\"" + field.name + "\" is not default!", ViewDefault.background, this.background)
+                    }
+                    "visibility" -> {
+                        assertEquals(
+                            "\"" + field.name + "\" is not default!",
+                            ViewDefault.visibility.toInt(),
+                            this.visibility
+                        )
+                    }
+                    "padding" -> {
+                        assertEquals("\"" + field.name + "\" is not default!", ViewDefault.padding, this.getPadding())
+                    }
+                    "keepScreenOn" -> {
+                        assertEquals("\"" + field.name + "\" is not default!", ViewDefault.keepScreenOn, this.keepScreenOn)
+                    }
+                    "onClick" -> {
+                        assertFalse("\"" + field.name + "\" is not default!", this.hasOnClickListeners())
+                    }
+                    "onLongClick" -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            assertFalse("\"" + field.name + "\" is not default!", this.hasOnLongClickListeners())
+                        }
+                    }
+                    "isClickable" -> {
+                        assertFalse("\"" + field.name + "\" is not default!", this.isClickable)
+                    }
+                    "isLongClickable" -> {
+                        assertFalse("\"" + field.name + "\" is not default!", this.isLongClickable)
+                    }
+                }
             }
         }
     }
@@ -127,47 +212,7 @@ class ViewUtilTest {
 
     @Test
     fun viewDefaultTest() {
-        val view = view(context)
-        ViewDefault::class.onFields { field ->
-            when (field.name) {
-                "id" -> {
-                    assertEquals("\"" + field.name + "\" is not default!", ViewDefault.id, view.id)
-                }
-                "layoutParams" -> {
-                    assertEquals("\"" + field.name + "\" is not default!", ViewDefault.layoutParams, view.layoutParams)
-                }
-                "background" -> {
-                    assertEquals("\"" + field.name + "\" is not default!", ViewDefault.background, view.background)
-                }
-                "visibility" -> {
-                    assertEquals(
-                        "\"" + field.name + "\" is not default!",
-                        ViewDefault.visibility.toInt(),
-                        view.visibility
-                    )
-                }
-                "padding" -> {
-                    assertEquals("\"" + field.name + "\" is not default!", ViewDefault.padding, view.getPadding())
-                }
-                "keepScreenOn" -> {
-                    assertEquals("\"" + field.name + "\" is not default!", ViewDefault.keepScreenOn, view.keepScreenOn)
-                }
-                "onClick" -> {
-                    assertFalse("\"" + field.name + "\" is not default!", view.hasOnClickListeners())
-                }
-                "onLongClick" -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        assertFalse("\"" + field.name + "\" is not default!", view.hasOnLongClickListeners())
-                    }
-                }
-                "isClickable" -> {
-                    assertFalse("\"" + field.name + "\" is not default!", view.isClickable)
-                }
-                "isLongClickable" -> {
-                    assertFalse("\"" + field.name + "\" is not default!", view.isLongClickable)
-                }
-            }
-        }
+        view(context).assertDefault(layoutParams = ViewDefault.layoutParams)
     }
 
     @Test
