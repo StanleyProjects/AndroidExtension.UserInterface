@@ -1,20 +1,81 @@
 package sp.ax.ui.view.group
 
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import sp.ax.ui.entity.Insets
+import sp.ax.ui.entity.insets
+import sp.ax.ui.view.group.LinearLayoutUtilTest.Companion.assert
 import java.util.concurrent.atomic.AtomicInteger
 
 @Config(manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
 class ViewGroupUtilTest {
     companion object {
-        private fun ViewGroup.LayoutParams.assert(width: Int, height: Int) {
+        internal fun ViewGroup.LayoutParams.assertEquals(expected: ViewGroup.LayoutParams) {
+            when (val actual = this) {
+                is LinearLayout.LayoutParams -> {
+                    check(expected is LinearLayout.LayoutParams) // todo assert
+                    actual.assert(expected)
+                }
+                is ViewGroup.MarginLayoutParams -> {
+                    check(expected is ViewGroup.MarginLayoutParams) // todo assert
+                    actual.assert(
+                        width = expected.width,
+                        height = expected.height,
+                        left = expected.leftMargin,
+                        top = expected.topMargin,
+                        right = expected.rightMargin,
+                        bottom = expected.bottomMargin
+                    )
+                }
+                else -> {
+                    actual.assert(width = expected.width, height = expected.height)
+                }
+            }
+        }
+
+        internal fun ViewGroup.LayoutParams.assert(width: Int, height: Int) {
             assertEquals(width, this.width)
             assertEquals(height, this.height)
+        }
+
+        internal fun ViewGroup.MarginLayoutParams.assert(
+            width: Int,
+            height: Int,
+            left: Int,
+            top: Int,
+            right: Int,
+            bottom: Int
+        ) {
+            assert(width = width, height = height)
+            assertMargin(
+                left = left,
+                top = top,
+                right = right,
+                bottom = bottom
+            )
+        }
+
+        private fun ViewGroup.MarginLayoutParams.assertMargin(
+            left: Int,
+            top: Int,
+            right: Int,
+            bottom: Int
+        ) {
+            mapOf(
+                "left" to (left to leftMargin),
+                "top" to (top to topMargin),
+                "right" to (right to rightMargin),
+                "bottom" to (bottom to bottomMargin),
+            ).forEach { (key, value) ->
+                val (expected, actual) = value
+                assertEquals("Margin $key is not $expected!", expected, actual)
+            }
         }
     }
 
@@ -54,6 +115,81 @@ class ViewGroupUtilTest {
         layoutParams.assert(
             width = ViewGroup.LayoutParams.MATCH_PARENT,
             height = ViewGroup.LayoutParams.MATCH_PARENT
+        )
+    }
+
+    @Test
+    fun getMarginTest() {
+        val value = AtomicInteger(1)
+        val layoutParams: ViewGroup.MarginLayoutParams = ViewGroup.MarginLayoutParams(
+            value.getAndIncrement(),
+            value.getAndIncrement()
+        )
+        layoutParams.assertMargin(left = 0, top = 0, right = 0, bottom = 0)
+        val left = value.getAndIncrement()
+        val top = value.getAndIncrement()
+        val right = value.getAndIncrement()
+        val bottom = value.getAndIncrement()
+        layoutParams.setMargins(
+            left,
+            top,
+            right,
+            bottom
+        )
+        layoutParams.assertMargin(left = left, top = top, right = right, bottom = bottom)
+        val margin: Insets = layoutParams.getMargin()
+        layoutParams.assertMargin(left = margin.left, top = margin.top, right = margin.right, bottom = margin.bottom)
+    }
+
+    @Test
+    fun setPaddingTest() {
+        val value = AtomicInteger(1)
+        val layoutParams: ViewGroup.MarginLayoutParams = ViewGroup.MarginLayoutParams(
+            value.getAndIncrement(),
+            value.getAndIncrement()
+        )
+        layoutParams.assertMargin(left = 0, top = 0, right = 0, bottom = 0)
+        val left = value.getAndIncrement()
+        val top = value.getAndIncrement()
+        val right = value.getAndIncrement()
+        val bottom = value.getAndIncrement()
+        layoutParams.setMargin(
+            insets(
+                left = left,
+                top = top,
+                right = right,
+                bottom = bottom
+            )
+        )
+        layoutParams.assertMargin(left = left, top = top, right = right, bottom = bottom)
+    }
+
+    @Test
+    fun marginLayoutParamsTest() {
+        val value = AtomicInteger(1)
+        val width = value.getAndIncrement()
+        val height = value.getAndIncrement()
+        val left = value.getAndIncrement()
+        val top = value.getAndIncrement()
+        val right = value.getAndIncrement()
+        val bottom = value.getAndIncrement()
+        val layoutParams: ViewGroup.MarginLayoutParams = ViewGroup::class.layoutParams(
+            width = width,
+            height = height,
+            margin = insets(
+                left = left,
+                top = top,
+                right = right,
+                bottom = bottom
+            )
+        )
+        layoutParams.assert(
+            width = width,
+            height = height,
+            left = left,
+            top = top,
+            right = right,
+            bottom = bottom
         )
     }
 }

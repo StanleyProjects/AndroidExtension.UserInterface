@@ -64,7 +64,12 @@ internal object LinearLayoutDefault {
     val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams::class.matched()
     val orientation: Orientation = Orientation.HORIZONTAL
     val gravity: Gravity = Gravity.TOP_LEFT
-    const val weight: Float = 0f
+    object LayoutParams {
+        const val width: Int = ViewGroup.LayoutParams.WRAP_CONTENT
+        const val height: Int = ViewGroup.LayoutParams.WRAP_CONTENT
+        const val weight: Float = 0f
+        val margin: Insets = insets()
+    }
 }
 
 /**
@@ -156,10 +161,10 @@ fun KClass<LinearLayout>.layoutParams(
  */
 fun LinearLayout.view(
     context: Context = this.context,
-    width: Int = ViewGroup.LayoutParams.WRAP_CONTENT,
-    height: Int = ViewGroup.LayoutParams.WRAP_CONTENT,
-    weight: Float = LinearLayoutDefault.weight,
-    margin: Insets = insets(),
+    width: Int = LinearLayoutDefault.LayoutParams.width,
+    height: Int = LinearLayoutDefault.LayoutParams.height,
+    weight: Float = LinearLayoutDefault.LayoutParams.weight,
+    margin: Insets = LinearLayoutDefault.LayoutParams.margin,
     id: Int = ViewDefault.id,
     background: Drawable = ViewDefault.background,
     visibility: Visibility = ViewDefault.visibility,
@@ -195,4 +200,25 @@ fun LinearLayout.view(
     }
     result.block()
     return result
+}
+
+/**
+ * A variant of [layoutParams] with one value [ViewGroup.LayoutParams.WRAP_CONTENT]
+ * to both width and height.
+ * @return An instance of [LinearLayout.LayoutParams]
+ * such that its [ViewGroup.LayoutParams.width] == [ViewGroup.LayoutParams.WRAP_CONTENT]
+ * and [ViewGroup.LayoutParams.height] == [ViewGroup.LayoutParams.WRAP_CONTENT].
+ * @author Stanley Wintergreen
+ * @since 0.0.6
+ */
+fun KClass<LinearLayout.LayoutParams>.wrapped(
+    weight: Float,
+    margin: Insets
+): LinearLayout.LayoutParams {
+    return LinearLayout::class.layoutParams(
+        width = ViewGroup.LayoutParams.WRAP_CONTENT,
+        height = ViewGroup.LayoutParams.WRAP_CONTENT,
+        weight = weight,
+        margin = margin
+    )
 }
