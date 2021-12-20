@@ -7,10 +7,26 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import sp.ax.ui.assertType
 import sp.ax.ui.entity.Insets
 import sp.ax.ui.entity.insets
-import sp.ax.ui.view.group.LinearLayoutUtilTest.Companion.assert
+import sp.ax.ui.view.group.ViewGroupUtilTest.Companion.assert
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.reflect.KClass
+
+internal fun KClass<ViewGroup.MarginLayoutParams>.assertEquals(
+    actual: ViewGroup.MarginLayoutParams,
+    expected: ViewGroup.MarginLayoutParams
+) {
+    actual.assert(
+        width = expected.width,
+        height = expected.height,
+        left = expected.leftMargin,
+        top = expected.topMargin,
+        right = expected.rightMargin,
+        bottom = expected.bottomMargin
+    )
+}
 
 @Config(manifest = Config.NONE)
 @RunWith(RobolectricTestRunner::class)
@@ -19,18 +35,15 @@ class ViewGroupUtilTest {
         internal fun ViewGroup.LayoutParams.assertEquals(expected: ViewGroup.LayoutParams) {
             when (val actual = this) {
                 is LinearLayout.LayoutParams -> {
-                    check(expected is LinearLayout.LayoutParams) // todo assert
-                    actual.assert(expected)
+                    LinearLayout.LayoutParams::class.assertEquals(
+                        actual = actual,
+                        expected = expected.assertType()
+                    )
                 }
                 is ViewGroup.MarginLayoutParams -> {
-                    check(expected is ViewGroup.MarginLayoutParams) // todo assert
-                    actual.assert(
-                        width = expected.width,
-                        height = expected.height,
-                        left = expected.leftMargin,
-                        top = expected.topMargin,
-                        right = expected.rightMargin,
-                        bottom = expected.bottomMargin
+                    ViewGroup.MarginLayoutParams::class.assertEquals(
+                        actual = actual,
+                        expected = expected.assertType()
                     )
                 }
                 else -> {

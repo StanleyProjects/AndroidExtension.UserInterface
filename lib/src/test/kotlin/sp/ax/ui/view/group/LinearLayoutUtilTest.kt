@@ -17,27 +17,33 @@ import sp.ax.ui.entity.Gravity.Companion.toInt
 import sp.ax.ui.entity.Orientation
 import sp.ax.ui.entity.Visibility
 import sp.ax.ui.entity.insets
+import sp.ax.ui.fail
 import sp.ax.ui.view.ViewUtilTest.Companion.assert
 import sp.ax.ui.view.ViewUtilTest.Companion.assertDefault
+import sp.ax.ui.view.group.LinearLayoutUtilTest.Companion.assert
 import sp.ax.ui.view.group.ViewGroupUtilTest.Companion.assert
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.reflect.KClass
+
+internal fun KClass<LinearLayout.LayoutParams>.assertEquals(
+    actual: LinearLayout.LayoutParams,
+    expected: LinearLayout.LayoutParams
+) {
+    actual.assert(
+        width = expected.width,
+        height = expected.height,
+        left = expected.leftMargin,
+        top = expected.topMargin,
+        right = expected.rightMargin,
+        bottom = expected.bottomMargin,
+        weight = expected.weight
+    )
+}
 
 @Config(manifest = Config.NONE, minSdk = BuildConfig.MIN_SDK, maxSdk = BuildConfig.TARGET_SDK)
 @RunWith(RobolectricTestRunner::class)
 class LinearLayoutUtilTest {
     companion object {
-        internal fun LinearLayout.LayoutParams.assert(expected: LinearLayout.LayoutParams) {
-            assert(
-                width = expected.width,
-                height = expected.height,
-                left = expected.leftMargin,
-                top = expected.topMargin,
-                right = expected.rightMargin,
-                bottom = expected.bottomMargin,
-                weight = expected.weight
-            )
-        }
-
         internal fun LinearLayout.LayoutParams.assert(
             width: Int,
             height: Int,
@@ -72,7 +78,7 @@ class LinearLayoutUtilTest {
             return when (view.orientation) {
                 LinearLayout.VERTICAL -> Orientation.VERTICAL
                 LinearLayout.HORIZONTAL -> Orientation.HORIZONTAL
-                else -> error("Impossible!") // todo fail!
+                else -> fail("Expected only LinearLayout.VERTICAL or LinearLayout.HORIZONTAL!")
             }
         }
     }
