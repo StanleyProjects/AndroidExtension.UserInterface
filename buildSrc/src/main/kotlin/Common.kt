@@ -1,9 +1,14 @@
 import sp.kx.gradle.entity.dependency
 import sp.kx.gradle.entity.plugin
 
+object Repository {
+    const val owner = "StanleyProjects"
+    const val name = "AndroidExtension.UserInterface"
+}
+
 object Maven {
     const val groupId = "com.github.kepocnhh"
-    const val artifactId = "AndroidExtension.UserInterface"
+    const val artifactId = Repository.name
 }
 
 object Version {
@@ -13,7 +18,7 @@ object Version {
     const val kotlin = "1.5.21"
     const val kotlinDsl = "2.1.7"
     const val kotlinLint = "0.42.1"
-    const val name = "0.0.6"
+    const val name = "0.0.7"
 
     object Android {
         const val toolsBuildGradle = "7.0.2"
