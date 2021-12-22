@@ -2,54 +2,30 @@
 
 echo "on failed pull request to dev start..."
 
-REQUEST_BODY='{"state":"closed"}'
-CODE=$(curl -w %{http_code} -o /dev/null -X PATCH \
- https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/pulls/$PR_NUMBER \
- -H "Authorization: token $GITHUB_PAT" \
- -d "$REQUEST_BODY")
-if test $CODE -ne 200; then
- echo "Pull request #$PR_NUMBER rejecting error!"
- echo "Request error with response code $CODE!"
- exit 11
-fi
+/bin/bash $RESOURCES_PATH/bash/workflow/vcs/close_pr.sh || exit 1 # todo
 
-echo "The pull request #$PR_NUMBER closed."
+/bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
+ GITHUB_OWNER GITHUB_REPO GITHUB_RUN_NUMBER GITHUB_RUN_ID || exit 1 # todo
 
-REQUEST_BODY="{\"body\":\"\
-Closed by GitHub build \
-[#$GITHUB_RUN_NUMBER](https://github.com/$GITHUB_OWNER/$GITHUB_REPO/actions/runs/$GITHUB_RUN_ID) \
-that failed just because.\
-\"}" # todo cause ?
-
-CODE=$(curl -w %{http_code} -o /dev/null -X POST \
- https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/issues/$PR_NUMBER/comments \
- -H "Authorization: token $GITHUB_PAT" \
- -d "$REQUEST_BODY")
-if test $CODE -ne 201; then
- echo "Post comment to pr #$PR_NUMBER error!"
- echo "Request error with response code $CODE!"
- exit 12
-fi
+RUN_URL="https://github.com/$GITHUB_OWNER/$GITHUB_REPO/actions/runs/$GITHUB_RUN_ID"
+BODY="Closed by GitHub build [#$GITHUB_RUN_NUMBER]($RUN_URL)."
+/bin/bash $RESOURCES_PATH/bash/workflow/vcs/post_comment.sh "$BODY" || exit 1 # todo
 
 AUTHOR_NAME="$(cat ${ASSEMBLY_PATH}/vcs/author.json | jq -r .name)"
 if test -z "$AUTHOR_NAME"; then
- echo "Author name is empty!"
- exit 21
+ echo "Author name is empty!"; exit 21
 fi
 AUTHOR_URL="$(cat ${ASSEMBLY_PATH}/vcs/author.json | jq -r .html_url)"
 if test -z "$AUTHOR_URL"; then
- echo "Author url is empty!"
- exit 22
+ echo "Author url is empty!"; exit 22
 fi
 WORKER_NAME="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .name)"
 if test -z "$WORKER_NAME"; then
- echo "Worker name is empty!"
- exit 23
+ echo "Worker name is empty!"; exit 23
 fi
 WORKER_URL="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .html_url)"
 if test -z "$WORKER_URL"; then
- echo "Worker url is empty!"
- exit 24
+ echo "Worker url is empty!"; exit 24
 fi
 
 REPO_URL=https://github.com/$GITHUB_OWNER/$GITHUB_REPO

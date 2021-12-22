@@ -152,6 +152,6 @@ task<JavaExec>("verifyCodeStyle") {
         "lib/build.gradle.kts",
         "sample/src/main/kotlin/**/*.kt",
         "sample/build.gradle.kts",
-        "--reporter=html,output=${File(buildDir, "reports/analysis/style/html/report.html")}"
+        "--reporter=html,output=${File(buildDir, "reports/analysis/style/html/index.html")}"
     )
 }
