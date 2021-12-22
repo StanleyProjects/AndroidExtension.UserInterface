@@ -2,15 +2,8 @@
 
 echo "assemble vcs start..."
 
-if test -z "$GITHUB_PAT"; then
- echo "GitHub personal access token is empty!"
- exit 11
-fi
-
-if test -z "$GIT_COMMIT_SHA"; then
- echo "Git commit sha is empty!"
- exit 12
-fi
+/bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
+ ASSEMBLY_PATH GITHUB_PAT GIT_COMMIT_SHA || exit 1 # todo
 
 CODE=0
 
@@ -39,9 +32,9 @@ echo "The commit $(cat $DST_PATH/commit.json | jq -r .html_url) is ready."
 
 AUTHOR_LOGIN="$(cat $DST_PATH/commit.json | jq -r .author.login)"
 if test -z "$AUTHOR_LOGIN"; then
- echo "Author login is empty!"
- exit 41
+ echo "Author login is empty!"; exit 41
 fi
+
 CODE=$(curl -w %{http_code} -o "$DST_PATH/author.json" \
  https://api.github.com/users/$AUTHOR_LOGIN)
 if test $CODE -ne 200; then

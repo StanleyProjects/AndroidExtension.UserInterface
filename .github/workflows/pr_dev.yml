@@ -7,28 +7,20 @@ on:
       - dev
 
 jobs:
+  prepare:
+    uses: .github/workflows/prepare.yml@build
   build:
     runs-on: ubuntu-20.04
+    needs: prepare
     env:
-      GITHUB_OWNER: StanleyProjects
-      GITHUB_REPO: AndroidExtension.UserInterface
       telegram_bot_id: ${{secrets.TELEGRAM_BOT_ID}}
       telegram_bot_token: ${{secrets.TELEGRAM_BOT_TOKEN}}
       telegram_chat_id: ${{secrets.TELEGRAM_CHAT_ID_COMMON}}
-      GITHUB_PAT: ${{secrets.PERSONAL_ACCESS_TOKEN}}
-      RESOURCES_PATH: buildSrc/src/main/resources
     steps:
       - run: |
-          echo "HOME=$(echo ~)" >> $GITHUB_ENV
-          echo "DOCKER_PREFIX=docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}" >> $GITHUB_ENV
-          echo "ASSEMBLY_PATH=$HOME/assembly_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}" >> $GITHUB_ENV
           echo "PR_NUMBER        =$(jq -r .pull_request.number   $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "PR_SOURCE_BRANCH =$(jq -r .pull_request.base.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "GIT_SOURCE_BRANCH=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
           echo "GIT_COMMIT_SHA   =$(jq -r .pull_request.head.sha $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
-      - run: git clone --depth=1 --branch=$GIT_SOURCE_BRANCH https://github.com/$GITHUB_OWNER/$GITHUB_REPO.git $HOME/repository
       - working-directory: ${{env.HOME}}/repository
-        run: |
-          /bin/bash $RESOURCES_PATH/bash/workflow/assemble/vcs.sh
-          /bin/bash $RESOURCES_PATH/bash/workflow/prepare.sh
-          /bin/bash $RESOURCES_PATH/bash/workflow/pr/dev/main.sh
+        run: /bin/bash $RESOURCES_PATH/bash/workflow/pr/dev/main.sh
