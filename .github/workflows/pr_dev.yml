@@ -12,9 +12,9 @@ jobs:
     env:
       GITHUB_OWNER: StanleyProjects
       GITHUB_REPO: AndroidExtension.UserInterface
-      telegram_bot_id: ${{secrets.TELEGRAM_BOT_ID}}
-      telegram_bot_token: ${{secrets.TELEGRAM_BOT_TOKEN}}
-      telegram_chat_id: ${{secrets.TELEGRAM_CHAT_ID_COMMON}}
+      TELEGRAM_BOT_ID: ${{secrets.TELEGRAM_BOT_ID}}
+      TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+      TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID_COMMON}}
       GITHUB_PAT: ${{secrets.PERSONAL_ACCESS_TOKEN}}
       RESOURCES_PATH: buildSrc/src/main/resources
     steps:
