@@ -16,6 +16,7 @@ fi
 /bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
  GITHUB_OWNER GITHUB_REPO PR_NUMBER GITHUB_PAT || exit 1 # todo
 
+BODY="${BODY/$'\n'/\n}"
 CODE=$(curl -w %{http_code} -o /dev/null -X POST \
  https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/issues/$PR_NUMBER/comments \
  -H "Authorization: token $GITHUB_PAT" \

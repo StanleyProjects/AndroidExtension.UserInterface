@@ -20,16 +20,16 @@ if test -f "$ASSEMBLY_PATH/diagnostics/summary.json"; then
   "CODE_STYLE")
    POSTFIX=" - due to code style issues. See the [report]($GITHUB_PAGES/$RELATIVE_PATH/CODE_STYLE/index.html)."
   ;;
-  *) echo "Failed type \"$REPORT_TYPE\" is not supported!"; exit 103;;
+  *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 103;;
  esac
- BODY="${BODY}:\n$POSTFIX"
- PR_RESULT="${PR_RESULT}:\n$POSTFIX"
+ BODY="${BODY}:"$'\n'"$POSTFIX"
+ PR_RESULT="${PR_RESULT}:"$'\n'"$POSTFIX"
 else
  BODY="${BODY}."
  PR_RESULT="${PR_RESULT}."
 fi
 
-/bin/bash $RESOURCES_PATH/bash/workflow/vcs/post_comment.sh "${BODY@E}" || exit 1 # todo
+/bin/bash $RESOURCES_PATH/bash/workflow/vcs/post_comment.sh "$BODY" || exit 1 # todo
 
 AUTHOR_NAME="$(cat ${ASSEMBLY_PATH}/vcs/author.json | jq -r .name)"
 AUTHOR_URL="$(cat ${ASSEMBLY_PATH}/vcs/author.json | jq -r .html_url)"
@@ -45,9 +45,9 @@ MESSAGE="GitHub build [#$GITHUB_RUN_NUMBER]($REPO_URL/actions/runs/$GITHUB_RUN_I
 
 [${GIT_COMMIT_SHA::7}]($REPO_URL/commit/$GIT_COMMIT_SHA) by [$AUTHOR_NAME]($AUTHOR_URL)
 
-${PR_RESULT@E}"
+$PR_RESULT"
 
-/bin/bash $RESOURCES_PATH/bash/workflow/telegram_send_message.sh "${MESSAGE@E}"
+/bin/bash $RESOURCES_PATH/bash/workflow/telegram_send_message.sh "$MESSAGE"
 
 echo "The pull request #$PR_NUMBER failed!"
 
