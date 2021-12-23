@@ -9,7 +9,24 @@ echo "on failed pull request to dev start..."
 
 RUN_URL="https://github.com/$GITHUB_OWNER/$GITHUB_REPO/actions/runs/$GITHUB_RUN_ID"
 BODY="Closed by GitHub build [#$GITHUB_RUN_NUMBER]($RUN_URL)."
-/bin/bash $RESOURCES_PATH/bash/workflow/vcs/post_comment.sh "$BODY" || exit 1 # todo
+PR_RESULT="pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER) closed by [$WORKER_NAME]($WORKER_URL)"
+
+if test -f "$ASSEMBLY_PATH/diagnostics/summary.json"; then
+ REPORT_TYPE="$(cat ${ASSEMBLY_PATH}/diagnostics/summary.json | jq -r .type)"
+ if test -z "$REPORT_TYPE"; then echo "Report type is empty!"; exit 101; fi
+ GITHUB_PAGES="https://$GITHUB_OWNER.github.io/$GITHUB_REPO"
+ RELATIVE_PATH="build/$GITHUB_RUN_NUMBER/$GITHUB_RUN_ID/diagnostics/report"
+ case REPORT_TYPE in
+  "CODE_STYLE")
+   POSTFIX=" - due to code style issues. See the [report]($GITHUB_PAGES/$RELATIVE_PATH/CODE_STYLE/index.html)."
+  ;;
+  *) echo "Failed type \"$REPORT_TYPE\" is not supported!"; exit 103;;
+ esac
+ BODY="$BODY\n$POSTFIX"
+ PR_RESULT="$PR_RESULT\n$POSTFIX"
+fi
+
+/bin/bash $RESOURCES_PATH/bash/workflow/vcs/post_comment.sh "${BODY@E}" || exit 1 # todo
 
 AUTHOR_NAME="$(cat ${ASSEMBLY_PATH}/vcs/author.json | jq -r .name)"
 AUTHOR_URL="$(cat ${ASSEMBLY_PATH}/vcs/author.json | jq -r .html_url)"
@@ -25,7 +42,7 @@ MESSAGE="GitHub build [#$GITHUB_RUN_NUMBER]($REPO_URL/actions/runs/$GITHUB_RUN_I
 
 [${GIT_COMMIT_SHA::7}]($REPO_URL/commit/$GIT_COMMIT_SHA) by [$AUTHOR_NAME]($AUTHOR_URL)
 
-pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER) closed by [$WORKER_NAME]($WORKER_URL)"
+${PR_RESULT@E}"
 
 /bin/bash $RESOURCES_PATH/bash/workflow/telegram_send_message.sh "${MESSAGE@E}"
 

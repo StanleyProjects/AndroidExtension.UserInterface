@@ -4,7 +4,7 @@ echo "diagnostics start..."
 
 CODE=0
 
-DST_PATH="/failed"
+DST_PATH="/diagnostics"
 rm -rf $DST_PATH
 mkdir -p $DST_PATH || exit 21
 

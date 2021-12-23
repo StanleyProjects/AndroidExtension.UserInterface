@@ -7,6 +7,7 @@ CODE=0
 /bin/bash $RESOURCES_PATH/bash/workflow/verify.sh; CODE=$?
 if test $CODE -ne 0; then
  /bin/bash $RESOURCES_PATH/bash/workflow/diagnostics.sh && \
+  /bin/bash $RESOURCES_PATH/bash/workflow/vcs/report.sh && \
   /bin/bash $RESOURCES_PATH/bash/workflow/pr/dev/on_failed.sh || exit 1 # todo
  exit 11
 fi

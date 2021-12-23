@@ -18,12 +18,12 @@ fi
 
 docker container rm -f ${DOCKER_PREFIX}.container.${POSTFIX}
 
-DST_PATH="${ASSEMBLY_PATH}/failed"
+DST_PATH="${ASSEMBLY_PATH}/diagnostics"
 rm -rf $DST_PATH
 mkdir -p $DST_PATH || exit 21
 ARRAY=(
  "run --name ${DOCKER_PREFIX}.container.${POSTFIX} ${DOCKER_PREFIX}.image.${POSTFIX}"
- "cp ${DOCKER_PREFIX}.container.${POSTFIX}:/failed/. $DST_PATH"
+ "cp ${DOCKER_PREFIX}.container.${POSTFIX}:/diagnostics/. $DST_PATH"
  "stop ${DOCKER_PREFIX}.container.${POSTFIX}"
  "container rm -f ${DOCKER_PREFIX}.container.${POSTFIX}"
 )
