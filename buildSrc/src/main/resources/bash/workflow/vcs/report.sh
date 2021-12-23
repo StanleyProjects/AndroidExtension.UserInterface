@@ -8,7 +8,7 @@ REPORT_TYPE="$(cat ${ASSEMBLY_PATH}/diagnostics/summary.json | jq -r .type)"
 WORKER_NAME="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .name)"
 WORKER_EMAIL="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .email)"
 
-for it in FAILED_TYPE WORKER_NAME WORKER_EMAIL; do
+for it in REPORT_TYPE WORKER_NAME WORKER_EMAIL; do
  if test -z "${!it}"; then echo "$it is empty!"; exit 21; fi; done
 
 /bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
@@ -17,19 +17,20 @@ for it in FAILED_TYPE WORKER_NAME WORKER_EMAIL; do
 REPOSITORY="$HOME/diagnostics/report"
 mkdir -p $REPOSITORY || exit 1 # todo
 git clone --depth=1 --branch=gh-pages \
- https://$GITHUB_PAT@github.com/$GITHUB_OWNER/$GITHUB_REPO.git "${REPOSITORY}" || exit 1 # todo
+ https://$GITHUB_PAT@github.com/$GITHUB_OWNER/$GITHUB_REPO.git $REPOSITORY || exit 1 # todo
 
 RELATIVE_PATH="build/$GITHUB_RUN_NUMBER/$GITHUB_RUN_ID/diagnostics/report"
 mkdir -p $REPOSITORY/$RELATIVE_PATH || exit 1 # todo
 
+COMMIT_MESSAGE="GitHub build #$GITHUB_RUN_NUMBER | $WORKER_NAME added diagnostics report"
+
 case REPORT_TYPE in
  "CODE_STYLE")
   cp -r ${ASSEMBLY_PATH}/diagnostics/* $REPOSITORY/$RELATIVE_PATH || exit 1 # todo
+  COMMIT_MESSAGE="${COMMIT_MESSAGE}. Code style issues."
  ;;
- *) echo "Failed type \"$REPORT_TYPE\" is not supported!"; exit 51;;
+ *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 51;;
 esac
-
-COMMIT_MESSAGE="GitHub build #$GITHUB_RUN_NUMBER | $WORKER_NAME added diagnostics report."
 
 git -C $REPOSITORY config user.name "$WORKER_NAME" && \
  git -C $REPOSITORY config user.email "$WORKER_EMAIL" && \
