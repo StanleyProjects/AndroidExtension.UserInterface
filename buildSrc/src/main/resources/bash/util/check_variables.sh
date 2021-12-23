@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "check variables..."
+#echo "check variables..."
 
 if test $# -eq 0; then
  echo "The script needs more than 0 arguments!"
@@ -16,6 +16,6 @@ for ((i=0; i<SIZE; i++)); do
  fi
 done
 
-echo "Validation of variables was successful."
+#echo "Validation of variables was successful."
 
 exit 0

@@ -26,10 +26,10 @@ COMMIT_MESSAGE="GitHub build #$GITHUB_RUN_NUMBER | $WORKER_NAME added diagnostic
 
 case "$REPORT_TYPE" in
  "CODE_STYLE")
-  cp -r ${ASSEMBLY_PATH}/diagnostics/* $REPOSITORY/$RELATIVE_PATH || exit 1 # todo
+  cp -r ${ASSEMBLY_PATH}/diagnostics/report/* $REPOSITORY/$RELATIVE_PATH || exit 101 # todo
   COMMIT_MESSAGE="${COMMIT_MESSAGE}. Code style issues."
  ;;
- *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 51;;
+ *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 102;;
 esac
 
 git -C $REPOSITORY config user.name "$WORKER_NAME" && \

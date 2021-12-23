@@ -8,22 +8,25 @@ echo "on failed pull request to dev start..."
  ASSEMBLY_PATH GITHUB_OWNER GITHUB_REPO GITHUB_RUN_NUMBER GITHUB_RUN_ID || exit 1 # todo
 
 RUN_URL="https://github.com/$GITHUB_OWNER/$GITHUB_REPO/actions/runs/$GITHUB_RUN_ID"
-BODY="Closed by GitHub build [#$GITHUB_RUN_NUMBER]($RUN_URL)."
-PR_RESULT="pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER) closed by [$WORKER_NAME]($WORKER_URL)"
+BODY="Closed by GitHub build [#$GITHUB_RUN_NUMBER]($RUN_URL)"
+PR_RESULT="The pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER) closed by [$WORKER_NAME]($WORKER_URL)"
 
 if test -f "$ASSEMBLY_PATH/diagnostics/summary.json"; then
  REPORT_TYPE="$(cat ${ASSEMBLY_PATH}/diagnostics/summary.json | jq -r .type)"
  if test -z "$REPORT_TYPE"; then echo "Report type is empty!"; exit 101; fi
  GITHUB_PAGES="https://$GITHUB_OWNER.github.io/$GITHUB_REPO"
  RELATIVE_PATH="build/$GITHUB_RUN_NUMBER/$GITHUB_RUN_ID/diagnostics/report"
- case REPORT_TYPE in
+ case "$REPORT_TYPE" in
   "CODE_STYLE")
    POSTFIX=" - due to code style issues. See the [report]($GITHUB_PAGES/$RELATIVE_PATH/CODE_STYLE/index.html)."
   ;;
   *) echo "Failed type \"$REPORT_TYPE\" is not supported!"; exit 103;;
  esac
- BODY="$BODY\n$POSTFIX"
- PR_RESULT="$PR_RESULT\n$POSTFIX"
+ BODY="${BODY}:\n$POSTFIX"
+ PR_RESULT="${PR_RESULT}:\n$POSTFIX"
+else
+ BODY="${BODY}."
+ PR_RESULT="${PR_RESULT}."
 fi
 
 /bin/bash $RESOURCES_PATH/bash/workflow/vcs/post_comment.sh "${BODY@E}" || exit 1 # todo
