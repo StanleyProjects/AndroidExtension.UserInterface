@@ -7,7 +7,7 @@ CODE=0
 docker image prune -f
 
 docker build --no-cache \
- -t "${DOCKER_IMAGE_NAME}.prepared" \
+ -t "${DOCKER_PREFIX}.image.prepared" \
  -f $RESOURCES_PATH/docker/Dockerfile.prepare .; CODE=$?
 
 if test $CODE -ne 0; then
