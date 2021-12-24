@@ -4,6 +4,14 @@ echo "pull request to dev start..."
 
 CODE=0
 
+REPO_URL=https://github.com/$GITHUB_OWNER/$GITHUB_REPO
+RUN_URL="$REPO_URL/actions/runs/$GITHUB_RUN_ID"
+COMMENT_BODY="First line [#$GITHUB_RUN_NUMBER]($RUN_URL)"
+POSTFIX=" - second line"
+COMMENT_BODY="${COMMENT_BODY}:"$'\n'"$POSTFIX"
+/bin/bash $RESOURCES_PATH/bash/workflow/vcs/post_comment.sh "$COMMENT_BODY" || exit 1 # todo
+exit 1 # todo
+
 /bin/bash $RESOURCES_PATH/bash/workflow/verify.sh; CODE=$?
 if test $CODE -ne 0; then
  /bin/bash $RESOURCES_PATH/bash/workflow/diagnostics.sh && \
