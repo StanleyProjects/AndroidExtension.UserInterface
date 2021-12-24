@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>detekt report</title>
+    <style>
+h2 {
+  background-color: #666666;
+  padding: 0.2em;
+  color: #ffffff;
+}
+h3 {
+  background-color:#f8dfdf;
+  padding:0.5em;
+}
+.rule {
+  background-color: #dddddd;
+  padding: 0.3em;
+  font-weight: bold;
+}
+.description {
+  color:#000000;
+  padding:0.3em;
+}
+.location {
+  color: #690505;
+  font-family: monospace;
+  display: block;
+}
+.message {
+  font-size: 0.8em;
+  color: #444444;
+  display: block;
+  margin-top: 1pt;
+}
+.rule-container {
+  border: 0.1em dashed #dddddd;
+  padding: 0.1em;
+  line-height: 1.5em;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+pre {
+  border: 1px solid #e0e0e0;
+  overflow: scroll;
+}
+.lineno {
+  color: #999999;
+  background-color: #f0f0f0;
+}
+.error {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AwCFR4T/3uLMgAAADxJREFUCNdNyLERQEAABMCjL4lQwIzcjErpguAL+C9AvgKJDbeD/PRpLdm35Hm+MU+cB+tCKaJW4L4YBy+CAiLJrFs9mgAAAABJRU5ErkJggg==) bottom repeat-x;
+}
+.exception {
+  color: #b60808;
+  display: inline-block;
+  background-color: #ecdada;
+  border-color: #b60808;
+  border-radius: 10px;
+  border: solid 2px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 16px;
+}
+</style>
+</head>
+<body>
+
+<h1>detekt report</h1>
+
+<h2>Metrics</h2>
+
+<div>
+  <ul></ul>
+</div>
+
+
+<h2>Complexity Report</h2>
+
+<div>
+  <ul></ul>
+</div>
+
+
+<h2>Findings</h2>
+<div>Total: 3
+  <h3>comments: 3</h3>
+  <details id="UndocumentedPublicClass" open="open">
+    <summary class="rule-container"><span class="rule">UndocumentedPublicClass: 1 </span><span class="description">Public classes, interfaces and objects require documentation.</span></summary>
+    <ul>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/TypeDimension.kt:5:12</span><span class="message">TypeDimension is missing required documentation.</span>
+        <pre><code><span class="lineno">   2 </span>
+<span class="lineno">   3 </span>import android.util.TypedValue
+<span class="lineno">   4 </span>
+<span class="lineno">   5 </span>enum class <span class="error">TypeDimension</span> {
+<span class="lineno">   6 </span>    PIXEL,
+<span class="lineno">   7 </span>    DEVICE_INDEPENDENT,
+<span class="lineno">   8 </span>    SCALED_PIXEL;
+</code></pre>
+      </li>
+    </ul>
+  </details>
+  <details id="UndocumentedPublicFunction" open="open">
+    <summary class="rule-container"><span class="rule">UndocumentedPublicFunction: 2 </span><span class="description">Public functions require documentation.</span></summary>
+    <ul>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/TypeDimension.kt:11:27</span><span class="message">The function toInt is missing documentation.</span>
+        <pre><code><span class="lineno">   8 </span>    SCALED_PIXEL;
+<span class="lineno">   9 </span>
+<span class="lineno">  10 </span>    companion object {
+<span class="lineno">  11 </span>        fun TypeDimension.<span class="error">toInt</span>(): Int {
+<span class="lineno">  12 </span>            return when (this) {
+<span class="lineno">  13 </span>                PIXEL -&gt; TypedValue.COMPLEX_UNIT_PX
+<span class="lineno">  14 </span>                DEVICE_INDEPENDENT -&gt; TypedValue.COMPLEX_UNIT_DIP
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/widget/TextViewUtil.kt:59:5</span><span class="message">The function textView is missing documentation.</span>
+        <pre><code><span class="lineno">  56 </span>    val textColor: Int = Color.parseColor(&quot;#000000&quot;)
+<span class="lineno">  57 </span>}
+<span class="lineno">  58 </span>
+<span class="lineno">  59 </span>fun <span class="error">textView</span>(
+<span class="lineno">  60 </span>    context: Context,
+<span class="lineno">  61 </span>    layoutParams: ViewGroup.LayoutParams = ViewDefault.layoutParams,
+<span class="lineno">  62 </span>    id: Int = ViewDefault.id,
+</code></pre>
+      </li>
+    </ul>
+  </details>
+</div>
+
+
+generated with <a href="https://detekt.github.io/">detekt version 1.19.0-RC2</a> on 2021-12-24 15:25:08 UTC.
+
+</body>
+</html>
