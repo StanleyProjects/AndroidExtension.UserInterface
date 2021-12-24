@@ -7,8 +7,8 @@ CODE=0
 POSTFIX="assemble.common"
 
 docker build --no-cache \
- -t "${DOCKER_IMAGE_NAME}.${POSTFIX}" \
- --build-arg IMAGE_SOURCE="${DOCKER_IMAGE_NAME}.verified" \
+ -t "${DOCKER_PREFIX}.image.${POSTFIX}" \
+ --build-arg IMAGE_SOURCE="${DOCKER_PREFIX}.image.verified" \
  -f $RESOURCES_PATH/docker/assemble/Dockerfile.common .; CODE=$?
 
 if test $CODE -ne 0; then
@@ -20,10 +20,10 @@ DST_PATH="${ASSEMBLY_PATH}"
 rm $DST_PATH/common.json
 mkdir -p $DST_PATH || exit 21
 ARRAY=(
- "docker run --name ${DOCKER_CONTAINER_NAME}.${POSTFIX} ${DOCKER_IMAGE_NAME}.${POSTFIX}"
- "docker cp ${DOCKER_CONTAINER_NAME}.${POSTFIX}:/repository/build/common.json $DST_PATH/common.json"
- "docker stop ${DOCKER_CONTAINER_NAME}.${POSTFIX}"
- "docker container rm -f ${DOCKER_CONTAINER_NAME}.${POSTFIX}"
+ "docker run --name ${DOCKER_PREFIX}.container.${POSTFIX} ${DOCKER_PREFIX}.image.${POSTFIX}"
+ "docker cp ${DOCKER_PREFIX}.container.${POSTFIX}:/repository/build/common.json $DST_PATH/common.json"
+ "docker stop ${DOCKER_PREFIX}.container.${POSTFIX}"
+ "docker container rm -f ${DOCKER_PREFIX}.container.${POSTFIX}"
 )
 SIZE=${#ARRAY[*]}
 for ((i = 0; i < SIZE; i++)); do

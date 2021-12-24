@@ -162,8 +162,7 @@ task<org.jetbrains.dokka.gradle.DokkaTask>("assembleDocumentation") {
             sourceLink {
                 val path = "src/main/kotlin"
                 localDirectory.set(file(path))
-                val owner = "StanleyProjects"
-                remoteUrl.set(URL("https://github.com/$owner/${Maven.artifactId}/tree/dev/lib/$path"))
+                remoteUrl.set(URL("https://github.com/${Repository.owner}/${Repository.name}/tree/dev/lib/$path"))
             }
         }
     }

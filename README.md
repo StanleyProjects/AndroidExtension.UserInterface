@@ -1,4 +1,5 @@
-![version](https://img.shields.io/static/v1?label=version&message=0.0.6&labelColor=212121&color=2962ff&style=flat)
+![version](https://img.shields.io/static/v1?label=version&message=0.0.7&labelColor=212121&color=2962ff&style=flat)
+[![documentation](https://img.shields.io/badge/documentation-2962ff.svg?style=flat)](https://StanleyProjects.github.io/AndroidExtension.UserInterface/documentation/0.0.7)
 
 # AndroidExtension.UserInterface
 A few Android extensions for user interface components.
