@@ -26,7 +26,9 @@ if test -f "$ASSEMBLY_PATH/diagnostics/summary.json"; then
  RELATIVE_PATH="build/$GITHUB_RUN_NUMBER/$GITHUB_RUN_ID/diagnostics/report"
  case "$REPORT_TYPE" in
   "CODE_STYLE")
-   POSTFIX=" - due to code style issues / [report]($GITHUB_PAGES/$RELATIVE_PATH/CODE_STYLE/index.html)";;
+   POSTFIX=" - due to code style issues / [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
+  "DOCUMENTATION")
+   POSTFIX=" - due to documentation issues / [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
   *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 103;;
  esac
  COMMENT_BODY="${COMMENT_BODY}:"$'\n'"$POSTFIX"

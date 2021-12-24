@@ -173,7 +173,10 @@ task<io.gitlab.arturbosch.detekt.Detekt>("verifyDocumentation") {
     setSource(files("src/main/kotlin"))
     config.setFrom(File(rootProject.rootDir, "buildSrc/src/main/resources/detekt/config/documentation.yml"))
     reports {
-        html.required.set(true)
+        html {
+            required.set(true)
+            outputLocation.set(File(buildDir, "reports/documentation/html/index.html"))
+        }
         xml.required.set(false)
         txt.required.set(false)
         sarif.required.set(false)
