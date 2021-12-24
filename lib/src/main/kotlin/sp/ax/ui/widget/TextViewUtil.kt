@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
+import android.widget.TextView
 import sp.ax.ui.entity.Gravity
 import sp.ax.ui.entity.Gravity.Companion.toInt
 import sp.ax.ui.entity.Insets
@@ -12,7 +13,6 @@ import sp.ax.ui.entity.TypeDimension.Companion.toInt
 import sp.ax.ui.entity.Visibility
 import sp.ax.ui.view.ViewDefault
 import sp.ax.ui.view.configure
-import android.widget.TextView
 
 internal fun TextView.configure(
     layoutParams: ViewGroup.LayoutParams,
