@@ -56,6 +56,22 @@ internal object TextViewDefault {
     val textColor: Int = Color.parseColor("#000000")
 }
 
+/**
+ * Builds an instance of [TextView] by [context] and parameters or default. Sample:
+ * ```
+ * fun foo(context: Context): LinearLayout {
+ *     return textView(
+ *         context = context,
+ *         layoutParams = ViewGroup::class.layoutParams(width = 512, height = 64),
+ *         text = "bar",
+ *         textSizeUnit = TypeDimension.PIXEL,
+ *         textSize = 64 / 2f
+ *     )
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.7
+ */
 fun textView(
     context: Context,
     layoutParams: ViewGroup.LayoutParams = ViewDefault.layoutParams,
