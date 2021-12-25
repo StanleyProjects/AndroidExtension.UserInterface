@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextViewUtil.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">sp.ax.ui.widget</a> &gt; <span class="el_source">TextViewUtil.kt</span></div><h1>TextViewUtil.kt</h1><pre class="source lang-java linenums">package sp.ax.ui.widget
+
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.view.ViewGroup
+import android.widget.TextView
+import sp.ax.ui.entity.Gravity
+import sp.ax.ui.entity.Gravity.Companion.toInt
+import sp.ax.ui.entity.Insets
+import sp.ax.ui.entity.TypeDimension
+import sp.ax.ui.entity.TypeDimension.Companion.toInt
+import sp.ax.ui.entity.Visibility
+import sp.ax.ui.view.ViewDefault
+import sp.ax.ui.view.configure
+
+internal fun TextView.configure(
+    layoutParams: ViewGroup.LayoutParams,
+    id: Int,
+    background: Drawable,
+    visibility: Visibility,
+    padding: Insets,
+    onClick: () -&gt; Unit,
+    onLongClick: () -&gt; Boolean,
+    isClickable: Boolean,
+    isLongClickable: Boolean,
+    keepScreenOn: Boolean,
+    gravity: Gravity,
+    text: CharSequence,
+    textSizeUnit: TypeDimension,
+    textSize: Float,
+    textColor: Int
+) {
+<span class="nc" id="L34">    configure(</span>
+<span class="nc" id="L35">        layoutParams = layoutParams,</span>
+<span class="nc" id="L36">        id = id,</span>
+<span class="nc" id="L37">        background = background,</span>
+<span class="nc" id="L38">        visibility = visibility,</span>
+<span class="nc" id="L39">        padding = padding,</span>
+<span class="nc" id="L40">        onClick = onClick,</span>
+<span class="nc" id="L41">        onLongClick = onLongClick,</span>
+<span class="nc" id="L42">        isClickable = isClickable,</span>
+<span class="nc" id="L43">        isLongClickable = isLongClickable,</span>
+<span class="nc" id="L44">        keepScreenOn = keepScreenOn</span>
+    )
+<span class="nc" id="L46">    this.gravity = gravity.toInt()</span>
+<span class="nc" id="L47">    this.text = text</span>
+<span class="nc" id="L48">    setTextSize(textSizeUnit.toInt(), textSize)</span>
+<span class="nc" id="L49">    setTextColor(textColor)</span>
+<span class="nc" id="L50">}</span>
+
+internal object TextViewDefault {
+<span class="nc" id="L53">    val gravity: Gravity = Gravity.TOP_LEFT</span>
+<span class="nc" id="L54">    val textSizeUnit: TypeDimension = TypeDimension.SCALED_PIXEL</span>
+    const val textSize: Float = 12f
+<span class="nc" id="L56">    val textColor: Int = Color.parseColor(&quot;#000000&quot;)</span>
+}
+
+/**
+ * Builds an instance of [TextView] by [context] and parameters or default. Sample:
+ * ```
+ * fun foo(context: Context): LinearLayout {
+ *     return textView(
+ *         context = context,
+ *         layoutParams = ViewGroup::class.layoutParams(width = 512, height = 64),
+ *         text = &quot;bar&quot;,
+ *         textSizeUnit = TypeDimension.PIXEL,
+ *         textSize = 64 / 2f
+ *     )
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.7
+ */
+<span class="nc" id="L75">fun textView(</span>
+    context: Context,
+<span class="nc" id="L77">    layoutParams: ViewGroup.LayoutParams = ViewDefault.layoutParams,</span>
+<span class="nc" id="L78">    id: Int = ViewDefault.id,</span>
+<span class="nc" id="L79">    background: Drawable = ViewDefault.background,</span>
+<span class="nc" id="L80">    visibility: Visibility = ViewDefault.visibility,</span>
+<span class="nc" id="L81">    padding: Insets = ViewDefault.padding,</span>
+<span class="nc" id="L82">    onClick: () -&gt; Unit = ViewDefault.onClick,</span>
+<span class="nc" id="L83">    onLongClick: () -&gt; Boolean = ViewDefault.onLongClick,</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">    isClickable: Boolean = onClick !== ViewDefault.onClick,</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,</span>
+<span class="nc" id="L86">    keepScreenOn: Boolean = ViewDefault.keepScreenOn,</span>
+<span class="nc" id="L87">    gravity: Gravity = TextViewDefault.gravity,</span>
+    text: CharSequence,
+<span class="nc" id="L89">    textSizeUnit: TypeDimension = TextViewDefault.textSizeUnit,</span>
+<span class="nc" id="L90">    textSize: Float = TextViewDefault.textSize,</span>
+<span class="nc" id="L91">    textColor: Int = TextViewDefault.textColor,</span>
+<span class="nc" id="L92">    block: TextView.() -&gt; Unit = {}</span>
+): TextView {
+<span class="nc" id="L94">    val result = TextView(context)</span>
+<span class="nc" id="L95">    result.configure(</span>
+<span class="nc" id="L96">        layoutParams = layoutParams,</span>
+<span class="nc" id="L97">        id = id,</span>
+<span class="nc" id="L98">        background = background,</span>
+<span class="nc" id="L99">        visibility = visibility,</span>
+<span class="nc" id="L100">        padding = padding,</span>
+<span class="nc" id="L101">        onClick = onClick,</span>
+<span class="nc" id="L102">        onLongClick = onLongClick,</span>
+<span class="nc" id="L103">        isClickable = isClickable,</span>
+<span class="nc" id="L104">        isLongClickable = isLongClickable,</span>
+<span class="nc" id="L105">        keepScreenOn = keepScreenOn,</span>
+<span class="nc" id="L106">        gravity = gravity,</span>
+<span class="nc" id="L107">        text = text,</span>
+<span class="nc" id="L108">        textSizeUnit = textSizeUnit,</span>
+<span class="nc" id="L109">        textSize = textSize,</span>
+<span class="nc" id="L110">        textColor = textColor</span>
+    )
+<span class="nc" id="L112">    result.block()</span>
+<span class="nc" id="L113">    return result</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

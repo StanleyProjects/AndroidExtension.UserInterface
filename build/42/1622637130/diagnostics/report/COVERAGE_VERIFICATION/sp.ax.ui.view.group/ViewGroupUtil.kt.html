@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ViewGroupUtil.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">sp.ax.ui.view.group</a> &gt; <span class="el_source">ViewGroupUtil.kt</span></div><h1>ViewGroupUtil.kt</h1><pre class="source lang-java linenums">package sp.ax.ui.view.group
+
+import android.view.ViewGroup
+import sp.ax.ui.entity.Insets
+import sp.ax.ui.entity.insets
+import kotlin.reflect.KClass
+
+/**
+ * A kotlin function variant of [ViewGroup.LayoutParams]. To use named arguments. Sample:
+ * ```
+ * fun foo(): ViewGroup.LayoutParams {
+ *     return ViewGroup::class.layoutParams(height = 5, width = 6)
+ * }
+ * ```
+ * @return An instance of [ViewGroup.LayoutParams] using its constructor.
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
+fun KClass&lt;ViewGroup&gt;.layoutParams(width: Int, height: Int): ViewGroup.LayoutParams {
+<span class="fc" id="L20">    return ViewGroup.LayoutParams(width, height)</span>
+}
+
+/**
+ * A variant of [layoutParams] with one value [size] to both width and height.
+ * @return An instance of [ViewGroup.LayoutParams]
+ * such that its [ViewGroup.LayoutParams.width] == [size]
+ * and [ViewGroup.LayoutParams.height] == [size].
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
+fun KClass&lt;ViewGroup&gt;.layoutParams(size: Int): ViewGroup.LayoutParams {
+<span class="fc" id="L32">    return layoutParams(width = size, height = size)</span>
+}
+
+/**
+ * A variant of [layoutParams] with one value [ViewGroup.LayoutParams.WRAP_CONTENT]
+ * to both width and height.
+ * @return An instance of [ViewGroup.LayoutParams]
+ * such that its [ViewGroup.LayoutParams.width] == [ViewGroup.LayoutParams.WRAP_CONTENT]
+ * and [ViewGroup.LayoutParams.height] == [ViewGroup.LayoutParams.WRAP_CONTENT].
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
+fun KClass&lt;ViewGroup.LayoutParams&gt;.wrapped(): ViewGroup.LayoutParams {
+<span class="fc" id="L45">    return ViewGroup::class.layoutParams(size = ViewGroup.LayoutParams.WRAP_CONTENT)</span>
+}
+
+/**
+ * A variant of [layoutParams] with one value [ViewGroup.LayoutParams.MATCH_PARENT]
+ * to both width and height.
+ * @return An instance of [ViewGroup.LayoutParams]
+ * such that its [ViewGroup.LayoutParams.width] == [ViewGroup.LayoutParams.MATCH_PARENT]
+ * and [ViewGroup.LayoutParams.height] == [ViewGroup.LayoutParams.MATCH_PARENT].
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
+fun KClass&lt;ViewGroup.LayoutParams&gt;.matched(): ViewGroup.LayoutParams {
+<span class="fc" id="L58">    return ViewGroup::class.layoutParams(size = ViewGroup.LayoutParams.MATCH_PARENT)</span>
+}
+
+/**
+ * Calls [ViewGroup.MarginLayoutParams.setMargins] with values of [margin].
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+fun ViewGroup.MarginLayoutParams.setMargin(margin: Insets) {
+<span class="fc" id="L67">    setMargins(</span>
+<span class="fc" id="L68">        margin.left,</span>
+<span class="fc" id="L69">        margin.top,</span>
+<span class="fc" id="L70">        margin.right,</span>
+<span class="fc" id="L71">        margin.bottom</span>
+    )
+<span class="fc" id="L73">}</span>
+
+/**
+ * A kotlin function variant of [ViewGroup.MarginLayoutParams]. To use named arguments. Sample:
+ * ```
+ * fun foo(): ViewGroup.MarginLayoutParams {
+ *     return ViewGroup::class.layoutParams(height = 5, width = 6, margin(right = 7, left = 8))
+ * }
+ * ```
+ * @return An instance of [ViewGroup.MarginLayoutParams] using its constructor with [setMargin].
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+fun KClass&lt;ViewGroup&gt;.layoutParams(width: Int, height: Int, margin: Insets): ViewGroup.MarginLayoutParams {
+<span class="fc" id="L87">    val result = ViewGroup.MarginLayoutParams(width, height)</span>
+<span class="fc" id="L88">    result.setMargin(margin)</span>
+<span class="fc" id="L89">    return result</span>
+}
+
+/**
+ * @return An instance of [Insets] by [ViewGroup.MarginLayoutParams.leftMargin], [ViewGroup.MarginLayoutParams.topMargin], [ViewGroup.MarginLayoutParams.rightMargin] and [ViewGroup.MarginLayoutParams.bottomMargin] values.
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+fun ViewGroup.MarginLayoutParams.getMargin(): Insets {
+<span class="fc" id="L98">    return insets(</span>
+<span class="fc" id="L99">        left = leftMargin,</span>
+<span class="fc" id="L100">        top = topMargin,</span>
+<span class="fc" id="L101">        right = rightMargin,</span>
+<span class="fc" id="L102">        bottom = bottomMargin</span>
+    )
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
