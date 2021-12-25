@@ -3,20 +3,17 @@
 echo "merge pull request..."
 
 if test $# -ne 2; then
- echo "Script needs for 2 argument but actual $#"
- exit 11
+ echo "Script needs for 2 argument but actual $#";exit 11
 fi
 
 TITLE=$1
 if test -z "$TITLE"; then
- echo "Title is empty!"
- exit 12
+ echo "Title is empty!"; exit 12
 fi
 
-MESSAGE=$1
+MESSAGE=$2
 if test -z "$MESSAGE"; then
- echo "Message is empty!"
- exit 13
+ echo "Message is empty!"; exit 13
 fi
 
 /bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
