@@ -33,6 +33,10 @@ case "$REPORT_TYPE" in
   cp -r ${ASSEMBLY_PATH}/diagnostics/report/* $REPOSITORY/$RELATIVE_PATH || exit 101 # todo
   COMMIT_MESSAGE="${COMMIT_MESSAGE}. Documentation issues."
  ;;
+ "UNIT_TEST")
+  cp -r ${ASSEMBLY_PATH}/diagnostics/report/* $REPOSITORY/$RELATIVE_PATH || exit 101 # todo
+  COMMIT_MESSAGE="${COMMIT_MESSAGE}. Unit test issues."
+ ;;
  *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 102;;
 esac
 
