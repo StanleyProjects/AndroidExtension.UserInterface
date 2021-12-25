@@ -26,7 +26,7 @@ MESSAGE="GitHub build [#$GITHUB_RUN_NUMBER]($REPO_URL/actions/runs/$GITHUB_RUN_I
 The pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER) merged by [$WORKER_NAME]($WORKER_URL)
  - intermediate [$VERSION]($GITHUB_PAGES/documentation/$VERSION)"
 
-/bin/bash $RESOURCES_PATH/bash/workflow/telegram_send_message.sh "$MESSAGE}"
+/bin/bash $RESOURCES_PATH/bash/workflow/telegram_send_message.sh "$MESSAGE"
 
 echo "The pull request #$PR_NUMBER merged."
 
