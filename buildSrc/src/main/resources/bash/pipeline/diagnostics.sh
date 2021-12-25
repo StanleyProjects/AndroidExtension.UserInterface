@@ -65,8 +65,20 @@ fi
 
 gradle lib:test${BUILD_VARIANT}CoverageVerification; CODE=$?
 if test $CODE -ne 0; then
- echo "Test coverage verification failed!"
- exit 202 # todo
+ SRC_PATH=lib/build/reports/jacoco/test${BUILD_VARIANT}CoverageReport/html
+ if test -f "$SRC_PATH/index.html"; then
+  echo "Test coverage verification failed!"
+ else
+  echo "Diagnostics cannot find test coverage report!"
+  exit 202
+ fi
+ TYPE="COVERAGE_VERIFICATION"
+ REPORT_PATH=$DST_PATH/report/$TYPE
+ rm -rf $REPORT_PATH
+ mkdir -p $REPORT_PATH && \
+ cp -r $SRC_PATH/* $REPORT_PATH && \
+ echo "{\"type\":\"$TYPE\"}" > $DST_PATH/summary.json || exit 41
+ exit 0
 fi
 
 echo "Diagnostics should have determined the cause of the failure!"

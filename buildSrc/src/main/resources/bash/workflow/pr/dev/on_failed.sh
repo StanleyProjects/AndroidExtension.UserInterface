@@ -26,15 +26,17 @@ if test -f "$ASSEMBLY_PATH/diagnostics/summary.json"; then
  RELATIVE_PATH="build/$GITHUB_RUN_NUMBER/$GITHUB_RUN_ID/diagnostics/report"
  case "$REPORT_TYPE" in
   "CODE_STYLE")
-   POSTFIX=" - see the code style issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
+   POSTFIX="see the code style issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
   "DOCUMENTATION")
-   POSTFIX=" - see the documentation issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
+   POSTFIX="see the documentation issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
   "UNIT_TEST")
-   POSTFIX=" - see the unit test issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
+   POSTFIX="see the unit test issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
+  "COVERAGE_VERIFICATION")
+   POSTFIX="see the coverage verification issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
   *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 103;;
  esac
- COMMENT_BODY="${COMMENT_BODY}:"$'\n'"$POSTFIX"
- PR_RESULT="${PR_RESULT}:"$'\n'"$POSTFIX"
+ COMMENT_BODY="${COMMENT_BODY}:"$'\n'"- $POSTFIX"
+ PR_RESULT="${PR_RESULT}:"$'\n'" - $POSTFIX"
 else
  COMMENT_BODY="${COMMENT_BODY}."
  PR_RESULT="${PR_RESULT}."
