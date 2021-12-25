@@ -103,7 +103,17 @@ task("verifyReadme") {
                 color = "2962ff"
             )
         )
-        setOf(versionBadge).forEach {
+        val documentationBadge = MarkdownUtil.url(
+            text = MarkdownUtil.image(
+                text = "documentation",
+                url = BadgeUtil.url(
+                    label = "documentation",
+                    labelColor = "2962ff"
+                )
+            ),
+            value = "https://${Repository.owner}.github.io/${Repository.name}/documentation/${Version.name}"
+        )
+        setOf(versionBadge, documentationBadge).forEach {
             check(lines.contains(it)) { "File by path ${file.absolutePath} must contains \"$it\" line!" }
         }
     }
@@ -142,6 +152,6 @@ task<JavaExec>("verifyCodeStyle") {
         "lib/build.gradle.kts",
         "sample/src/main/kotlin/**/*.kt",
         "sample/build.gradle.kts",
-        "--reporter=html,output=${File(buildDir, "reports/analysis/style/html/report.html")}"
+        "--reporter=html,output=${File(buildDir, "reports/analysis/style/html/index.html")}"
     )
 }

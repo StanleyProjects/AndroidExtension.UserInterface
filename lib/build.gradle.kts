@@ -162,8 +162,7 @@ task<org.jetbrains.dokka.gradle.DokkaTask>("assembleDocumentation") {
             sourceLink {
                 val path = "src/main/kotlin"
                 localDirectory.set(file(path))
-                val owner = "StanleyProjects"
-                remoteUrl.set(URL("https://github.com/$owner/${Maven.artifactId}/tree/dev/lib/$path"))
+                remoteUrl.set(URL("https://github.com/${Repository.owner}/${Repository.name}/tree/dev/lib/$path"))
             }
         }
     }
@@ -174,7 +173,10 @@ task<io.gitlab.arturbosch.detekt.Detekt>("verifyDocumentation") {
     setSource(files("src/main/kotlin"))
     config.setFrom(File(rootProject.rootDir, "buildSrc/src/main/resources/detekt/config/documentation.yml"))
     reports {
-        html.required.set(true)
+        html {
+            required.set(true)
+            outputLocation.set(File(buildDir, "reports/documentation/html/index.html"))
+        }
         xml.required.set(false)
         txt.required.set(false)
         sarif.required.set(false)

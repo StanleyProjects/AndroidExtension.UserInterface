@@ -2,15 +2,8 @@
 
 echo "assemble vcs start..."
 
-if test -z "$GITHUB_PAT"; then
- echo "GitHub personal access token is empty!"
- exit 11
-fi
-
-if test -z "$GIT_COMMIT_SHA"; then
- echo "Git commit sha is empty!"
- exit 12
-fi
+/bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
+ ASSEMBLY_PATH GITHUB_PAT GIT_COMMIT_SHA || exit 1 # todo
 
 CODE=0
 

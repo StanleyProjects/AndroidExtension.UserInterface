@@ -16,4 +16,12 @@ object BadgeUtil {
             "$key=$value"
         }.joinToString(separator = "&")
     }
+
+    fun url(
+        label: String,
+        labelColor: String,
+        style: String = "flat"
+    ): String {
+        return "https://img.shields.io/badge/$label-$labelColor.svg?style=$style"
+    }
 }

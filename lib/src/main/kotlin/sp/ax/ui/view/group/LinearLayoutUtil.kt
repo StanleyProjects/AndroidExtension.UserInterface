@@ -40,8 +40,7 @@ internal fun LinearLayout.configure(
     isLongClickable: Boolean,
     keepScreenOn: Boolean,
     orientation: Orientation,
-    gravity: Gravity,
-    block: LinearLayout.() -> Unit = {}
+    gravity: Gravity
 ) {
     configure(
         layoutParams = layoutParams,
@@ -57,7 +56,6 @@ internal fun LinearLayout.configure(
     )
     setOrientation(orientation)
     this.gravity = gravity.toInt()
-    block()
 }
 
 internal object LinearLayoutDefault {

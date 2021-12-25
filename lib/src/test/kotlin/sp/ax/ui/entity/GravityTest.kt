@@ -3,23 +3,26 @@ package sp.ax.ui.entity
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import sp.ax.ui.entity.Gravity.Companion.toInt
-import sp.ax.ui.exhaustive
 import android.view.Gravity as AndroidGravity
 
 class GravityTest {
     @Test
     fun toIntTest() {
-        Gravity.values().forEach {
-            when (it) {
-                Gravity.LEFT -> assertEquals(AndroidGravity.LEFT, it.toInt())
-                Gravity.TOP -> assertEquals(AndroidGravity.TOP, it.toInt())
-                Gravity.RIGHT -> assertEquals(AndroidGravity.RIGHT, it.toInt())
-                Gravity.BOTTOM -> assertEquals(AndroidGravity.BOTTOM, it.toInt())
-                Gravity.TOP_LEFT -> assertEquals(AndroidGravity.TOP or AndroidGravity.LEFT, it.toInt())
-                Gravity.CENTER -> assertEquals(AndroidGravity.CENTER, it.toInt())
-                Gravity.CENTER_VERTICAL -> assertEquals(AndroidGravity.CENTER_VERTICAL, it.toInt())
-                Gravity.CENTER_HORIZONTAL -> assertEquals(AndroidGravity.CENTER_HORIZONTAL, it.toInt())
-            }.exhaustive()
+        Gravity.values().map {
+            it to when (it) {
+                Gravity.TOP -> AndroidGravity.TOP or AndroidGravity.CENTER_HORIZONTAL
+                Gravity.TOP_LEFT -> AndroidGravity.TOP or AndroidGravity.LEFT
+                Gravity.TOP_RIGHT -> AndroidGravity.TOP or AndroidGravity.RIGHT
+                Gravity.BOTTOM -> AndroidGravity.BOTTOM or AndroidGravity.CENTER_HORIZONTAL
+                Gravity.BOTTOM_LEFT -> AndroidGravity.BOTTOM or AndroidGravity.LEFT
+                Gravity.BOTTOM_RIGHT -> AndroidGravity.BOTTOM or AndroidGravity.RIGHT
+                Gravity.LEFT -> AndroidGravity.LEFT or AndroidGravity.CENTER_VERTICAL
+                Gravity.RIGHT -> AndroidGravity.RIGHT or AndroidGravity.CENTER_VERTICAL
+                Gravity.CENTER -> AndroidGravity.CENTER
+            }
+        }.forEach { (gravity, expected) ->
+            val actual = gravity.toInt()
+            assertEquals("An expected android integer for Gravity.${gravity.name} is $expected, but actual is $actual!", expected, actual)
         }
     }
 }
