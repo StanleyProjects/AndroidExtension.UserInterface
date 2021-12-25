@@ -8,9 +8,59 @@ import android.view.Gravity as AndroidGravity
  * @since 0.0.7
  */
 enum class Gravity {
-    TOP, TOP_LEFT, TOP_RIGHT,
-    BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT,
-    LEFT, RIGHT,
+    /**```
+     * ┌--*--┐
+     * |     |
+     * └-----┘
+     * ```*/
+    TOP,
+    /**```
+     * *-----┐
+     * |     |
+     * └-----┘
+     * ```*/
+    TOP_LEFT,
+    /**```
+     * ┌-----*
+     * |     |
+     * └-----┘
+     * ```*/
+    TOP_RIGHT,
+    /**```
+     * ┌-----┐
+     * |     |
+     * └--*--┘
+     * ```*/
+    BOTTOM,
+    /**```
+     * ┌-----┐
+     * |     |
+     * *-----┘
+     * ```*/
+    BOTTOM_LEFT,
+    /**```
+     * ┌-----┐
+     * |     |
+     * └-----*
+     * ```*/
+    BOTTOM_RIGHT,
+    /**```
+     * ┌-----┐
+     * *     |
+     * └-----┘
+     * ```*/
+    LEFT,
+    /**```
+     * ┌-----┐
+     * |     *
+     * └-----┘
+     * ```*/
+    RIGHT,
+    /**```
+     * ┌-----┐
+     * |  *  |
+     * └-----┘
+     * ```*/
     CENTER;
 
     companion object {
