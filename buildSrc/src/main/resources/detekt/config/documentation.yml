@@ -7,6 +7,7 @@ comments:
     active: true
   EndOfSentenceFormat:
     active: true
+    endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)|(```\n)'
   OutdatedDocumentation:
     active: true
     matchTypeParameters: true
