@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>detekt report</title>
+    <style>
+h2 {
+  background-color: #666666;
+  padding: 0.2em;
+  color: #ffffff;
+}
+h3 {
+  background-color:#f8dfdf;
+  padding:0.5em;
+}
+.rule {
+  background-color: #dddddd;
+  padding: 0.3em;
+  font-weight: bold;
+}
+.description {
+  color:#000000;
+  padding:0.3em;
+}
+.location {
+  color: #690505;
+  font-family: monospace;
+  display: block;
+}
+.message {
+  font-size: 0.8em;
+  color: #444444;
+  display: block;
+  margin-top: 1pt;
+}
+.rule-container {
+  border: 0.1em dashed #dddddd;
+  padding: 0.1em;
+  line-height: 1.5em;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+pre {
+  border: 1px solid #e0e0e0;
+  overflow: scroll;
+}
+.lineno {
+  color: #999999;
+  background-color: #f0f0f0;
+}
+.error {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AwCFR4T/3uLMgAAADxJREFUCNdNyLERQEAABMCjL4lQwIzcjErpguAL+C9AvgKJDbeD/PRpLdm35Hm+MU+cB+tCKaJW4L4YBy+CAiLJrFs9mgAAAABJRU5ErkJggg==) bottom repeat-x;
+}
+.exception {
+  color: #b60808;
+  display: inline-block;
+  background-color: #ecdada;
+  border-color: #b60808;
+  border-radius: 10px;
+  border: solid 2px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 16px;
+}
+</style>
+</head>
+<body>
+
+<h1>detekt report</h1>
+
+<h2>Metrics</h2>
+
+<div>
+  <ul></ul>
+</div>
+
+
+<h2>Complexity Report</h2>
+
+<div>
+  <ul></ul>
+</div>
+
+
+<h2>Findings</h2>
+<div>Total: 9
+  <h3>comments: 9</h3>
+  <details id="EndOfSentenceFormat" open="open">
+    <summary class="rule-container"><span class="rule">EndOfSentenceFormat: 9 </span><span class="description">The first sentence in a KDoc comment should end with correct punctuation.</span></summary>
+    <ul>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:11:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">   8 </span> * @since 0.0.7
+<span class="lineno">   9 </span> */
+<span class="lineno">  10 </span>enum class Gravity {
+<span class="lineno">  11 </span>    <span class="error">/**```</span>
+<span class="lineno">  12 </span><span class="error">     * ┌--*--┐</span>
+<span class="lineno">  13 </span><span class="error">     * |     |</span>
+<span class="lineno">  14 </span><span class="error">     * └-----┘</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:17:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  14 </span>     * └-----┘
+<span class="lineno">  15 </span>     * ```*/
+<span class="lineno">  16 </span>    TOP,
+<span class="lineno">  17 </span>    <span class="error">/**```</span>
+<span class="lineno">  18 </span><span class="error">     * *-----┐</span>
+<span class="lineno">  19 </span><span class="error">     * |     |</span>
+<span class="lineno">  20 </span><span class="error">     * └-----┘</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:23:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  20 </span>     * └-----┘
+<span class="lineno">  21 </span>     * ```*/
+<span class="lineno">  22 </span>    TOP_LEFT,
+<span class="lineno">  23 </span>    <span class="error">/**```</span>
+<span class="lineno">  24 </span><span class="error">     * ┌-----*</span>
+<span class="lineno">  25 </span><span class="error">     * |     |</span>
+<span class="lineno">  26 </span><span class="error">     * └-----┘</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:29:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  26 </span>     * └-----┘
+<span class="lineno">  27 </span>     * ```*/
+<span class="lineno">  28 </span>    TOP_RIGHT,
+<span class="lineno">  29 </span>    <span class="error">/**```</span>
+<span class="lineno">  30 </span><span class="error">     * ┌-----┐</span>
+<span class="lineno">  31 </span><span class="error">     * |     |</span>
+<span class="lineno">  32 </span><span class="error">     * └--*--┘</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:35:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  32 </span>     * └--*--┘
+<span class="lineno">  33 </span>     * ```*/
+<span class="lineno">  34 </span>    BOTTOM,
+<span class="lineno">  35 </span>    <span class="error">/**```</span>
+<span class="lineno">  36 </span><span class="error">     * ┌-----┐</span>
+<span class="lineno">  37 </span><span class="error">     * |     |</span>
+<span class="lineno">  38 </span><span class="error">     * *-----┘</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:41:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  38 </span>     * *-----┘
+<span class="lineno">  39 </span>     * ```*/
+<span class="lineno">  40 </span>    BOTTOM_LEFT,
+<span class="lineno">  41 </span>    <span class="error">/**```</span>
+<span class="lineno">  42 </span><span class="error">     * ┌-----┐</span>
+<span class="lineno">  43 </span><span class="error">     * |     |</span>
+<span class="lineno">  44 </span><span class="error">     * └-----*</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:47:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  44 </span>     * └-----*
+<span class="lineno">  45 </span>     * ```*/
+<span class="lineno">  46 </span>    BOTTOM_RIGHT,
+<span class="lineno">  47 </span>    <span class="error">/**```</span>
+<span class="lineno">  48 </span><span class="error">     * ┌-----┐</span>
+<span class="lineno">  49 </span><span class="error">     * *     |</span>
+<span class="lineno">  50 </span><span class="error">     * └-----┘</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:53:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  50 </span>     * └-----┘
+<span class="lineno">  51 </span>     * ```*/
+<span class="lineno">  52 </span>    LEFT,
+<span class="lineno">  53 </span>    <span class="error">/**```</span>
+<span class="lineno">  54 </span><span class="error">     * ┌-----┐</span>
+<span class="lineno">  55 </span><span class="error">     * |     *</span>
+<span class="lineno">  56 </span><span class="error">     * └-----┘</span>
+</code></pre>
+      </li>
+      <li><span class="location">/repository/lib/src/main/kotlin/sp/ax/ui/entity/Gravity.kt:59:5</span><span class="message">The first sentence of this KDoc does not end with the correct punctuation.</span>
+        <pre><code><span class="lineno">  56 </span>     * └-----┘
+<span class="lineno">  57 </span>     * ```*/
+<span class="lineno">  58 </span>    RIGHT,
+<span class="lineno">  59 </span>    <span class="error">/**```</span>
+<span class="lineno">  60 </span><span class="error">     * ┌-----┐</span>
+<span class="lineno">  61 </span><span class="error">     * |  *  |</span>
+<span class="lineno">  62 </span><span class="error">     * └-----┘</span>
+</code></pre>
+      </li>
+    </ul>
+  </details>
+</div>
+
+
+generated with <a href="https://detekt.github.io/">detekt version 1.19.0-RC2</a> on 2021-12-25 21:41:54 UTC.
+
+</body>
+</html>
