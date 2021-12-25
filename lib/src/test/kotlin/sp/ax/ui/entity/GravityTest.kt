@@ -17,8 +17,9 @@ class GravityTest {
                 Gravity.BOTTOM -> assertEquals(AndroidGravity.BOTTOM, it.toInt())
                 Gravity.TOP_LEFT -> assertEquals(AndroidGravity.TOP or AndroidGravity.LEFT, it.toInt())
                 Gravity.CENTER -> assertEquals(AndroidGravity.CENTER, it.toInt())
-                Gravity.CENTER_VERTICAL -> assertEquals(AndroidGravity.CENTER_VERTICAL, it.toInt())
-                Gravity.CENTER_HORIZONTAL -> assertEquals(AndroidGravity.CENTER_HORIZONTAL, it.toInt())
+                Gravity.TOP_RIGHT -> TODO()
+                Gravity.BOTTOM_LEFT -> TODO()
+                Gravity.BOTTOM_RIGHT -> TODO()
             }.exhaustive()
         }
     }
