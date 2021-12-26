@@ -2,7 +2,9 @@ package sp.ax.ui.widget
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.text.TextWatcher
 import android.view.ViewGroup
 import android.widget.TextView
 import sp.ax.ui.entity.Gravity
@@ -10,6 +12,8 @@ import sp.ax.ui.entity.Gravity.Companion.toInt
 import sp.ax.ui.entity.Insets
 import sp.ax.ui.entity.TypeDimension
 import sp.ax.ui.entity.TypeDimension.Companion.toInt
+import sp.ax.ui.entity.TypefaceStyle
+import sp.ax.ui.entity.TypefaceStyle.Companion.toInt
 import sp.ax.ui.entity.Visibility
 import sp.ax.ui.view.ViewDefault
 import sp.ax.ui.view.configure
@@ -29,7 +33,11 @@ internal fun TextView.configure(
     text: CharSequence,
     textSizeUnit: TypeDimension,
     textSize: Float,
-    textColor: Int
+    textColor: Int,
+    typeface: Typeface?,
+    typefaceStyle: TypefaceStyle,
+    isAllCaps: Boolean,
+    textWatchers: Set<TextWatcher>
 ) {
     configure(
         layoutParams = layoutParams,
@@ -47,6 +55,9 @@ internal fun TextView.configure(
     this.text = text
     setTextSize(textSizeUnit.toInt(), textSize)
     setTextColor(textColor)
+    setTypeface(typeface, typefaceStyle.toInt())
+    this.isAllCaps = isAllCaps
+    textWatchers.forEach(::addTextChangedListener)
 }
 
 internal object TextViewDefault {
@@ -54,6 +65,10 @@ internal object TextViewDefault {
     val textSizeUnit: TypeDimension = TypeDimension.SCALED_PIXEL
     const val textSize: Float = 12f
     val textColor: Int = Color.parseColor("#000000")
+    val typeface: Typeface? = null
+    val typefaceStyle: TypefaceStyle = TypefaceStyle.NORMAL
+    const val isAllCaps: Boolean = false
+    val textWatchers: Set<TextWatcher> = emptySet()
 }
 
 /**
@@ -89,6 +104,10 @@ fun textView(
     textSizeUnit: TypeDimension = TextViewDefault.textSizeUnit,
     textSize: Float = TextViewDefault.textSize,
     textColor: Int = TextViewDefault.textColor,
+    typeface: Typeface? = TextViewDefault.typeface,
+    typefaceStyle: TypefaceStyle = TextViewDefault.typefaceStyle,
+    isAllCaps: Boolean = TextViewDefault.isAllCaps,
+    textWatchers: Set<TextWatcher> = TextViewDefault.textWatchers,
     block: TextView.() -> Unit = {}
 ): TextView {
     val result = TextView(context)
@@ -107,7 +126,11 @@ fun textView(
         text = text,
         textSizeUnit = textSizeUnit,
         textSize = textSize,
-        textColor = textColor
+        textColor = textColor,
+        typeface = typeface,
+        typefaceStyle = typefaceStyle,
+        isAllCaps = isAllCaps,
+        textWatchers = textWatchers
     )
     result.block()
     return result
