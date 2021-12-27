@@ -17,7 +17,7 @@ jobs:
       - run: |
           echo "HOME=$(echo ~)" >> $GITHUB_ENV
           echo "GIT_SOURCE_BRANCH=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
-      - run: if test "$GIT_SOURCE_BRANCH" != dev; then echo "Source branch is not \"dev\"!"; exit 1; fi
+      - run: if test "$GIT_SOURCE_BRANCH" != dev; then echo "Source branch is \"$GIT_SOURCE_BRANCH\", but it is not \"dev\"!"; exit 1; fi
       - run: git clone --depth=1 --branch=$GIT_SOURCE_BRANCH https://github.com/$GITHUB_OWNER/$GITHUB_REPO.git $HOME/repository
       - working-directory: ${{env.HOME}}/repository
         run: exit 1
