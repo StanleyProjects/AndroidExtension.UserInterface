@@ -1,0 +1,23 @@
+name: Pull request to snapshot
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - snapshot
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_OWNER: StanleyProjects
+      GITHUB_REPO: AndroidExtension.UserInterface
+      RESOURCES_PATH: buildSrc/src/main/resources
+    steps:
+      - run: |
+          echo "HOME=$(echo ~)" >> $GITHUB_ENV
+          echo "GIT_SOURCE_BRANCH=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+      - run: if test "$GIT_SOURCE_BRANCH" != dev; then echo "Source branch is not \"dev\"!"; exit 1; fi
+      - run: git clone --depth=1 --branch=$GIT_SOURCE_BRANCH https://github.com/$GITHUB_OWNER/$GITHUB_REPO.git $HOME/repository
+      - working-directory: ${{env.HOME}}/repository
+        run: exit 1
