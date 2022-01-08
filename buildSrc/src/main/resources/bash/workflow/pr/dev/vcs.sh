@@ -24,7 +24,7 @@ if test $CODE -ne 0; then
  exit 31
 fi
 
-git commit -m "Merge $GIT_SOURCE_BRANCH -> $PR_SOURCE_BRANCH by $WORKER_NAME." && \
+git commit -m "Merge $GIT_COMMIT_SHA -> $PR_SOURCE_BRANCH by $WORKER_NAME." && \
  git tag "$TAG" && \
  git push && git push --tag; CODE=$?
 if test $CODE -ne 0; then
