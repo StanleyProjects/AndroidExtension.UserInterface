@@ -29,7 +29,11 @@ for it in WORKER_NAME WORKER_EMAIL; do
 git config user.name "$WORKER_NAME" && \
  git config user.email "$WORKER_EMAIL" && \
  git fetch origin $GIT_COMMIT_SHA && \
- git merge --no-ff --no-commit $GIT_COMMIT_SHA
+ git merge --no-ff --no-commit $GIT_COMMIT_SHA; CODE=$?
+if test $CODE -ne 0; then
+ echo "Git merge failed!"
+ exit 101
+fi
 
 CODE=$(curl -w %{http_code} -o "$DST_PATH/commit.json" \
  https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/commits/$GIT_COMMIT_SHA)
