@@ -17,8 +17,13 @@ mkdir $REPOSITORY || exit 1 # todo
 git clone --depth=1 --branch=gh-pages \
  https://$GITHUB_PAT@github.com/$GITHUB_OWNER/$GITHUB_REPO.git $REPOSITORY || exit 1 # todo
 
-mkdir -p "$REPOSITORY/documentation/$VERSION" || exit 1 # todo
-cp -r ${ASSEMBLY_PATH}/documentation/* "$REPOSITORY/documentation/$VERSION"
+RELATIVE_PATH="$REPOSITORY/documentation/$VERSION"
+if [ -d "$RELATIVE_PATH" ]; then
+ echo "Directory $RELATIVE_PATH already exists!"
+ exit 101
+fi
+mkdir -p "$RELATIVE_PATH" || exit 1 # todo
+cp -r ${ASSEMBLY_PATH}/documentation/* "$RELATIVE_PATH"
 
 CODE=0
 COMMIT_MESSAGE="GitHub build #$GITHUB_RUN_NUMBER | $WORKER_NAME added documentation for version $VERSION."
