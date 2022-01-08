@@ -23,9 +23,7 @@ if test $CODE -ne 0; then
  echo "Maven deploy $TAG failed!"; exit 21
 fi
 
-git config user.name "$WORKER_NAME" && \
- git config user.email "$WORKER_EMAIL" && \
- git commit -m "Merge $GIT_SOURCE_BRANCH -> $PR_SOURCE_BRANCH by $WORKER_NAME." && \
+git commit -m "Merge $GIT_SOURCE_BRANCH -> $PR_SOURCE_BRANCH by $WORKER_NAME." && \
  git push; CODE=$?
 if test $CODE -ne 0; then
  echo "Git push failed!"

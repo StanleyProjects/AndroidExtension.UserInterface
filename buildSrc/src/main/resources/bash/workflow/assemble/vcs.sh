@@ -21,6 +21,16 @@ if test $CODE -ne 200; then
 fi
 echo "The worker $(cat $DST_PATH/worker.json | jq -r .html_url) is ready."
 
+WORKER_NAME="$(cat $ASSEMBLY_PATH/vcs/worker.json | jq -r .name)"
+WORKER_EMAIL="$(cat $ASSEMBLY_PATH/vcs/worker.json | jq -r .email)"
+for it in WORKER_NAME WORKER_EMAIL; do
+ if test -z "${!it}"; then echo "$it is empty!"; exit 11; fi; done
+
+git config user.name "$WORKER_NAME" && \
+ git config user.email "$WORKER_EMAIL" && \
+ git fetch origin $GIT_COMMIT_SHA && \
+ git merge --no-ff --no-commit $GIT_COMMIT_SHA
+
 CODE=$(curl -w %{http_code} -o "$DST_PATH/commit.json" \
  https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/commits/$GIT_COMMIT_SHA)
 if test $CODE -ne 200; then
