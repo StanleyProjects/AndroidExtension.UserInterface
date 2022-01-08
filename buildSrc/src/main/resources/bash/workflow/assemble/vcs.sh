@@ -3,7 +3,7 @@
 echo "assemble vcs start..."
 
 /bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
- ASSEMBLY_PATH GITHUB_PAT GIT_COMMIT_SHA || exit 1 # todo
+ ASSEMBLY_PATH GITHUB_PAT GIT_COMMIT_SHA PR_SOURCE_BRANCH || exit 1 # todo
 
 CODE=0
 
@@ -28,7 +28,7 @@ for it in WORKER_NAME WORKER_EMAIL; do
 
 git config user.name "$WORKER_NAME" && \
  git config user.email "$WORKER_EMAIL" && \
- git fetch origin $GIT_COMMIT_SHA && \
+ git checkout $PR_SOURCE_BRANCH && \
  git merge --no-ff --no-commit $GIT_COMMIT_SHA; CODE=$?
 if test $CODE -ne 0; then
  echo "Git merge failed!"
