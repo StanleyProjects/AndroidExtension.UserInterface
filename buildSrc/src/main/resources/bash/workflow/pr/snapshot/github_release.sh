@@ -4,13 +4,14 @@ echo "GitHub release snapshot..."
 
 /bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
  ASSEMBLY_PATH MAVEN_GROUP_ID MAVEN_ARTIFACT_ID \
- GITHUB_OWNER GITHUB_REPO GITHUB_PAT GIT_COMMIT_SHA GITHUB_RUN_NUMBER GITHUB_RUN_ID || exit 1 # todo
+ GITHUB_OWNER GITHUB_REPO GITHUB_PAT GITHUB_RUN_NUMBER GITHUB_RUN_ID || exit 1 # todo
 
 VERSION="$(cat ${ASSEMBLY_PATH}/common.json | jq -r .version)"
 WORKER_NAME="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .name)"
 WORKER_URL="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .html_url)"
+RESULT_COMMIT_SHA="$(git rev-parse head)"
 
-for it in VERSION WORKER_NAME WORKER_URL; do
+for it in VERSION WORKER_NAME WORKER_URL RESULT_COMMIT_SHA; do
  if test -z "${!it}"; then echo "$it is empty!"; exit 11; fi; done
 
 TAG="$VERSION-SNAPSHOT"
@@ -22,7 +23,7 @@ BODY="GitHub build [#$GITHUB_RUN_NUMBER]($RUN_URL) | by [$WORKER_NAME]($WORKER_U
  - maven [snapshot](${MAVEN_BASE_URL}/${MAVEN_ARTIFACT_ID}/${VERSION}-SNAPSHOT)"
 REQUEST_BODY="{\
 \"tag_name\":\"$TAG\",
-\"target_commitish\":\"$GIT_COMMIT_SHA\",
+\"target_commitish\":\"$RESULT_COMMIT_SHA\",
 \"name\":\"$TAG\",
 \"body\":\"${BODY//$'\n'/\\n}\",
 \"draft\":false,
