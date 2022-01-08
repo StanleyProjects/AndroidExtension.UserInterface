@@ -5,10 +5,10 @@ echo "dev vcs start..."
 CODE=0
 
 VERSION="$(cat ${ASSEMBLY_PATH}/common.json | jq -r .version)"
-if test -z "$VERSION"; then
- echo "Version is empty!"
- exit 11
-fi
+WORKER_NAME="$(cat $ASSEMBLY_PATH/vcs/worker.json | jq -r .name)"
+
+for it in WORKER_NAME VERSION; do
+ if test -z "${!it}"; then echo "$it is empty!"; exit 11; fi; done
 
 TAG="intermediate/$VERSION"
 
@@ -24,9 +24,11 @@ if test $CODE -ne 0; then
  exit 31
 fi
 
-/bin/bash $RESOURCES_PATH/bash/workflow/vcs/tag.sh "$TAG"; CODE=$?
+git commit -m "Merge $GIT_COMMIT_SHA -> $PR_SOURCE_BRANCH by $WORKER_NAME." && \
+ git tag "$TAG" && \
+ git push && git push --tag; CODE=$?
 if test $CODE -ne 0; then
- echo "Tag $TAG failed!"
+ echo "Git push failed!"
  exit 41
 fi
 
