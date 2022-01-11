@@ -1,0 +1,1 @@
+sourceset_dependencies='{":lib:assembleDocumentation/androidTestRelease":[],":lib:assembleDocumentation/androidTestSnapshot":[],":lib:assembleDocumentation/debug":[],":lib:assembleDocumentation/main":[],":lib:assembleDocumentation/release":[],":lib:assembleDocumentation/snapshot":[]}'

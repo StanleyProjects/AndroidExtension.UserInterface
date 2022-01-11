@@ -1,0 +1,74 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:sp.ax.ui.entity////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/index.html
+$dokka.location:sp.ax.ui.entity//insets/#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/insets.html
+$dokka.location:sp.ax.ui.entity/Gravity.BOTTOM///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-b-o-t-t-o-m/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.BOTTOM_LEFT///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-b-o-t-t-o-m_-l-e-f-t/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.BOTTOM_RIGHT///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-b-o-t-t-o-m_-r-i-g-h-t/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.CENTER///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-c-e-n-t-e-r/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.Companion///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-companion/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.Companion/toInt/sp.ax.ui.entity.Gravity#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-companion/to-int.html
+$dokka.location:sp.ax.ui.entity/Gravity.LEFT///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-l-e-f-t/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.RIGHT///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-r-i-g-h-t/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.TOP///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-t-o-p/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.TOP_LEFT///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-t-o-p_-l-e-f-t/index.html
+$dokka.location:sp.ax.ui.entity/Gravity.TOP_RIGHT///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/-t-o-p_-r-i-g-h-t/index.html
+$dokka.location:sp.ax.ui.entity/Gravity///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-gravity/index.html
+$dokka.location:sp.ax.ui.entity/Insets///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-insets/index.html
+$dokka.location:sp.ax.ui.entity/Insets/bottom/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-insets/bottom.html
+$dokka.location:sp.ax.ui.entity/Insets/left/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-insets/left.html
+$dokka.location:sp.ax.ui.entity/Insets/right/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-insets/right.html
+$dokka.location:sp.ax.ui.entity/Insets/top/#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-insets/top.html
+$dokka.location:sp.ax.ui.entity/Orientation.HORIZONTAL///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-orientation/-h-o-r-i-z-o-n-t-a-l/index.html
+$dokka.location:sp.ax.ui.entity/Orientation.VERTICAL///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-orientation/-v-e-r-t-i-c-a-l/index.html
+$dokka.location:sp.ax.ui.entity/Orientation///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-orientation/index.html
+$dokka.location:sp.ax.ui.entity/TypeDimension.Companion///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-type-dimension/-companion/index.html
+$dokka.location:sp.ax.ui.entity/TypeDimension.Companion/toInt/sp.ax.ui.entity.TypeDimension#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-type-dimension/-companion/to-int.html
+$dokka.location:sp.ax.ui.entity/TypeDimension.DEVICE_INDEPENDENT///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-type-dimension/-d-e-v-i-c-e_-i-n-d-e-p-e-n-d-e-n-t/index.html
+$dokka.location:sp.ax.ui.entity/TypeDimension.PIXEL///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-type-dimension/-p-i-x-e-l/index.html
+$dokka.location:sp.ax.ui.entity/TypeDimension.SCALED_PIXEL///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-type-dimension/-s-c-a-l-e-d_-p-i-x-e-l/index.html
+$dokka.location:sp.ax.ui.entity/TypeDimension///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-type-dimension/index.html
+$dokka.location:sp.ax.ui.entity/TypefaceStyle.BOLD///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-typeface-style/-b-o-l-d/index.html
+$dokka.location:sp.ax.ui.entity/TypefaceStyle.BOLD_ITALIC///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-typeface-style/-b-o-l-d_-i-t-a-l-i-c/index.html
+$dokka.location:sp.ax.ui.entity/TypefaceStyle.Companion///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-typeface-style/-companion/index.html
+$dokka.location:sp.ax.ui.entity/TypefaceStyle.Companion/toInt/sp.ax.ui.entity.TypefaceStyle#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-typeface-style/-companion/to-int.html
+$dokka.location:sp.ax.ui.entity/TypefaceStyle.ITALIC///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-typeface-style/-i-t-a-l-i-c/index.html
+$dokka.location:sp.ax.ui.entity/TypefaceStyle.NORMAL///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-typeface-style/-n-o-r-m-a-l/index.html
+$dokka.location:sp.ax.ui.entity/TypefaceStyle///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-typeface-style/index.html
+$dokka.location:sp.ax.ui.entity/Visibility.Companion///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-companion/index.html
+$dokka.location:sp.ax.ui.entity/Visibility.Companion/fromInt/#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-companion/from-int.html
+$dokka.location:sp.ax.ui.entity/Visibility.Companion/toInt/sp.ax.ui.entity.Visibility#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-companion/to-int.html
+$dokka.location:sp.ax.ui.entity/Visibility.GONE///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-g-o-n-e/index.html
+$dokka.location:sp.ax.ui.entity/Visibility.INVISIBLE///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-i-n-v-i-s-i-b-l-e/index.html
+$dokka.location:sp.ax.ui.entity/Visibility.VISIBLE///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/-v-i-s-i-b-l-e/index.html
+$dokka.location:sp.ax.ui.entity/Visibility///PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.entity/-visibility/index.html
+$dokka.location:sp.ax.ui.text////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.text/index.html
+$dokka.location:sp.ax.ui.text//onTextChanged/#kotlin.Function1[kotlin.CharSequence,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.text/on-text-changed.html
+$dokka.location:sp.ax.ui.view.group////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/index.html
+$dokka.location:sp.ax.ui.view.group//getMargin/android.view.ViewGroup.MarginLayoutParams#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/get-margin.html
+$dokka.location:sp.ax.ui.view.group//layoutParams/kotlin.reflect.KClass[android.view.ViewGroup]#kotlin.Int#kotlin.Int#sp.ax.ui.entity.Insets/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/layout-params.html
+$dokka.location:sp.ax.ui.view.group//layoutParams/kotlin.reflect.KClass[android.view.ViewGroup]#kotlin.Int#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/layout-params.html
+$dokka.location:sp.ax.ui.view.group//layoutParams/kotlin.reflect.KClass[android.view.ViewGroup]#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/layout-params.html
+$dokka.location:sp.ax.ui.view.group//layoutParams/kotlin.reflect.KClass[android.widget.LinearLayout]#kotlin.Int#kotlin.Int#kotlin.Float#sp.ax.ui.entity.Insets/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/layout-params.html
+$dokka.location:sp.ax.ui.view.group//linearLayout/#android.content.Context#android.view.ViewGroup.LayoutParams#kotlin.Int#android.graphics.drawable.Drawable#sp.ax.ui.entity.Visibility#sp.ax.ui.entity.Insets#kotlin.Function0[kotlin.Unit]#kotlin.Function0[kotlin.Boolean]#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#sp.ax.ui.entity.Orientation#sp.ax.ui.entity.Gravity#kotlin.Function1[android.widget.LinearLayout,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/linear-layout.html
+$dokka.location:sp.ax.ui.view.group//matched/kotlin.reflect.KClass[android.view.ViewGroup.LayoutParams]#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/matched.html
+$dokka.location:sp.ax.ui.view.group//setMargin/android.view.ViewGroup.MarginLayoutParams#sp.ax.ui.entity.Insets/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/set-margin.html
+$dokka.location:sp.ax.ui.view.group//setOrientation/android.widget.LinearLayout#sp.ax.ui.entity.Orientation/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/set-orientation.html
+$dokka.location:sp.ax.ui.view.group//view/android.widget.LinearLayout#android.content.Context#kotlin.Int#kotlin.Int#kotlin.Float#sp.ax.ui.entity.Insets#kotlin.Int#android.graphics.drawable.Drawable#sp.ax.ui.entity.Visibility#sp.ax.ui.entity.Insets#kotlin.Function0[kotlin.Unit]#kotlin.Function0[kotlin.Boolean]#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#kotlin.Function1[android.view.View,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/view.html
+$dokka.location:sp.ax.ui.view.group//wrapped/kotlin.reflect.KClass[android.view.ViewGroup.LayoutParams]#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/wrapped.html
+$dokka.location:sp.ax.ui.view.group//wrapped/kotlin.reflect.KClass[android.widget.LinearLayout.LayoutParams]#kotlin.Float#sp.ax.ui.entity.Insets/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view.group/wrapped.html
+$dokka.location:sp.ax.ui.view////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/index.html
+$dokka.location:sp.ax.ui.view//getPadding/android.view.View#/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/get-padding.html
+$dokka.location:sp.ax.ui.view//setPadding/android.view.View#sp.ax.ui.entity.Insets/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/set-padding.html
+$dokka.location:sp.ax.ui.view//updatePadding/android.view.View#kotlin.Int#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/update-padding.html
+$dokka.location:sp.ax.ui.view//view/#android.content.Context#android.view.ViewGroup.LayoutParams#kotlin.Int#android.graphics.drawable.Drawable#sp.ax.ui.entity.Visibility#sp.ax.ui.entity.Insets#kotlin.Function0[kotlin.Unit]#kotlin.Function0[kotlin.Boolean]#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#kotlin.Function1[android.view.View,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.view/view.html
+$dokka.location:sp.ax.ui.widget////PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.widget/index.html
+$dokka.location:sp.ax.ui.widget//addOnTextChanged/android.widget.TextView#kotlin.Function1[kotlin.CharSequence,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.widget/add-on-text-changed.html
+$dokka.location:sp.ax.ui.widget//editText/#android.content.Context#android.view.ViewGroup.LayoutParams#kotlin.Int#android.graphics.drawable.Drawable#sp.ax.ui.entity.Visibility#sp.ax.ui.entity.Insets#kotlin.Function0[kotlin.Unit]#kotlin.Function0[kotlin.Boolean]#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#sp.ax.ui.entity.Gravity#kotlin.CharSequence#sp.ax.ui.entity.TypeDimension#kotlin.Float#kotlin.Int#android.graphics.Typeface?#sp.ax.ui.entity.TypefaceStyle#kotlin.Boolean#kotlin.collections.Set[android.text.TextWatcher]#kotlin.Function1[android.widget.EditText,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.widget/edit-text.html
+$dokka.location:sp.ax.ui.widget//textView/#android.content.Context#android.view.ViewGroup.LayoutParams#kotlin.Int#android.graphics.drawable.Drawable#sp.ax.ui.entity.Visibility#sp.ax.ui.entity.Insets#kotlin.Function0[kotlin.Unit]#kotlin.Function0[kotlin.Boolean]#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#sp.ax.ui.entity.Gravity#kotlin.CharSequence#sp.ax.ui.entity.TypeDimension#kotlin.Float#kotlin.Int#android.graphics.Typeface?#sp.ax.ui.entity.TypefaceStyle#kotlin.Boolean#kotlin.collections.Set[android.text.TextWatcher]#kotlin.Function1[android.widget.TextView,kotlin.Unit]/PointingToDeclaration/-android-extension.-user-interface/sp.ax.ui.widget/text-view.html
+sp.ax.ui.entity
+sp.ax.ui.text
+sp.ax.ui.view
+sp.ax.ui.view.group
+sp.ax.ui.widget
+
