@@ -41,6 +41,10 @@ case "$REPORT_TYPE" in
   cp -r ${ASSEMBLY_PATH}/diagnostics/report/* $REPOSITORY/$RELATIVE_PATH || exit 101 # todo
   COMMIT_MESSAGE="${COMMIT_MESSAGE}. Coverage verification issues."
  ;;
+ "README")
+  cp -r ${ASSEMBLY_PATH}/diagnostics/report/* $REPOSITORY/$RELATIVE_PATH || exit 101 # todo
+  COMMIT_MESSAGE="${COMMIT_MESSAGE}. Readme issues."
+ ;;
  *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 102;;
 esac
 
