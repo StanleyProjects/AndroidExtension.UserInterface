@@ -9,8 +9,19 @@ rm -rf $DST_PATH
 mkdir -p $DST_PATH || exit 21
 
 #gradle verifyService; CODE=$? # todo
-#gradle verifyReadme; CODE=$? # todo
 #gradle verifyLicense; CODE=$? # todo
+
+gradle verifyReadme; CODE=$?
+if test $CODE -ne 0; then
+ echo "Diagnostics have determined the cause of the failure - this is readme."
+ TYPE="README"
+ REPORT_PATH=$DST_PATH/report/$TYPE
+ rm -rf $REPORT_PATH
+ mkdir -p $REPORT_PATH || exit 111
+ cp build/reports/analysis/readme/index.html $REPORT_PATH/index.html || exit 112
+ echo "{\"type\":\"$TYPE\"}" > $DST_PATH/summary.json || exit 113
+ exit 0
+fi
 
 gradle verifyCodeStyle; CODE=$?
 if test $CODE -ne 0; then

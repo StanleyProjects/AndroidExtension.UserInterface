@@ -78,8 +78,6 @@ task("verifyService") {
 
 task("verifyReadme") {
     doLast {
-        val file = File(rootDir, "README.md")
-        val text = file.requireFilledText()
         val projectCommon = MarkdownUtil.table(
             heads = listOf("Android project common", "version"),
             dividers = listOf("-", "-:"),
@@ -91,10 +89,6 @@ task("verifyReadme") {
                 listOf("target sdk", "`${Version.Android.targetSdk}`")
             )
         )
-        setOf(projectCommon).forEach {
-            check(text.contains(it)) { "File by path ${file.absolutePath} must contains \"$it\"!" }
-        }
-        val lines = text.split(SystemUtil.newLine)
         val versionBadge = MarkdownUtil.image(
             text = "version",
             url = BadgeUtil.url(
@@ -113,8 +107,28 @@ task("verifyReadme") {
             ),
             value = "https://${Repository.owner}.github.io/${Repository.name}/documentation/${Version.name}"
         )
-        setOf(versionBadge, documentationBadge).forEach {
-            check(lines.contains(it)) { "File by path ${file.absolutePath} must contains \"$it\" line!" }
+        val environment = Analysis.FileContain(
+            texts = setOf(projectCommon),
+            lines = setOf(versionBadge, documentationBadge)
+        )
+        val result = Analysis.check(file = File(rootDir, "README.md"), environment = environment)
+        val file = File(buildDir, "reports/analysis/readme/index.html").also {
+            it.delete()
+            it.parentFile!!.mkdirs()
+        }
+        if (result.issues.isEmpty()) {
+            val message = "All checks of the file along the \"README.md\" were successful."
+            file.writeText(message)
+            println(message)
+        } else {
+            val text = """
+<html>
+<h3>The following problems were found while checking the <code>README.md</code>:</h3>
+${result.issues.joinToString(prefix = "<ul>", postfix = "</ul>", separator = "\n") { "<li>${it.message}</li>" }}
+</html>
+            """.trimIndent()
+            file.writeText(text)
+            error("Problems were found while checking the \"README.md\". See the report: ${file.absolutePath}")
         }
     }
 }

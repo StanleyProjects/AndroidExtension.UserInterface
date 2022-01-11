@@ -18,7 +18,7 @@ android {
         minSdk = Version.Android.minSdk
         targetSdk = Version.Android.targetSdk
         applicationId = "sp.ax.sample"
-        versionCode = 1
+        versionCode = 10
         versionName = "0.0.$versionCode"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true

@@ -238,4 +238,11 @@ class LinearLayoutUtilTest {
             )
         }
     }
+
+    @Test
+    fun textViewDefaultTest() {
+        val root = LinearLayout(context)
+        TODO()
+        assertEquals("Child count is not 1!", 1, root.childCount)
+    }
 }
