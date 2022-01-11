@@ -27,12 +27,17 @@ for it in WORKER_NAME WORKER_EMAIL; do
  if test -z "${!it}"; then echo "$it is empty!"; exit 11; fi; done
 
 git config user.name "$WORKER_NAME" && \
- git config user.email "$WORKER_EMAIL" && \
- git checkout $GIT_BRANCH_DST && \
- git merge --no-ff --no-commit $GIT_COMMIT_SRC; CODE=$?
+ git config user.email "$WORKER_EMAIL"; CODE=$?
 if test $CODE -ne 0; then
- echo "Git merge failed!"
- exit 101
+ echo "Git config error!"; exit 101
+fi
+git checkout $GIT_BRANCH_DST; CODE=$?
+if test $CODE -ne 0; then
+ echo "Git checkout to \"$GIT_BRANCH_DST\" error!"; exit 102
+fi
+git merge --no-ff --no-commit $GIT_COMMIT_SRC; CODE=$?
+if test $CODE -ne 0; then
+ echo "Git merge with ${GIT_COMMIT_SRC::7} failed!"; exit 103
 fi
 
 # source

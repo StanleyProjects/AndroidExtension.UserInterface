@@ -36,7 +36,7 @@ jobs:
           git init
           git remote add origin https://$GITHUB_PAT@github.com/$GITHUB_OWNER/$GITHUB_REPO.git
           git fetch origin $GIT_BRANCH_SRC
-          git fetch origin $GIT_COMMIT_DST
+          git fetch origin $GIT_BRANCH_DST
           git checkout $GIT_BRANCH_SRC
       - working-directory: ${{env.REPOSITORY_PATH}}
         run: |
