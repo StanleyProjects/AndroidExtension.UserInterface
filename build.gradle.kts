@@ -107,16 +107,32 @@ task("verifyReadme") {
             ),
             value = "https://${Repository.owner}.github.io/${Repository.name}/documentation/${Version.name}"
         )
-        val environment = Analysis.FileContain(
-            texts = setOf(projectCommon),
-            lines = setOf(versionBadge, documentationBadge)
+        val issues = Analysis.check(
+            file = File(rootDir, "README.md"),
+            onError = {
+                when (it) {
+                    Analysis.FileError.EXIST -> setOf("the file should exist")
+                    Analysis.FileError.DIRECTORY -> setOf("the file should not be a directory")
+                    Analysis.FileError.TEXT -> setOf("the file should contain text")
+                }
+            },
+            onText = { text ->
+                mutableSetOf<String>().also { issues ->
+                    setOf(projectCommon).forEach {
+                        if (!text.contains(it)) issues.add("the file does not contain \"$it\"")
+                    }
+                    val lines = text.split(SystemUtil.newLine)
+                    setOf(versionBadge, documentationBadge).forEach {
+                        if (!lines.contains(it)) issues.add("the file does not contain \"$it\" line")
+                    }
+                }
+            }
         )
-        val result = Analysis.check(file = File(rootDir, "README.md"), environment = environment)
         val file = File(buildDir, "reports/analysis/readme/index.html").also {
             it.delete()
             it.parentFile!!.mkdirs()
         }
-        if (result.issues.isEmpty()) {
+        if (issues.isEmpty()) {
             val message = "All checks of the file along the \"README.md\" were successful."
             file.writeText(message)
             println(message)
@@ -124,7 +140,7 @@ task("verifyReadme") {
             val text = """
 <html>
 <h3>The following problems were found while checking the <code>README.md</code>:</h3>
-${result.issues.joinToString(prefix = "<ul>", postfix = "</ul>", separator = "\n") { "<li>${it.message}</li>" }}
+${issues.joinToString(prefix = "<ul>", postfix = "</ul>", separator = "\n") { "<li>$it</li>" }}
 </html>
             """.trimIndent()
             file.writeText(text)
