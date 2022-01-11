@@ -18,7 +18,7 @@ object Version {
     const val kotlin = "1.5.21"
     const val kotlinDsl = "2.1.7"
     const val kotlinLint = "0.42.1"
-    const val name = "0.0.8"
+    const val name = "0.0.9"
 
     object Android {
         const val toolsBuildGradle = "7.0.2"

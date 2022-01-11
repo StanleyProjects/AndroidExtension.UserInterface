@@ -26,7 +26,7 @@ mkdir -p "$RELATIVE_PATH" || exit 1 # todo
 cp -r ${ASSEMBLY_PATH}/documentation/* "$RELATIVE_PATH"
 
 CODE=0
-COMMIT_MESSAGE="GitHub build #$GITHUB_RUN_NUMBER | $WORKER_NAME added documentation for version $VERSION."
+COMMIT_MESSAGE="GitHub build #$GITHUB_RUN_NUMBER | $WORKER_NAME added documentation for version ${VERSION}."
 git -C $REPOSITORY config user.name "$WORKER_NAME" && \
  git -C $REPOSITORY config user.email "$WORKER_EMAIL" && \
  git -C $REPOSITORY add --all $REPOSITORY && \

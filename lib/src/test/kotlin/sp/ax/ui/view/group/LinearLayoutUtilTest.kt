@@ -18,8 +18,10 @@ import sp.ax.ui.entity.Orientation
 import sp.ax.ui.entity.Visibility
 import sp.ax.ui.entity.insets
 import sp.ax.ui.fail
+import sp.ax.ui.getPrivateInt
 import sp.ax.ui.view.ViewUtilTest.Companion.assert
 import sp.ax.ui.view.ViewUtilTest.Companion.assertDefault
+import sp.ax.ui.view.ViewUtilTest.Companion.assertSetOnClick
 import sp.ax.ui.view.group.LinearLayoutUtilTest.Companion.assert
 import sp.ax.ui.view.group.ViewGroupUtilTest.Companion.assert
 import java.util.concurrent.atomic.AtomicInteger
@@ -66,10 +68,7 @@ class LinearLayoutUtilTest {
 
         private fun getGravity(view: LinearLayout): Int {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                return LinearLayout::class.java.getDeclaredField("mGravity").let {
-                    it.isAccessible = true
-                    it.getInt(view)
-                }
+                return view.getPrivateInt("mGravity")
             }
             return view.gravity
         }
@@ -215,5 +214,28 @@ class LinearLayoutUtilTest {
         val root = LinearLayout(context)
         root.view(needToAdd = false)
         assertEquals("Child count is not 0!", 0, root.childCount)
+    }
+
+    @Test
+    fun linearLayoutSetOnClickTest() {
+        assertSetOnClick { onClick: () -> Unit, onLongClick: () -> Boolean ->
+            linearLayout(
+                context = context,
+                onClick = onClick,
+                onLongClick = onLongClick
+            )
+        }
+    }
+
+    @Test
+    fun viewSetOnClickTest() {
+        val root = LinearLayout(context)
+        assertSetOnClick { onClick: () -> Unit, onLongClick: () -> Boolean ->
+            root.view(
+                context = context,
+                onClick = onClick,
+                onLongClick = onLongClick
+            )
+        }
     }
 }

@@ -125,6 +125,39 @@ class ViewUtilTest {
                 }
             }
         }
+
+        internal fun assertSetOnClick(supplier: (onClick: () -> Unit, onLongClick: () -> Boolean) -> View) {
+            val init = 11
+            var value = init
+            val first = 21
+            val second = 31
+            assertNotEquals(first, value)
+            assertNotEquals(second, value)
+            assertNotEquals(first, second)
+            val onClick: () -> Unit = {
+                value = first
+            }
+            assertNotEquals(UNSPECIFIED_ON_CLICK, onClick)
+            val onLongClick: () -> Boolean = {
+                value = second
+                true
+            }
+            assertNotEquals(UNSPECIFIED_ON_LONG_CLICK, onLongClick)
+            val view = supplier(onClick, onLongClick)
+            assertTrue(view.hasOnClickListeners())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                assertTrue(view.hasOnLongClickListeners())
+            }
+            assertEquals(init, value)
+            view.performClick()
+            assertEquals(first, value)
+            view.performLongClick()
+            assertEquals(second, value)
+            view.performClick()
+            assertEquals(first, value)
+            view.performLongClick()
+            assertEquals(second, value)
+        }
     }
 
     private val context: Context = ApplicationProvider.getApplicationContext()
@@ -226,40 +259,13 @@ class ViewUtilTest {
 
     @Test
     fun viewSetOnClickTest() {
-        val init = 11
-        val value = AtomicInteger(init)
-        val first = 21
-        val second = 31
-        assertNotEquals(first, value.get())
-        assertNotEquals(second, value.get())
-        assertNotEquals(first, second)
-        val onClick: () -> Unit = {
-            value.set(first)
+        assertSetOnClick { onClick: () -> Unit, onLongClick: () -> Boolean ->
+            view(
+                context = context,
+                onClick = onClick,
+                onLongClick = onLongClick
+            )
         }
-        assertNotEquals(UNSPECIFIED_ON_CLICK, onClick)
-        val onLongClick: () -> Boolean = {
-            value.set(second)
-            true
-        }
-        assertNotEquals(UNSPECIFIED_ON_LONG_CLICK, onLongClick)
-        val view = view(
-            context = context,
-            onClick = onClick,
-            onLongClick = onLongClick
-        )
-        assertTrue(view.hasOnClickListeners())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            assertTrue(view.hasOnLongClickListeners())
-        }
-        assertEquals(init, value.get())
-        view.performClick()
-        assertEquals(first, value.get())
-        view.performLongClick()
-        assertEquals(second, value.get())
-        view.performClick()
-        assertEquals(first, value.get())
-        view.performLongClick()
-        assertEquals(second, value.get())
     }
 
     @Test

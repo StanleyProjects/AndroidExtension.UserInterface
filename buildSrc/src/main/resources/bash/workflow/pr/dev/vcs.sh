@@ -2,13 +2,16 @@
 
 echo "dev vcs start..."
 
+/bin/bash $RESOURCES_PATH/bash/util/check_variables.sh \
+ ASSEMBLY_PATH GIT_COMMIT_SRC GIT_COMMIT_DST GITHUB_RUN_NUMBER || exit 1 # todo
+
 CODE=0
 
-VERSION="$(cat ${ASSEMBLY_PATH}/common.json | jq -r .version)"
-WORKER_NAME="$(cat $ASSEMBLY_PATH/vcs/worker.json | jq -r .name)"
+VERSION="$(cat $ASSEMBLY_PATH/common.json | jq -r .version)"
 
-for it in WORKER_NAME VERSION; do
- if test -z "${!it}"; then echo "$it is empty!"; exit 11; fi; done
+if test -z "$VERSION"; then
+ echo "Version is empty!"; exit 11
+fi
 
 TAG="intermediate/$VERSION"
 
@@ -24,7 +27,8 @@ if test $CODE -ne 0; then
  exit 31
 fi
 
-git commit -m "Merge $GIT_COMMIT_SHA -> $PR_SOURCE_BRANCH by $WORKER_NAME." && \
+git commit -m \
+  "Merge ${GIT_COMMIT_SRC::7} -> ${GIT_COMMIT_DST::7} by GitHub build #${GITHUB_RUN_NUMBER}." && \
  git tag "$TAG" && \
  git push && git push --tag; CODE=$?
 if test $CODE -ne 0; then
