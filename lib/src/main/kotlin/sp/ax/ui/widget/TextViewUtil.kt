@@ -15,6 +15,7 @@ import sp.ax.ui.entity.TypeDimension.Companion.toInt
 import sp.ax.ui.entity.TypefaceStyle
 import sp.ax.ui.entity.TypefaceStyle.Companion.toInt
 import sp.ax.ui.entity.Visibility
+import sp.ax.ui.text.onTextChanged
 import sp.ax.ui.view.ViewDefault
 import sp.ax.ui.view.configure
 
@@ -74,7 +75,7 @@ internal object TextViewDefault {
 /**
  * Builds an instance of [TextView] by [context] and parameters or default. Sample:
  * ```
- * fun foo(context: Context): LinearLayout {
+ * fun foo(context: Context): TextView {
  *     return textView(
  *         context = context,
  *         layoutParams = ViewGroup::class.layoutParams(width = 512, height = 64),
@@ -134,4 +135,15 @@ fun textView(
     )
     result.block()
     return result
+}
+
+/**
+ * Calls [TextView.addTextChangedListener] with [TextWatcher] built only with the overridden [TextWatcher.onTextChanged] method.
+ * @author Stanley Wintergreen
+ * @since 0.0.9
+ */
+fun TextView.addOnTextChanged(
+    block: (CharSequence) -> Unit
+) {
+    addTextChangedListener(onTextChanged(block))
 }
