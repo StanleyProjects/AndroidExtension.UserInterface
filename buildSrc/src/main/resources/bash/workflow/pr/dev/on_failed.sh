@@ -18,7 +18,7 @@ REPO_URL=https://github.com/$GITHUB_OWNER/$GITHUB_REPO
 RUN_URL="$REPO_URL/actions/runs/$GITHUB_RUN_ID"
 COMMENT_BODY="Closed by GitHub build [#$GITHUB_RUN_NUMBER]($RUN_URL)"
 PR_RESULT="The pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER) closed by [$WORKER_NAME]($WORKER_URL)
- - source ${GIT_COMMIT_SRC::7} by [$AUTHOR_NAME_SRC]($AUTHOR_URL_SRC)"
+ - source [${GIT_COMMIT_SRC::7}]($REPO_URL/commit/$GIT_COMMIT_SRC) by [$AUTHOR_NAME_SRC]($AUTHOR_URL_SRC)"
 
 if test -f "$ASSEMBLY_PATH/diagnostics/summary.json"; then
  REPORT_TYPE="$(cat ${ASSEMBLY_PATH}/diagnostics/summary.json | jq -r .type)"
