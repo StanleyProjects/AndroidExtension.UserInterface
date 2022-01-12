@@ -107,34 +107,29 @@ task("verifyReadme") {
             ),
             value = "https://${Repository.owner}.github.io/${Repository.name}/documentation/${Version.name}"
         )
-        val issues = Analysis.check(
-            file = File(rootDir, "README.md"),
-            onError = {
-                when (it) {
-                    Analysis.FileError.EXIST -> setOf("the file should exist")
-                    Analysis.FileError.DIRECTORY -> setOf("the file should not be a directory")
-                    Analysis.FileError.TEXT -> setOf("the file should contain text")
-                }
-            },
-            onText = { text ->
-                mutableSetOf<String>().also { issues ->
-                    setOf(projectCommon).forEach {
-                        if (!text.contains(it)) issues.add("the file does not contain \"$it\"")
-                    }
-                    val lines = text.split(SystemUtil.newLine)
-                    setOf(versionBadge, documentationBadge).forEach {
-                        if (!lines.contains(it)) issues.add("the file does not contain \"$it\" line")
-                    }
-                }
+        fun check(file: File): Set<String> {
+            if (!file.exists()) return setOf("the file does not exist")
+            if (file.isDirectory) return setOf("the file is a directory")
+            val text = file.readText(Charsets.UTF_8)
+            if (text.isEmpty()) return setOf("the file does not contain text")
+            val result = mutableSetOf<String>()
+            setOf(projectCommon).forEach {
+                if (!text.contains(it)) result.add("the file does not contain \"$it\"")
             }
-        )
-        val file = File(buildDir, "reports/analysis/readme/index.html").also {
+            val lines = text.split(SystemUtil.newLine)
+            setOf(versionBadge, documentationBadge).forEach {
+                if (!lines.contains(it)) result.add("the file does not contain \"$it\" line")
+            }
+            return result
+        }
+        val issues = check(file = File(rootDir, "README.md"))
+        val report = File(buildDir, "reports/analysis/readme/index.html").also {
             it.delete()
             it.parentFile!!.mkdirs()
         }
         if (issues.isEmpty()) {
             val message = "All checks of the file along the \"README.md\" were successful."
-            file.writeText(message)
+            report.writeText(message)
             println(message)
         } else {
             val text = """
@@ -143,8 +138,8 @@ task("verifyReadme") {
 ${issues.joinToString(prefix = "<ul>", postfix = "</ul>", separator = "\n") { "<li>$it</li>" }}
 </html>
             """.trimIndent()
-            file.writeText(text)
-            error("Problems were found while checking the \"README.md\". See the report: ${file.absolutePath}")
+            report.writeText(text)
+            error("Problems were found while checking the \"README.md\". See the report: ${report.absolutePath}")
         }
     }
 }
