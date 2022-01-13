@@ -38,8 +38,3 @@ inline fun <reified A : Any, reified E : A> A.assertType(): E {
     if (this is E) return this
     fail("Expected type is ${E::class}, but actual is ${this::class}!")
 }
-
-inline fun <reified E : Any> Any.assertType1(): E {
-    if (this is E) return this
-    fail("Expected type is ${E::class}, but actual is ${this::class}!")
-}
