@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>linearLayout</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
+const savedDarkMode = storage ? JSON.parse(storage) : false
+if(savedDarkMode === true){
+    document.getElementsByTagName("html")[0].classList.add("theme-dark")
+}</script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../styles/style.css" rel="Stylesheet"><link href="../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../styles/main.css" rel="Stylesheet"><link href="../../styles/prism.css" rel="Stylesheet"><link href="../../styles/logo-styles.css" rel="Stylesheet"><script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../scripts/main.js" defer="defer"></script><script type="text/javascript" src="../../scripts/prism.js" async="async"></script>  </head>
+  <body>
+    <div class="navigation-wrapper" id="navigation-wrapper">
+      <div id="leftToggler"><span class="icon-toggler"></span></div>
+      <div class="library-name"><a href="../../index.html">AndroidExtension.UserInterface</a></div>
+      <div></div>
+      <div class="pull-right d-flex"><button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+      </div>
+    </div>
+    <div id="container">
+      <div id="leftColumn">
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div class="main-content" id="content" pageIds="AndroidExtension.UserInterface::sp.ax.ui.view.group//linearLayout/#android.content.Context#android.view.ViewGroup.LayoutParams#kotlin.Int#android.graphics.drawable.Drawable#sp.ax.ui.entity.Visibility#sp.ax.ui.entity.Insets#kotlin.Function0[kotlin.Unit]#kotlin.Function0[kotlin.Boolean]#kotlin.Boolean#kotlin.Boolean#kotlin.Boolean#sp.ax.ui.entity.Orientation#sp.ax.ui.entity.Gravity#kotlin.Function1[android.widget.LinearLayout,kotlin.Unit]/PointingToDeclaration//-476407277">
+          <div class="breadcrumbs"><a href="../../index.html">AndroidExtension.UserInterface</a>/<a href="index.html">sp.ax.ui.view.group</a>/<a href="linear-layout.html">linearLayout</a></div>
+          <div class="cover ">
+            <h1 class="cover"><span>linear</span><wbr></wbr><span><span>Layout</span></span></h1>
+          </div>
+          <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:assembleDocumentation/snapshot"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="linear-layout.html"><span class="token function">linearLayout</span></a><span class="token punctuation">(</span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span>layoutParams<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/ViewGroup.LayoutParams.html">ViewGroup.LayoutParams</a><span class="token operator"> = </span>LinearLayoutDefault.layoutParams<span class="token punctuation">, </span>id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>ViewDefault.id<span class="token punctuation">, </span>background<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/graphics/drawable/Drawable.html">Drawable</a><span class="token operator"> = </span>ViewDefault.background<span class="token punctuation">, </span>visibility<span class="token operator">: </span><a href="../sp.ax.ui.entity/-visibility/index.html">Visibility</a><span class="token operator"> = </span>ViewDefault.visibility<span class="token punctuation">, </span>padding<span class="token operator">: </span><a href="../sp.ax.ui.entity/-insets/index.html">Insets</a><span class="token operator"> = </span>ViewDefault.padding<span class="token punctuation">, </span>onClick<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>ViewDefault.onClick<span class="token punctuation">, </span>onLongClick<span class="token operator">: </span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span>ViewDefault.onLongClick<span class="token punctuation">, </span>isClickable<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span>onClick !== ViewDefault.onClick<span class="token punctuation">, </span>isLongClickable<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span>onLongClick !== ViewDefault.onLongClick<span class="token punctuation">, </span>keepScreenOn<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span>ViewDefault.keepScreenOn<span class="token punctuation">, </span>orientation<span class="token operator">: </span><a href="../sp.ax.ui.entity/-orientation/index.html">Orientation</a><span class="token operator"> = </span>LinearLayoutDefault.orientation<span class="token punctuation">, </span>gravity<span class="token operator">: </span><a href="../sp.ax.ui.entity/-gravity/index.html">Gravity</a><span class="token operator"> = </span>LinearLayoutDefault.gravity<span class="token punctuation">, </span>block<span class="token operator">: </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/android/widget/LinearLayout.html">LinearLayout</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}<span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/widget/LinearLayout.html">LinearLayout</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Builds an instance of <a href="https://developer.android.com/reference/kotlin/android/widget/LinearLayout.html">LinearLayout</a> by <a href="linear-layout.html">context</a> and parameters or default. Sample:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">fun foo(context: Context): LinearLayout {<br>    return linearLayout(<br>        context = context,<br>        layoutParams = ViewGroup::class.layoutParams(size = 5),<br>        background = ColorDrawable(Color.GREEN)<br>    )<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><h4 class="">Author</h4><p class="paragraph">Stanley Wintergreen</p><h4 class="">Since</h4><p class="paragraph">0.0.6</p></div></div>
+          <h2 class="">Sources</h2>
+          <div class="table" data-togglable="Sources"><a data-name="-931770314%2FSource%2F-892862648" anchor-label="https://github.com/StanleyProjects/AndroidExtension.UserInterface/tree/dev/lib/src/main/kotlin/sp/ax/ui/view/group/LinearLayoutUtil.kt#L90" id="-931770314%2FSource%2F-892862648" data-filterable-set=":lib:assembleDocumentation/main"></a>
+            <div class="table-row" data-filterable-current=":lib:assembleDocumentation/main" data-filterable-set=":lib:assembleDocumentation/main">
+              <div class="main-subrow keyValue ">
+                <div class=""><span class="inline-flex">
+                    <div><a href="https://github.com/StanleyProjects/AndroidExtension.UserInterface/tree/dev/lib/src/main/kotlin/sp/ax/ui/view/group/LinearLayoutUtil.kt#L90">androidJvm source</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-931770314%2FSource%2F-892862648"></span>
+                      <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                    </span></span></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
