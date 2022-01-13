@@ -1,18 +1,26 @@
 package sp.ax.ui.view.group
 
 import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import sp.ax.ui.entity.Gravity
 import sp.ax.ui.entity.Gravity.Companion.toInt
 import sp.ax.ui.entity.Insets
 import sp.ax.ui.entity.Orientation
+import sp.ax.ui.entity.TypeDimension
+import sp.ax.ui.entity.TypefaceStyle
 import sp.ax.ui.entity.Visibility
 import sp.ax.ui.entity.insets
 import sp.ax.ui.view.ViewDefault
 import sp.ax.ui.view.configure
+import sp.ax.ui.widget.TextViewDefault
+import sp.ax.ui.widget.configure
 import kotlin.reflect.KClass
 
 /**
@@ -62,11 +70,20 @@ internal object LinearLayoutDefault {
     val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams::class.matched()
     val orientation: Orientation = Orientation.HORIZONTAL
     val gravity: Gravity = Gravity.TOP_LEFT
-    object LayoutParams {
+    object Child {
         const val width: Int = ViewGroup.LayoutParams.WRAP_CONTENT
         const val height: Int = ViewGroup.LayoutParams.WRAP_CONTENT
         const val weight: Float = 0f
         val margin: Insets = insets()
+
+        fun getLayoutParams(): LinearLayout.LayoutParams {
+            return LinearLayout::class.layoutParams(
+                width = width,
+                height = height,
+                weight = weight,
+                margin = margin
+            )
+        }
     }
 }
 
@@ -159,10 +176,10 @@ fun KClass<LinearLayout>.layoutParams(
  */
 fun LinearLayout.view(
     context: Context = this.context,
-    width: Int = LinearLayoutDefault.LayoutParams.width,
-    height: Int = LinearLayoutDefault.LayoutParams.height,
-    weight: Float = LinearLayoutDefault.LayoutParams.weight,
-    margin: Insets = LinearLayoutDefault.LayoutParams.margin,
+    width: Int = LinearLayoutDefault.Child.width,
+    height: Int = LinearLayoutDefault.Child.height,
+    weight: Float = LinearLayoutDefault.Child.weight,
+    margin: Insets = LinearLayoutDefault.Child.margin,
     id: Int = ViewDefault.id,
     background: Drawable = ViewDefault.background,
     visibility: Visibility = ViewDefault.visibility,
@@ -219,4 +236,158 @@ fun KClass<LinearLayout.LayoutParams>.wrapped(
         weight = weight,
         margin = margin
     )
+}
+
+/**
+ * Builds an instance of [TextView] by parameters or default and adds to [LinearLayout] receiver if [needToAdd] == `true`. Sample:
+ * ```
+ * fun foo(context: Context) {
+ *     val bar = linearLayout(context) {
+ *         textView(
+ *             width = 256,
+ *             height = 128,
+ *             text = "baz"
+ *         )
+ *     }
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.10
+ */
+fun LinearLayout.textView(
+    context: Context = this.context,
+    width: Int = LinearLayoutDefault.Child.width,
+    height: Int = LinearLayoutDefault.Child.height,
+    weight: Float = LinearLayoutDefault.Child.weight,
+    margin: Insets = LinearLayoutDefault.Child.margin,
+    id: Int = ViewDefault.id,
+    background: Drawable = ViewDefault.background,
+    visibility: Visibility = ViewDefault.visibility,
+    padding: Insets = ViewDefault.padding,
+    onClick: () -> Unit = ViewDefault.onClick,
+    onLongClick: () -> Boolean = ViewDefault.onLongClick,
+    isClickable: Boolean = onClick !== ViewDefault.onClick,
+    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,
+    keepScreenOn: Boolean = ViewDefault.keepScreenOn,
+    gravity: Gravity = TextViewDefault.gravity,
+    text: CharSequence,
+    textSizeUnit: TypeDimension = TextViewDefault.textSizeUnit,
+    textSize: Float = TextViewDefault.textSize,
+    textColor: Int = TextViewDefault.textColor,
+    typeface: Typeface? = TextViewDefault.typeface,
+    typefaceStyle: TypefaceStyle = TextViewDefault.typefaceStyle,
+    isAllCaps: Boolean = TextViewDefault.isAllCaps,
+    textWatchers: Set<TextWatcher> = TextViewDefault.textWatchers,
+    needToAdd: Boolean = true,
+    block: TextView.() -> Unit = {}
+): TextView {
+    val result = TextView(context)
+    result.configure(
+        layoutParams = LinearLayout::class.layoutParams(
+            width = width,
+            height = height,
+            weight = weight,
+            margin = margin
+        ),
+        id = id,
+        background = background,
+        visibility = visibility,
+        padding = padding,
+        onClick = onClick,
+        onLongClick = onLongClick,
+        isClickable = isClickable,
+        isLongClickable = isLongClickable,
+        keepScreenOn = keepScreenOn,
+        gravity = gravity,
+        text = text,
+        textSizeUnit = textSizeUnit,
+        textSize = textSize,
+        textColor = textColor,
+        typeface = typeface,
+        typefaceStyle = typefaceStyle,
+        isAllCaps = isAllCaps,
+        textWatchers = textWatchers
+    )
+    if (needToAdd) {
+        addView(result)
+    }
+    result.block()
+    return result
+}
+
+/**
+ * Builds an instance of [EditText] by parameters or default and adds to [LinearLayout] receiver if [needToAdd] == `true`. Sample:
+ * ```
+ * fun foo(context: Context) {
+ *     val bar = linearLayout(context) {
+ *         editText(
+ *             width = 256,
+ *             height = 128,
+ *             textWatchers = setOf(onTextChanged { println(it) })
+ *         )
+ *     }
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.10
+ */
+fun LinearLayout.editText(
+    context: Context = this.context,
+    width: Int = LinearLayoutDefault.Child.width,
+    height: Int = LinearLayoutDefault.Child.height,
+    weight: Float = LinearLayoutDefault.Child.weight,
+    margin: Insets = LinearLayoutDefault.Child.margin,
+    id: Int = ViewDefault.id,
+    background: Drawable = ViewDefault.background,
+    visibility: Visibility = ViewDefault.visibility,
+    padding: Insets = ViewDefault.padding,
+    onClick: () -> Unit = ViewDefault.onClick,
+    onLongClick: () -> Boolean = ViewDefault.onLongClick,
+    isClickable: Boolean = onClick !== ViewDefault.onClick,
+    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,
+    keepScreenOn: Boolean = ViewDefault.keepScreenOn,
+    gravity: Gravity = TextViewDefault.gravity,
+    text: CharSequence = "",
+    textSizeUnit: TypeDimension = TextViewDefault.textSizeUnit,
+    textSize: Float = TextViewDefault.textSize,
+    textColor: Int = TextViewDefault.textColor,
+    typeface: Typeface? = TextViewDefault.typeface,
+    typefaceStyle: TypefaceStyle = TextViewDefault.typefaceStyle,
+    isAllCaps: Boolean = TextViewDefault.isAllCaps,
+    textWatchers: Set<TextWatcher> = TextViewDefault.textWatchers,
+    needToAdd: Boolean = true,
+    block: EditText.() -> Unit = {}
+): EditText {
+    val result = EditText(context)
+    result.configure(
+        layoutParams = LinearLayout::class.layoutParams(
+            width = width,
+            height = height,
+            weight = weight,
+            margin = margin
+        ),
+        id = id,
+        background = background,
+        visibility = visibility,
+        padding = padding,
+        onClick = onClick,
+        onLongClick = onLongClick,
+        isClickable = isClickable,
+        isLongClickable = isLongClickable,
+        keepScreenOn = keepScreenOn,
+        gravity = gravity,
+        text = text,
+        textSizeUnit = textSizeUnit,
+        textSize = textSize,
+        textColor = textColor,
+        typeface = typeface,
+        typefaceStyle = typefaceStyle,
+        isAllCaps = isAllCaps,
+        textWatchers = textWatchers
+    )
+    if (needToAdd) {
+        addView(result)
+    }
+    result.block()
+    return result
 }

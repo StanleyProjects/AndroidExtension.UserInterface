@@ -6,6 +6,8 @@ echo "on success pull request to dev start..."
  ASSEMBLY_PATH GIT_COMMIT_SRC \
  GITHUB_OWNER GITHUB_REPO GITHUB_RUN_NUMBER GITHUB_RUN_ID || exit 1 # todo
 
+AUTHOR_NAME_DST="$(cat $ASSEMBLY_PATH/vcs/author.dst.json | jq -r .name)"
+AUTHOR_URL_DST="$(cat $ASSEMBLY_PATH/vcs/author.dst.json | jq -r .html_url)"
 AUTHOR_NAME_SRC="$(cat $ASSEMBLY_PATH/vcs/author.src.json | jq -r .name)"
 AUTHOR_URL_SRC="$(cat $ASSEMBLY_PATH/vcs/author.src.json | jq -r .html_url)"
 WORKER_NAME="$(cat ${ASSEMBLY_PATH}/vcs/worker.json | jq -r .name)"
@@ -25,8 +27,10 @@ fi
 
 PR_STATE="$(cat $ASSEMBLY_PATH/vcs/pr.${PR_NUMBER}.json | jq -r .state)"
 PR_MERGED="$(cat $ASSEMBLY_PATH/vcs/pr.${PR_NUMBER}.json | jq -r .merged)"
+MERGE_COMMIT_SHA="$(cat $ASSEMBLY_PATH/vcs/pr.${PR_NUMBER}.json | jq -r .merge_commit_sha)"
 
-for it in AUTHOR_NAME_SRC AUTHOR_URL_SRC WORKER_NAME WORKER_URL VERSION PR_STATE PR_MERGED; do
+for it in AUTHOR_NAME_SRC AUTHOR_URL_SRC AUTHOR_NAME_DST AUTHOR_URL_DST \
+ WORKER_NAME WORKER_URL VERSION PR_STATE PR_MERGED MERGE_COMMIT_SHA; do
  if test -z "${!it}"; then echo "$it is empty!"; exit 11; fi; done
 
 if test "$PR_STATE" -ne "closed"; then
@@ -48,8 +52,12 @@ MESSAGE="GitHub build [#$GITHUB_RUN_NUMBER]($RUN_URL)
 
 [$GITHUB_OWNER](https://github.com/$GITHUB_OWNER) / [$GITHUB_REPO]($REPO_URL)
 
+\`*\` [${MERGE_COMMIT_SHA::7}]($REPO_URL/commit/$MERGE_COMMIT_SHA) by [$WORKER_NAME]($WORKER_URL)
+\`|\\\`
+\`| *\` [${GIT_COMMIT_SRC::7}]($REPO_URL/commit/$GIT_COMMIT_SRC) by [$AUTHOR_NAME_SRC]($AUTHOR_URL_SRC)
+\`*\` [${GIT_COMMIT_DST::7}]($REPO_URL/commit/$GIT_COMMIT_DST) by [$AUTHOR_NAME_DST]($AUTHOR_URL_DST)
+
 The pull request [#$PR_NUMBER]($REPO_URL/pull/$PR_NUMBER) merged by [$WORKER_NAME]($WORKER_URL)
- - source ${GIT_COMMIT_SRC::7} by [$AUTHOR_NAME_SRC]($AUTHOR_URL_SRC)
  - intermediate [$VERSION]($GITHUB_PAGES/documentation/$VERSION)"
 
 /bin/bash $RESOURCES_PATH/bash/workflow/telegram_send_message.sh "$MESSAGE"

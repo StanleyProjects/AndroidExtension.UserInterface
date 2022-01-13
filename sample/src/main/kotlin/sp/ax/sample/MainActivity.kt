@@ -4,25 +4,17 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.ViewGroup
 import sp.ax.ui.entity.Orientation
-import sp.ax.ui.view.group.layoutParams
+import sp.ax.ui.text.onTextChanged
+import sp.ax.ui.view.group.editText
 import sp.ax.ui.view.group.linearLayout
-import sp.ax.ui.widget.addOnTextChanged
-import sp.ax.ui.widget.editText
+import sp.ax.ui.view.group.textView
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val root = linearLayout(this, orientation = Orientation.VERTICAL) {
-            val height = 64
-            val layoutParams = ViewGroup::class.layoutParams(
-                width = ViewGroup.LayoutParams.MATCH_PARENT,
-                height = height
-            )
-            addView(
-                editText(context, layoutParams = layoutParams) {
-                    addOnTextChanged { println(it) }
-                }
-            )
+            textView(width = ViewGroup.LayoutParams.MATCH_PARENT, text = "title")
+            editText(width = ViewGroup.LayoutParams.MATCH_PARENT, textWatchers = setOf(onTextChanged { println(it) }))
         }
         setContentView(root)
     }

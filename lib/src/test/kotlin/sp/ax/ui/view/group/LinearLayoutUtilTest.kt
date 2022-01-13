@@ -19,53 +19,17 @@ import sp.ax.ui.entity.Visibility
 import sp.ax.ui.entity.insets
 import sp.ax.ui.fail
 import sp.ax.ui.getPrivateInt
-import sp.ax.ui.view.ViewUtilTest.Companion.assert
-import sp.ax.ui.view.ViewUtilTest.Companion.assertDefault
-import sp.ax.ui.view.ViewUtilTest.Companion.assertSetOnClick
-import sp.ax.ui.view.group.LinearLayoutUtilTest.Companion.assert
-import sp.ax.ui.view.group.ViewGroupUtilTest.Companion.assert
+import sp.ax.ui.view.assert
+import sp.ax.ui.view.assertDefault
+import sp.ax.ui.view.assertEquals
+import sp.ax.ui.view.assertSetOnClick
+import sp.ax.ui.widget.assertDefault
 import java.util.concurrent.atomic.AtomicInteger
-import kotlin.reflect.KClass
-
-internal fun KClass<LinearLayout.LayoutParams>.assertEquals(
-    actual: LinearLayout.LayoutParams,
-    expected: LinearLayout.LayoutParams
-) {
-    actual.assert(
-        width = expected.width,
-        height = expected.height,
-        left = expected.leftMargin,
-        top = expected.topMargin,
-        right = expected.rightMargin,
-        bottom = expected.bottomMargin,
-        weight = expected.weight
-    )
-}
 
 @Config(manifest = Config.NONE, minSdk = BuildConfig.MIN_SDK, maxSdk = BuildConfig.TARGET_SDK)
 @RunWith(RobolectricTestRunner::class)
 class LinearLayoutUtilTest {
     companion object {
-        internal fun LinearLayout.LayoutParams.assert(
-            width: Int,
-            height: Int,
-            weight: Float,
-            left: Int,
-            top: Int,
-            right: Int,
-            bottom: Int
-        ) {
-            assert(
-                width = width,
-                height = height,
-                left = left,
-                top = top,
-                right = right,
-                bottom = bottom
-            )
-            assertEquals("Weight is not expected!", weight, this.weight)
-        }
-
         private fun getGravity(view: LinearLayout): Int {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 return view.getPrivateInt("mGravity")
@@ -83,6 +47,34 @@ class LinearLayoutUtilTest {
     }
 
     private val context: Context = ApplicationProvider.getApplicationContext()
+
+    @Test
+    fun layoutParamsWrappedTest() {
+        val value = AtomicInteger(3)
+        val weight = value.getAndIncrement().toFloat()
+        val left = value.getAndIncrement()
+        val top = value.getAndIncrement()
+        val right = value.getAndIncrement()
+        val bottom = value.getAndIncrement()
+        val layoutParams = LinearLayout.LayoutParams::class.wrapped(
+            weight = weight,
+            margin = insets(
+                left = left,
+                top = top,
+                right = right,
+                bottom = bottom
+            )
+        )
+        layoutParams.assert(
+            width = ViewGroup.LayoutParams.WRAP_CONTENT,
+            height = ViewGroup.LayoutParams.WRAP_CONTENT,
+            weight = weight,
+            left = left,
+            top = top,
+            right = right,
+            bottom = bottom
+        )
+    }
 
     @Test
     fun setOrientationTest() {
@@ -139,10 +131,7 @@ class LinearLayoutUtilTest {
         val root = LinearLayout(context)
         val view = root.view()
         view.assertDefault(
-            layoutParams = LinearLayout.LayoutParams::class.wrapped(
-                weight = LinearLayoutDefault.LayoutParams.weight,
-                margin = LinearLayoutDefault.LayoutParams.margin
-            )
+            layoutParams = LinearLayoutDefault.Child.getLayoutParams()
         )
         assertEquals("Child count is not 1!", 1, root.childCount)
     }
@@ -206,7 +195,7 @@ class LinearLayoutUtilTest {
         )
         assertEquals("Child count is not 1!", 1, root.childCount)
         val child: View = root.getChildAt(0)
-        child.assert(expected = view)
+        child.assertEquals(expected = view)
     }
 
     @Test
@@ -237,5 +226,28 @@ class LinearLayoutUtilTest {
                 onLongClick = onLongClick
             )
         }
+    }
+
+    @Test
+    fun textViewDefaultTest() {
+        val root = LinearLayout(context)
+        val text = "foo"
+        assertDefault(
+            view = root.textView(text = text),
+            layoutParams = LinearLayoutDefault.Child.getLayoutParams(),
+            text = text
+        )
+        assertEquals("Child count is not 1!", 1, root.childCount)
+    }
+
+    @Test
+    fun editTextDefaultTest() {
+        val root = LinearLayout(context)
+        assertDefault(
+            view = root.editText(),
+            layoutParams = LinearLayoutDefault.Child.getLayoutParams(),
+            text = ""
+        )
+        assertEquals("Child count is not 1!", 1, root.childCount)
     }
 }
