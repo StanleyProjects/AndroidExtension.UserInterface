@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Assert.assertEquals
@@ -79,23 +80,25 @@ class TextViewUtilTest {
                 )
             }
         }
+
+        internal fun assertDefault(view: TextView) {
+            view.assertDefault(layoutParams = ViewDefault.layoutParams)
+            assertEquals("\"gravity\" is not default!", TextViewDefault.gravity.toInt(), view.gravity)
+//        assertEquals("\"textSizeUnit\" is not default!", TextViewDefault.textSizeUnit.toInt(), view.textSizeUnit) // todo api 30
+            assertEquals("\"textSize\" is not default!", TextViewDefault.textSize, view.textSize)
+            assertEquals("\"currentTextColor\" is not default!", TextViewDefault.textColor, view.currentTextColor)
+            assertEquals("\"typeface\" is not default!", TextViewDefault.typeface, view.typeface)
+            // todo TextViewDefault.typefaceStyle
+//        assertEquals("\"isAllCaps\" is not default!", TextViewDefault.isAllCaps, view.isAllCaps) // todo api 28
+            // todo TextViewDefault.textWatchers
+        }
     }
 
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Test
     fun textViewDefaultTest() {
-        val text = "foo"
-        val view = textView(context, text = text)
-        view.assertDefault(layoutParams = ViewDefault.layoutParams)
-        assertEquals("\"gravity\" is not default!", TextViewDefault.gravity.toInt(), view.gravity)
-//        assertEquals("\"textSizeUnit\" is not default!", TextViewDefault.textSizeUnit.toInt(), view.textSizeUnit) // todo api 30
-        assertEquals("\"textSize\" is not default!", TextViewDefault.textSize, view.textSize)
-        assertEquals("\"currentTextColor\" is not default!", TextViewDefault.textColor, view.currentTextColor)
-        assertEquals("\"typeface\" is not default!", TextViewDefault.typeface, view.typeface)
-        // todo TextViewDefault.typefaceStyle
-//        assertEquals("\"isAllCaps\" is not default!", TextViewDefault.isAllCaps, view.isAllCaps) // todo api 28
-        // todo TextViewDefault.textWatchers
+        assertDefault(textView(context, text = "foo"))
     }
 
     @Test
