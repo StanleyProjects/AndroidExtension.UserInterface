@@ -19,8 +19,8 @@ import sp.ax.ui.entity.Visibility
 import sp.ax.ui.entity.insets
 import sp.ax.ui.view.ViewDefault
 import sp.ax.ui.view.configure
-import sp.ax.ui.widget.configure
 import sp.ax.ui.widget.TextViewDefault
+import sp.ax.ui.widget.configure
 import kotlin.reflect.KClass
 
 /**

@@ -11,7 +11,7 @@ plugins {
         P.Android.kotlin
     )
     id("org.gradle.jacoco")
-    id("org.jetbrains.dokka") version "1.5.31"
+    id("org.jetbrains.dokka") version Version.dokka
     id("io.gitlab.arturbosch.detekt") version "1.19.0-RC2"
 }
 

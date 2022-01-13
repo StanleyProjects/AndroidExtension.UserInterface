@@ -12,10 +12,11 @@ object Maven {
 }
 
 object Version {
+//    const val dokka = "1.5.31"
+    const val dokka = "1.6.10" // todo kotlin 1.5?
     const val jacoco = "0.8.7"
     const val jvmTarget = "1.8"
-//    const val jvmTarget = "12"
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.5.32"
     const val kotlinDsl = "2.1.7"
     const val kotlinLint = "0.42.1"
     const val name = "0.0.10"
