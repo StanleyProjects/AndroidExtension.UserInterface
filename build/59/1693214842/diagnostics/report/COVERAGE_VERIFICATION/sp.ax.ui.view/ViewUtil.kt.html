@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ViewUtil.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">sp.ax.ui.view</a> &gt; <span class="el_source">ViewUtil.kt</span></div><h1>ViewUtil.kt</h1><pre class="source lang-java linenums">package sp.ax.ui.view
+
+import android.content.Context
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
+import android.view.View
+import android.view.ViewGroup
+import sp.ax.ui.entity.Insets
+import sp.ax.ui.entity.Visibility
+import sp.ax.ui.entity.Visibility.Companion.toInt
+import sp.ax.ui.entity.insets
+import sp.ax.ui.view.group.wrapped
+
+/**
+ * @return An instance of [Insets] by [View.getPaddingLeft], [View.getPaddingTop], [View.getPaddingRight] and [View.getPaddingBottom] values.
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+fun View.getPadding(): Insets {
+<span class="fc" id="L20">    return insets(</span>
+<span class="fc" id="L21">        left = paddingLeft,</span>
+<span class="fc" id="L22">        top = paddingTop,</span>
+<span class="fc" id="L23">        right = paddingRight,</span>
+<span class="fc" id="L24">        bottom = paddingBottom</span>
+    )
+}
+
+/**
+ * Calls [View.setPadding] with values of [padding].
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+fun View.setPadding(padding: Insets) {
+<span class="fc" id="L34">    setPadding(</span>
+<span class="fc" id="L35">        padding.left,</span>
+<span class="fc" id="L36">        padding.top,</span>
+<span class="fc" id="L37">        padding.right,</span>
+<span class="fc" id="L38">        padding.bottom</span>
+    )
+<span class="fc" id="L40">}</span>
+
+/**
+ * Calls [View.setPadding] with values of [left], [top], [right] and [bottom] or default [View.getPaddingLeft], [View.getPaddingTop], [View.getPaddingRight] and [View.getPaddingBottom] respectively.
+ * @author Stanley Wintergreen
+ * @since 0.0.3
+ */
+<span class="fc" id="L47">fun View.updatePadding(</span>
+<span class="fc" id="L48">    left: Int = paddingLeft,</span>
+<span class="fc" id="L49">    top: Int = paddingTop,</span>
+<span class="fc" id="L50">    right: Int = paddingRight,</span>
+<span class="fc" id="L51">    bottom: Int = paddingBottom</span>
+) {
+<span class="fc" id="L53">    setPadding(</span>
+<span class="fc" id="L54">        left,</span>
+<span class="fc" id="L55">        top,</span>
+<span class="fc" id="L56">        right,</span>
+<span class="fc" id="L57">        bottom</span>
+    )
+<span class="fc" id="L59">}</span>
+
+<span class="fc" id="L61">internal val UNSPECIFIED_ON_CLICK: () -&gt; Unit = { error(&quot;not for use&quot;) }</span>
+<span class="fc" id="L62">internal val UNSPECIFIED_ON_LONG_CLICK: () -&gt; Boolean = { error(&quot;not for use&quot;) }</span>
+
+internal object ViewDefault {
+    const val id = View.NO_ID
+<span class="fc" id="L66">    val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams::class.wrapped()</span>
+<span class="fc" id="L67">    val background: Drawable = ColorDrawable(0)</span>
+<span class="fc" id="L68">    val visibility: Visibility = Visibility.VISIBLE</span>
+<span class="fc" id="L69">    val padding: Insets = insets()</span>
+<span class="fc" id="L70">    val onClick: () -&gt; Unit = UNSPECIFIED_ON_CLICK</span>
+<span class="fc" id="L71">    val onLongClick: () -&gt; Boolean = UNSPECIFIED_ON_LONG_CLICK</span>
+    const val keepScreenOn: Boolean = false
+}
+
+internal fun View.configure(
+    layoutParams: ViewGroup.LayoutParams,
+    id: Int,
+    background: Drawable,
+    visibility: Visibility,
+    padding: Insets,
+    onClick: () -&gt; Unit,
+    onLongClick: () -&gt; Boolean,
+    isClickable: Boolean,
+    isLongClickable: Boolean,
+    keepScreenOn: Boolean
+) {
+<span class="fc" id="L87">    this.id = id</span>
+<span class="fc" id="L88">    this.layoutParams = layoutParams</span>
+<span class="fc" id="L89">    this.background = background</span>
+<span class="fc" id="L90">    this.visibility = visibility.toInt()</span>
+<span class="fc" id="L91">    setPadding(padding)</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">    if (onClick !== UNSPECIFIED_ON_CLICK) {</span>
+<span class="fc" id="L93">        setOnClickListener { onClick() }</span>
+    }
+<span class="fc" id="L95">    this.isClickable = isClickable</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">    if (onLongClick !== UNSPECIFIED_ON_LONG_CLICK) {</span>
+<span class="fc" id="L97">        setOnLongClickListener { onLongClick() }</span>
+    }
+<span class="fc" id="L99">    this.isLongClickable = isLongClickable</span>
+<span class="fc" id="L100">    this.keepScreenOn = keepScreenOn</span>
+<span class="fc" id="L101">}</span>
+
+/**
+ * Builds an instance of [View] by [context] and parameters or default. Sample:
+ * ```
+ * fun foo(context: Context): View {
+ *     return view(
+ *         context = context,
+ *         layoutParams = ViewGroup::class.layoutParams(size = 5),
+ *         background = ColorDrawable(Color.GREEN)
+ *     )
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+<span class="fc" id="L117">fun view(</span>
+    context: Context,
+<span class="fc" id="L119">    layoutParams: ViewGroup.LayoutParams = ViewDefault.layoutParams,</span>
+<span class="fc" id="L120">    id: Int = ViewDefault.id,</span>
+<span class="fc" id="L121">    background: Drawable = ViewDefault.background,</span>
+<span class="fc" id="L122">    visibility: Visibility = ViewDefault.visibility,</span>
+<span class="fc" id="L123">    padding: Insets = ViewDefault.padding,</span>
+<span class="fc" id="L124">    onClick: () -&gt; Unit = ViewDefault.onClick,</span>
+<span class="fc" id="L125">    onLongClick: () -&gt; Boolean = ViewDefault.onLongClick,</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">    isClickable: Boolean = onClick !== ViewDefault.onClick,</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,</span>
+<span class="fc" id="L128">    keepScreenOn: Boolean = ViewDefault.keepScreenOn,</span>
+<span class="fc" id="L129">    block: View.() -&gt; Unit = {}</span>
+): View {
+<span class="fc" id="L131">    val result = View(context)</span>
+<span class="fc" id="L132">    result.configure(</span>
+<span class="fc" id="L133">        layoutParams = layoutParams,</span>
+<span class="fc" id="L134">        id = id,</span>
+<span class="fc" id="L135">        background = background,</span>
+<span class="fc" id="L136">        visibility = visibility,</span>
+<span class="fc" id="L137">        padding = padding,</span>
+<span class="fc" id="L138">        onClick = onClick,</span>
+<span class="fc" id="L139">        onLongClick = onLongClick,</span>
+<span class="fc" id="L140">        isClickable = isClickable,</span>
+<span class="fc" id="L141">        isLongClickable = isLongClickable,</span>
+<span class="fc" id="L142">        keepScreenOn = keepScreenOn</span>
+    )
+<span class="fc" id="L144">    result.block()</span>
+<span class="fc" id="L145">    return result</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

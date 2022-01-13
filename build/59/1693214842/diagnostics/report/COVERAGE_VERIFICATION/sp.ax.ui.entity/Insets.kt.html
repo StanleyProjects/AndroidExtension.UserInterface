@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Insets.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">sp.ax.ui.entity</a> &gt; <span class="el_source">Insets.kt</span></div><h1>Insets.kt</h1><pre class="source lang-java linenums">package sp.ax.ui.entity
+
+/**
+ * The type holds four integer offsets which describe changes to the four edges of a rectangle.
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+interface Insets {
+    /**
+     * Holds integer offset which describe the `left` edge of a rectangle.
+     */
+    val left: Int
+    /**
+     * Holds integer offset which describe the `top` edge of a rectangle.
+     */
+    val top: Int
+    /**
+     * Holds integer offset which describe the `right` edge of a rectangle.
+     */
+    val right: Int
+    /**
+     * Holds integer offset which describe the `bottom` edge of a rectangle.
+     */
+    val bottom: Int
+}
+
+<span class="fc" id="L27">private class InsetsImpl(</span>
+<span class="fc" id="L28">    override val left: Int,</span>
+<span class="fc" id="L29">    override val top: Int,</span>
+<span class="fc" id="L30">    override val right: Int,</span>
+<span class="fc" id="L31">    override val bottom: Int</span>
+) : Insets {
+    override fun equals(other: Any?): Boolean {
+<span class="fc" id="L34">        return when (other) {</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">            is Insets -&gt; {</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">                left == other.left &amp;&amp;</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                    top == other.top &amp;&amp;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">                    right == other.right &amp;&amp;</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">                    bottom == other.bottom</span>
+            }
+<span class="fc" id="L41">            else -&gt; false</span>
+        }
+    }
+
+    override fun hashCode(): Int {
+<span class="fc" id="L46">        return listOf(left, top, right, bottom).fold(17) { acc, it -&gt; 31 * acc + it }</span>
+    }
+}
+
+/**
+ * @return An instance of [Insets] by [left], [top], [right] and [bottom] values or default zeros.
+ * @author Stanley Wintergreen
+ * @since 0.0.5
+ */
+<span class="fc" id="L55">fun insets(</span>
+<span class="fc" id="L56">    left: Int = 0,</span>
+<span class="fc" id="L57">    top: Int = 0,</span>
+<span class="fc" id="L58">    right: Int = 0,</span>
+<span class="fc" id="L59">    bottom: Int = 0</span>
+): Insets {
+<span class="fc" id="L61">    return InsetsImpl(</span>
+<span class="fc" id="L62">        left = left,</span>
+<span class="fc" id="L63">        top = top,</span>
+<span class="fc" id="L64">        right = right,</span>
+<span class="fc" id="L65">        bottom = bottom</span>
+    )
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

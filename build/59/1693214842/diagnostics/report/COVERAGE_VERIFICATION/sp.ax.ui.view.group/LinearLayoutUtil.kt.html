@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LinearLayoutUtil.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">sp.ax.ui.view.group</a> &gt; <span class="el_source">LinearLayoutUtil.kt</span></div><h1>LinearLayoutUtil.kt</h1><pre class="source lang-java linenums">package sp.ax.ui.view.group
+
+import android.content.Context
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.text.TextWatcher
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
+import sp.ax.ui.entity.Gravity
+import sp.ax.ui.entity.Gravity.Companion.toInt
+import sp.ax.ui.entity.Insets
+import sp.ax.ui.entity.Orientation
+import sp.ax.ui.entity.TypeDimension
+import sp.ax.ui.entity.TypefaceStyle
+import sp.ax.ui.entity.Visibility
+import sp.ax.ui.entity.insets
+import sp.ax.ui.view.ViewDefault
+import sp.ax.ui.view.configure
+import sp.ax.ui.widget.TextViewDefault
+import sp.ax.ui.widget.configure
+import kotlin.reflect.KClass
+
+/**
+ * Calls [LinearLayout.setOrientation] with one of [LinearLayout.HORIZONTAL] and [LinearLayout.VERTICAL] depending on [orientation].
+ * @author Stanley Wintergreen
+ * @since 0.0.6
+ */
+fun LinearLayout.setOrientation(orientation: Orientation) {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">    val result = when (orientation) {</span>
+<span class="fc" id="L33">        Orientation.HORIZONTAL -&gt; LinearLayout.HORIZONTAL</span>
+<span class="fc" id="L34">        Orientation.VERTICAL -&gt; LinearLayout.VERTICAL</span>
+    }
+<span class="fc" id="L36">    setOrientation(result)</span>
+<span class="fc" id="L37">}</span>
+
+internal fun LinearLayout.configure(
+    layoutParams: ViewGroup.LayoutParams,
+    id: Int,
+    background: Drawable,
+    visibility: Visibility,
+    padding: Insets,
+    onClick: () -&gt; Unit,
+    onLongClick: () -&gt; Boolean,
+    isClickable: Boolean,
+    isLongClickable: Boolean,
+    keepScreenOn: Boolean,
+    orientation: Orientation,
+    gravity: Gravity
+) {
+<span class="fc" id="L53">    configure(</span>
+<span class="fc" id="L54">        layoutParams = layoutParams,</span>
+<span class="fc" id="L55">        id = id,</span>
+<span class="fc" id="L56">        background = background,</span>
+<span class="fc" id="L57">        visibility = visibility,</span>
+<span class="fc" id="L58">        padding = padding,</span>
+<span class="fc" id="L59">        onClick = onClick,</span>
+<span class="fc" id="L60">        onLongClick = onLongClick,</span>
+<span class="fc" id="L61">        isClickable = isClickable,</span>
+<span class="fc" id="L62">        isLongClickable = isLongClickable,</span>
+<span class="fc" id="L63">        keepScreenOn = keepScreenOn</span>
+    )
+<span class="fc" id="L65">    setOrientation(orientation)</span>
+<span class="fc" id="L66">    this.gravity = gravity.toInt()</span>
+<span class="fc" id="L67">}</span>
+
+internal object LinearLayoutDefault {
+<span class="fc" id="L70">    val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams::class.matched()</span>
+<span class="fc" id="L71">    val orientation: Orientation = Orientation.HORIZONTAL</span>
+<span class="fc" id="L72">    val gravity: Gravity = Gravity.TOP_LEFT</span>
+    object Child {
+        const val width: Int = ViewGroup.LayoutParams.WRAP_CONTENT
+        const val height: Int = ViewGroup.LayoutParams.WRAP_CONTENT
+        const val weight: Float = 0f
+<span class="fc" id="L77">        val margin: Insets = insets()</span>
+
+        fun getLayoutParams(): LinearLayout.LayoutParams {
+<span class="fc" id="L80">            return LinearLayout::class.layoutParams(</span>
+<span class="fc" id="L81">                width = width,</span>
+<span class="fc" id="L82">                height = height,</span>
+<span class="fc" id="L83">                weight = weight,</span>
+<span class="fc" id="L84">                margin = margin</span>
+            )
+        }
+    }
+}
+
+/**
+ * Builds an instance of [LinearLayout] by [context] and parameters or default. Sample:
+ * ```
+ * fun foo(context: Context): LinearLayout {
+ *     return linearLayout(
+ *         context = context,
+ *         layoutParams = ViewGroup::class.layoutParams(size = 5),
+ *         background = ColorDrawable(Color.GREEN)
+ *     )
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.6
+ */
+<span class="fc" id="L104">fun linearLayout(</span>
+    context: Context,
+<span class="fc" id="L106">    layoutParams: ViewGroup.LayoutParams = LinearLayoutDefault.layoutParams,</span>
+<span class="fc" id="L107">    id: Int = ViewDefault.id,</span>
+<span class="fc" id="L108">    background: Drawable = ViewDefault.background,</span>
+<span class="fc" id="L109">    visibility: Visibility = ViewDefault.visibility,</span>
+<span class="fc" id="L110">    padding: Insets = ViewDefault.padding,</span>
+<span class="fc" id="L111">    onClick: () -&gt; Unit = ViewDefault.onClick,</span>
+<span class="fc" id="L112">    onLongClick: () -&gt; Boolean = ViewDefault.onLongClick,</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">    isClickable: Boolean = onClick !== ViewDefault.onClick,</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,</span>
+<span class="fc" id="L115">    keepScreenOn: Boolean = ViewDefault.keepScreenOn,</span>
+<span class="fc" id="L116">    orientation: Orientation = LinearLayoutDefault.orientation,</span>
+<span class="fc" id="L117">    gravity: Gravity = LinearLayoutDefault.gravity,</span>
+<span class="fc" id="L118">    block: LinearLayout.() -&gt; Unit = {}</span>
+): LinearLayout {
+<span class="fc" id="L120">    val result = LinearLayout(context)</span>
+<span class="fc" id="L121">    result.configure(</span>
+<span class="fc" id="L122">        layoutParams = layoutParams,</span>
+<span class="fc" id="L123">        id = id,</span>
+<span class="fc" id="L124">        background = background,</span>
+<span class="fc" id="L125">        visibility = visibility,</span>
+<span class="fc" id="L126">        padding = padding,</span>
+<span class="fc" id="L127">        onClick = onClick,</span>
+<span class="fc" id="L128">        onLongClick = onLongClick,</span>
+<span class="fc" id="L129">        isClickable = isClickable,</span>
+<span class="fc" id="L130">        isLongClickable = isLongClickable,</span>
+<span class="fc" id="L131">        keepScreenOn = keepScreenOn,</span>
+<span class="fc" id="L132">        orientation = orientation,</span>
+<span class="fc" id="L133">        gravity = gravity</span>
+    )
+<span class="fc" id="L135">    result.block()</span>
+<span class="fc" id="L136">    return result</span>
+}
+
+/**
+ * A kotlin function variant of [LinearLayout.LayoutParams]. To use named arguments. Sample:
+ * ```
+ * fun foo(): LinearLayout.LayoutParams {
+ *     return LinearLayout::class.layoutParams(height = 5, width = 6, margin(right = 7, left = 8))
+ * }
+ * ```
+ * @return An instance of [LinearLayout.LayoutParams] using its constructor with [ViewGroup.MarginLayoutParams.setMargin].
+ * @author Stanley Wintergreen
+ * @since 0.0.6
+ */
+fun KClass&lt;LinearLayout&gt;.layoutParams(
+    width: Int,
+    height: Int,
+    weight: Float,
+    margin: Insets
+): LinearLayout.LayoutParams {
+<span class="fc" id="L156">    val result = LinearLayout.LayoutParams(width, height, weight)</span>
+<span class="fc" id="L157">    result.setMargin(margin)</span>
+<span class="fc" id="L158">    return result</span>
+}
+
+/**
+ * Builds an instance of [View] by parameters or default and adds to [LinearLayout] receiver if [needToAdd] == `true`. Sample:
+ * ```
+ * fun foo(context: Context) {
+ *     val bar = linearLayout(context) {
+ *         view(
+ *             width = 256,
+ *             height = 128,
+ *             onClick = { ... }
+ *         )
+ *     }
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.6
+ */
+<span class="fc" id="L177">fun LinearLayout.view(</span>
+<span class="fc" id="L178">    context: Context = this.context,</span>
+<span class="fc" id="L179">    width: Int = LinearLayoutDefault.Child.width,</span>
+<span class="fc" id="L180">    height: Int = LinearLayoutDefault.Child.height,</span>
+<span class="fc" id="L181">    weight: Float = LinearLayoutDefault.Child.weight,</span>
+<span class="fc" id="L182">    margin: Insets = LinearLayoutDefault.Child.margin,</span>
+<span class="fc" id="L183">    id: Int = ViewDefault.id,</span>
+<span class="fc" id="L184">    background: Drawable = ViewDefault.background,</span>
+<span class="fc" id="L185">    visibility: Visibility = ViewDefault.visibility,</span>
+<span class="fc" id="L186">    padding: Insets = ViewDefault.padding,</span>
+<span class="fc" id="L187">    onClick: () -&gt; Unit = ViewDefault.onClick,</span>
+<span class="fc" id="L188">    onLongClick: () -&gt; Boolean = ViewDefault.onLongClick,</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">    isClickable: Boolean = onClick !== ViewDefault.onClick,</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,</span>
+<span class="fc" id="L191">    keepScreenOn: Boolean = ViewDefault.keepScreenOn,</span>
+<span class="fc" id="L192">    needToAdd: Boolean = true,</span>
+<span class="fc" id="L193">    block: View.() -&gt; Unit = {}</span>
+): View {
+<span class="fc" id="L195">    val result = View(context)</span>
+<span class="fc" id="L196">    result.configure(</span>
+<span class="fc" id="L197">        layoutParams = LinearLayout::class.layoutParams(</span>
+<span class="fc" id="L198">            width = width,</span>
+<span class="fc" id="L199">            height = height,</span>
+<span class="fc" id="L200">            weight = weight,</span>
+<span class="fc" id="L201">            margin = margin</span>
+        ),
+<span class="fc" id="L203">        id = id,</span>
+<span class="fc" id="L204">        background = background,</span>
+<span class="fc" id="L205">        visibility = visibility,</span>
+<span class="fc" id="L206">        padding = padding,</span>
+<span class="fc" id="L207">        onClick = onClick,</span>
+<span class="fc" id="L208">        onLongClick = onLongClick,</span>
+<span class="fc" id="L209">        isClickable = isClickable,</span>
+<span class="fc" id="L210">        isLongClickable = isLongClickable,</span>
+<span class="fc" id="L211">        keepScreenOn = keepScreenOn</span>
+    )
+<span class="fc bfc" id="L213" title="All 2 branches covered.">    if (needToAdd) {</span>
+<span class="fc" id="L214">        addView(result)</span>
+    }
+<span class="fc" id="L216">    result.block()</span>
+<span class="fc" id="L217">    return result</span>
+}
+
+/**
+ * A variant of [layoutParams] with one value [ViewGroup.LayoutParams.WRAP_CONTENT]
+ * to both width and height.
+ * @return An instance of [LinearLayout.LayoutParams]
+ * such that its [ViewGroup.LayoutParams.width] == [ViewGroup.LayoutParams.WRAP_CONTENT]
+ * and [ViewGroup.LayoutParams.height] == [ViewGroup.LayoutParams.WRAP_CONTENT].
+ * @author Stanley Wintergreen
+ * @since 0.0.6
+ */
+fun KClass&lt;LinearLayout.LayoutParams&gt;.wrapped(
+    weight: Float,
+    margin: Insets
+): LinearLayout.LayoutParams {
+<span class="nc" id="L233">    return LinearLayout::class.layoutParams(</span>
+<span class="nc" id="L234">        width = ViewGroup.LayoutParams.WRAP_CONTENT,</span>
+<span class="nc" id="L235">        height = ViewGroup.LayoutParams.WRAP_CONTENT,</span>
+<span class="nc" id="L236">        weight = weight,</span>
+<span class="nc" id="L237">        margin = margin</span>
+    )
+}
+
+/**
+ * Builds an instance of [TextView] by parameters or default and adds to [LinearLayout] receiver if [needToAdd] == `true`. Sample:
+ * ```
+ * fun foo(context: Context) {
+ *     val bar = linearLayout(context) {
+ *         textView(
+ *             width = 256,
+ *             height = 128,
+ *             text = &quot;baz&quot;
+ *         )
+ *     }
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.10
+ */
+<span class="fc" id="L257">fun LinearLayout.textView(</span>
+<span class="fc" id="L258">    context: Context = this.context,</span>
+<span class="fc" id="L259">    width: Int = LinearLayoutDefault.Child.width,</span>
+<span class="fc" id="L260">    height: Int = LinearLayoutDefault.Child.height,</span>
+<span class="fc" id="L261">    weight: Float = LinearLayoutDefault.Child.weight,</span>
+<span class="fc" id="L262">    margin: Insets = LinearLayoutDefault.Child.margin,</span>
+<span class="fc" id="L263">    id: Int = ViewDefault.id,</span>
+<span class="fc" id="L264">    background: Drawable = ViewDefault.background,</span>
+<span class="fc" id="L265">    visibility: Visibility = ViewDefault.visibility,</span>
+<span class="fc" id="L266">    padding: Insets = ViewDefault.padding,</span>
+<span class="fc" id="L267">    onClick: () -&gt; Unit = ViewDefault.onClick,</span>
+<span class="fc" id="L268">    onLongClick: () -&gt; Boolean = ViewDefault.onLongClick,</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">    isClickable: Boolean = onClick !== ViewDefault.onClick,</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,</span>
+<span class="fc" id="L271">    keepScreenOn: Boolean = ViewDefault.keepScreenOn,</span>
+<span class="fc" id="L272">    gravity: Gravity = TextViewDefault.gravity,</span>
+    text: CharSequence,
+<span class="fc" id="L274">    textSizeUnit: TypeDimension = TextViewDefault.textSizeUnit,</span>
+<span class="fc" id="L275">    textSize: Float = TextViewDefault.textSize,</span>
+<span class="fc" id="L276">    textColor: Int = TextViewDefault.textColor,</span>
+<span class="fc" id="L277">    typeface: Typeface? = TextViewDefault.typeface,</span>
+<span class="fc" id="L278">    typefaceStyle: TypefaceStyle = TextViewDefault.typefaceStyle,</span>
+<span class="fc" id="L279">    isAllCaps: Boolean = TextViewDefault.isAllCaps,</span>
+<span class="fc" id="L280">    textWatchers: Set&lt;TextWatcher&gt; = TextViewDefault.textWatchers,</span>
+<span class="fc" id="L281">    needToAdd: Boolean = true,</span>
+<span class="fc" id="L282">    block: TextView.() -&gt; Unit = {}</span>
+): TextView {
+<span class="fc" id="L284">    val result = TextView(context)</span>
+<span class="fc" id="L285">    result.configure(</span>
+<span class="fc" id="L286">        layoutParams = LinearLayout::class.layoutParams(</span>
+<span class="fc" id="L287">            width = width,</span>
+<span class="fc" id="L288">            height = height,</span>
+<span class="fc" id="L289">            weight = weight,</span>
+<span class="fc" id="L290">            margin = margin</span>
+        ),
+<span class="fc" id="L292">        id = id,</span>
+<span class="fc" id="L293">        background = background,</span>
+<span class="fc" id="L294">        visibility = visibility,</span>
+<span class="fc" id="L295">        padding = padding,</span>
+<span class="fc" id="L296">        onClick = onClick,</span>
+<span class="fc" id="L297">        onLongClick = onLongClick,</span>
+<span class="fc" id="L298">        isClickable = isClickable,</span>
+<span class="fc" id="L299">        isLongClickable = isLongClickable,</span>
+<span class="fc" id="L300">        keepScreenOn = keepScreenOn,</span>
+<span class="fc" id="L301">        gravity = gravity,</span>
+<span class="fc" id="L302">        text = text,</span>
+<span class="fc" id="L303">        textSizeUnit = textSizeUnit,</span>
+<span class="fc" id="L304">        textSize = textSize,</span>
+<span class="fc" id="L305">        textColor = textColor,</span>
+<span class="fc" id="L306">        typeface = typeface,</span>
+<span class="fc" id="L307">        typefaceStyle = typefaceStyle,</span>
+<span class="fc" id="L308">        isAllCaps = isAllCaps,</span>
+<span class="fc" id="L309">        textWatchers = textWatchers</span>
+    )
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">    if (needToAdd) {</span>
+<span class="fc" id="L312">        addView(result)</span>
+    }
+<span class="fc" id="L314">    result.block()</span>
+<span class="fc" id="L315">    return result</span>
+}
+
+/**
+ * Builds an instance of [EditText] by parameters or default and adds to [LinearLayout] receiver if [needToAdd] == `true`. Sample:
+ * ```
+ * fun foo(context: Context) {
+ *     val bar = linearLayout(context) {
+ *         editText(
+ *             width = 256,
+ *             height = 128,
+ *             textWatchers = setOf(onTextChanged { println(it) })
+ *         )
+ *     }
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.10
+ */
+<span class="nc" id="L334">fun LinearLayout.editText(</span>
+<span class="nc" id="L335">    context: Context = this.context,</span>
+<span class="nc" id="L336">    width: Int = LinearLayoutDefault.Child.width,</span>
+<span class="nc" id="L337">    height: Int = LinearLayoutDefault.Child.height,</span>
+<span class="nc" id="L338">    weight: Float = LinearLayoutDefault.Child.weight,</span>
+<span class="nc" id="L339">    margin: Insets = LinearLayoutDefault.Child.margin,</span>
+<span class="nc" id="L340">    id: Int = ViewDefault.id,</span>
+<span class="nc" id="L341">    background: Drawable = ViewDefault.background,</span>
+<span class="nc" id="L342">    visibility: Visibility = ViewDefault.visibility,</span>
+<span class="nc" id="L343">    padding: Insets = ViewDefault.padding,</span>
+<span class="nc" id="L344">    onClick: () -&gt; Unit = ViewDefault.onClick,</span>
+<span class="nc" id="L345">    onLongClick: () -&gt; Boolean = ViewDefault.onLongClick,</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">    isClickable: Boolean = onClick !== ViewDefault.onClick,</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,</span>
+<span class="nc" id="L348">    keepScreenOn: Boolean = ViewDefault.keepScreenOn,</span>
+<span class="nc" id="L349">    gravity: Gravity = TextViewDefault.gravity,</span>
+<span class="nc" id="L350">    text: CharSequence = &quot;&quot;,</span>
+<span class="nc" id="L351">    textSizeUnit: TypeDimension = TextViewDefault.textSizeUnit,</span>
+<span class="nc" id="L352">    textSize: Float = TextViewDefault.textSize,</span>
+<span class="nc" id="L353">    textColor: Int = TextViewDefault.textColor,</span>
+<span class="nc" id="L354">    typeface: Typeface? = TextViewDefault.typeface,</span>
+<span class="nc" id="L355">    typefaceStyle: TypefaceStyle = TextViewDefault.typefaceStyle,</span>
+<span class="nc" id="L356">    isAllCaps: Boolean = TextViewDefault.isAllCaps,</span>
+<span class="nc" id="L357">    textWatchers: Set&lt;TextWatcher&gt; = TextViewDefault.textWatchers,</span>
+<span class="nc" id="L358">    needToAdd: Boolean = true,</span>
+<span class="nc" id="L359">    block: EditText.() -&gt; Unit = {}</span>
+): EditText {
+<span class="nc" id="L361">    val result = EditText(context)</span>
+<span class="nc" id="L362">    result.configure(</span>
+<span class="nc" id="L363">        layoutParams = LinearLayout::class.layoutParams(</span>
+<span class="nc" id="L364">            width = width,</span>
+<span class="nc" id="L365">            height = height,</span>
+<span class="nc" id="L366">            weight = weight,</span>
+<span class="nc" id="L367">            margin = margin</span>
+        ),
+<span class="nc" id="L369">        id = id,</span>
+<span class="nc" id="L370">        background = background,</span>
+<span class="nc" id="L371">        visibility = visibility,</span>
+<span class="nc" id="L372">        padding = padding,</span>
+<span class="nc" id="L373">        onClick = onClick,</span>
+<span class="nc" id="L374">        onLongClick = onLongClick,</span>
+<span class="nc" id="L375">        isClickable = isClickable,</span>
+<span class="nc" id="L376">        isLongClickable = isLongClickable,</span>
+<span class="nc" id="L377">        keepScreenOn = keepScreenOn,</span>
+<span class="nc" id="L378">        gravity = gravity,</span>
+<span class="nc" id="L379">        text = text,</span>
+<span class="nc" id="L380">        textSizeUnit = textSizeUnit,</span>
+<span class="nc" id="L381">        textSize = textSize,</span>
+<span class="nc" id="L382">        textColor = textColor,</span>
+<span class="nc" id="L383">        typeface = typeface,</span>
+<span class="nc" id="L384">        typefaceStyle = typefaceStyle,</span>
+<span class="nc" id="L385">        isAllCaps = isAllCaps,</span>
+<span class="nc" id="L386">        textWatchers = textWatchers</span>
+    )
+<span class="nc bnc" id="L388" title="All 2 branches missed.">    if (needToAdd) {</span>
+<span class="nc" id="L389">        addView(result)</span>
+    }
+<span class="nc" id="L391">    result.block()</span>
+<span class="nc" id="L392">    return result</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextViewUtil.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">sp.ax.ui.widget</a> &gt; <span class="el_source">TextViewUtil.kt</span></div><h1>TextViewUtil.kt</h1><pre class="source lang-java linenums">package sp.ax.ui.widget
+
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.Drawable
+import android.text.TextWatcher
+import android.view.ViewGroup
+import android.widget.TextView
+import sp.ax.ui.entity.Gravity
+import sp.ax.ui.entity.Gravity.Companion.toInt
+import sp.ax.ui.entity.Insets
+import sp.ax.ui.entity.TypeDimension
+import sp.ax.ui.entity.TypeDimension.Companion.toInt
+import sp.ax.ui.entity.TypefaceStyle
+import sp.ax.ui.entity.TypefaceStyle.Companion.toInt
+import sp.ax.ui.entity.Visibility
+import sp.ax.ui.text.onTextChanged
+import sp.ax.ui.view.ViewDefault
+import sp.ax.ui.view.configure
+
+internal fun TextView.configure(
+    layoutParams: ViewGroup.LayoutParams,
+    id: Int,
+    background: Drawable,
+    visibility: Visibility,
+    padding: Insets,
+    onClick: () -&gt; Unit,
+    onLongClick: () -&gt; Boolean,
+    isClickable: Boolean,
+    isLongClickable: Boolean,
+    keepScreenOn: Boolean,
+    gravity: Gravity,
+    text: CharSequence,
+    textSizeUnit: TypeDimension,
+    textSize: Float,
+    textColor: Int,
+    typeface: Typeface?,
+    typefaceStyle: TypefaceStyle,
+    isAllCaps: Boolean,
+    textWatchers: Set&lt;TextWatcher&gt;
+) {
+<span class="fc" id="L43">    configure(</span>
+<span class="fc" id="L44">        layoutParams = layoutParams,</span>
+<span class="fc" id="L45">        id = id,</span>
+<span class="fc" id="L46">        background = background,</span>
+<span class="fc" id="L47">        visibility = visibility,</span>
+<span class="fc" id="L48">        padding = padding,</span>
+<span class="fc" id="L49">        onClick = onClick,</span>
+<span class="fc" id="L50">        onLongClick = onLongClick,</span>
+<span class="fc" id="L51">        isClickable = isClickable,</span>
+<span class="fc" id="L52">        isLongClickable = isLongClickable,</span>
+<span class="fc" id="L53">        keepScreenOn = keepScreenOn</span>
+    )
+<span class="fc" id="L55">    this.gravity = gravity.toInt()</span>
+<span class="fc" id="L56">    this.text = text</span>
+<span class="fc" id="L57">    setTextSize(textSizeUnit.toInt(), textSize)</span>
+<span class="fc" id="L58">    setTextColor(textColor)</span>
+<span class="fc" id="L59">    setTypeface(typeface, typefaceStyle.toInt())</span>
+<span class="fc" id="L60">    this.isAllCaps = isAllCaps</span>
+<span class="fc" id="L61">    textWatchers.forEach(::addTextChangedListener)</span>
+<span class="fc" id="L62">}</span>
+
+internal object TextViewDefault {
+<span class="fc" id="L65">    val gravity: Gravity = Gravity.TOP_LEFT</span>
+<span class="fc" id="L66">    val textSizeUnit: TypeDimension = TypeDimension.SCALED_PIXEL</span>
+    const val textSize: Float = 12f
+<span class="fc" id="L68">    val textColor: Int = Color.parseColor(&quot;#000000&quot;)</span>
+<span class="fc" id="L69">    val typeface: Typeface? = null</span>
+<span class="fc" id="L70">    val typefaceStyle: TypefaceStyle = TypefaceStyle.NORMAL</span>
+    const val isAllCaps: Boolean = false
+<span class="fc" id="L72">    val textWatchers: Set&lt;TextWatcher&gt; = emptySet()</span>
+}
+
+/**
+ * Builds an instance of [TextView] by [context] and parameters or default. Sample:
+ * ```
+ * fun foo(context: Context): TextView {
+ *     return textView(
+ *         context = context,
+ *         layoutParams = ViewGroup::class.layoutParams(width = 512, height = 64),
+ *         text = &quot;bar&quot;,
+ *         textSizeUnit = TypeDimension.PIXEL,
+ *         textSize = 64 / 2f
+ *     )
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.7
+ */
+<span class="fc" id="L91">fun textView(</span>
+    context: Context,
+<span class="fc" id="L93">    layoutParams: ViewGroup.LayoutParams = ViewDefault.layoutParams,</span>
+<span class="fc" id="L94">    id: Int = ViewDefault.id,</span>
+<span class="fc" id="L95">    background: Drawable = ViewDefault.background,</span>
+<span class="fc" id="L96">    visibility: Visibility = ViewDefault.visibility,</span>
+<span class="fc" id="L97">    padding: Insets = ViewDefault.padding,</span>
+<span class="fc" id="L98">    onClick: () -&gt; Unit = ViewDefault.onClick,</span>
+<span class="fc" id="L99">    onLongClick: () -&gt; Boolean = ViewDefault.onLongClick,</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">    isClickable: Boolean = onClick !== ViewDefault.onClick,</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">    isLongClickable: Boolean = onLongClick !== ViewDefault.onLongClick,</span>
+<span class="fc" id="L102">    keepScreenOn: Boolean = ViewDefault.keepScreenOn,</span>
+<span class="fc" id="L103">    gravity: Gravity = TextViewDefault.gravity,</span>
+    text: CharSequence,
+<span class="fc" id="L105">    textSizeUnit: TypeDimension = TextViewDefault.textSizeUnit,</span>
+<span class="fc" id="L106">    textSize: Float = TextViewDefault.textSize,</span>
+<span class="fc" id="L107">    textColor: Int = TextViewDefault.textColor,</span>
+<span class="fc" id="L108">    typeface: Typeface? = TextViewDefault.typeface,</span>
+<span class="fc" id="L109">    typefaceStyle: TypefaceStyle = TextViewDefault.typefaceStyle,</span>
+<span class="fc" id="L110">    isAllCaps: Boolean = TextViewDefault.isAllCaps,</span>
+<span class="fc" id="L111">    textWatchers: Set&lt;TextWatcher&gt; = TextViewDefault.textWatchers,</span>
+<span class="fc" id="L112">    block: TextView.() -&gt; Unit = {}</span>
+): TextView {
+<span class="fc" id="L114">    val result = TextView(context)</span>
+<span class="fc" id="L115">    result.configure(</span>
+<span class="fc" id="L116">        layoutParams = layoutParams,</span>
+<span class="fc" id="L117">        id = id,</span>
+<span class="fc" id="L118">        background = background,</span>
+<span class="fc" id="L119">        visibility = visibility,</span>
+<span class="fc" id="L120">        padding = padding,</span>
+<span class="fc" id="L121">        onClick = onClick,</span>
+<span class="fc" id="L122">        onLongClick = onLongClick,</span>
+<span class="fc" id="L123">        isClickable = isClickable,</span>
+<span class="fc" id="L124">        isLongClickable = isLongClickable,</span>
+<span class="fc" id="L125">        keepScreenOn = keepScreenOn,</span>
+<span class="fc" id="L126">        gravity = gravity,</span>
+<span class="fc" id="L127">        text = text,</span>
+<span class="fc" id="L128">        textSizeUnit = textSizeUnit,</span>
+<span class="fc" id="L129">        textSize = textSize,</span>
+<span class="fc" id="L130">        textColor = textColor,</span>
+<span class="fc" id="L131">        typeface = typeface,</span>
+<span class="fc" id="L132">        typefaceStyle = typefaceStyle,</span>
+<span class="fc" id="L133">        isAllCaps = isAllCaps,</span>
+<span class="fc" id="L134">        textWatchers = textWatchers</span>
+    )
+<span class="fc" id="L136">    result.block()</span>
+<span class="fc" id="L137">    return result</span>
+}
+
+/**
+ * Calls [TextView.addTextChangedListener] with [TextWatcher] built only with the overridden [TextWatcher.onTextChanged] method.
+ * @author Stanley Wintergreen
+ * @since 0.0.9
+ */
+fun TextView.addOnTextChanged(
+    block: (CharSequence) -&gt; Unit
+) {
+<span class="fc" id="L148">    addTextChangedListener(onTextChanged(block))</span>
+<span class="fc" id="L149">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TypeDimension.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">sp.ax.ui.entity</a> &gt; <span class="el_source">TypeDimension.kt</span></div><h1>TypeDimension.kt</h1><pre class="source lang-java linenums">package sp.ax.ui.entity
+
+import android.util.TypedValue
+
+/**
+ * Represents the values of the [android.util.TypedValue] class as enumerations.
+ * @author Stanley Wintergreen
+ * @since 0.0.7
+ */
+enum class TypeDimension {
+<span class="fc" id="L11">    PIXEL,</span>
+<span class="fc" id="L12">    DEVICE_INDEPENDENT,</span>
+<span class="fc" id="L13">    SCALED_PIXEL;</span>
+
+    companion object {
+        /**
+         * Converts instance of [TypeDimension] to integer value by [android.util.TypedValue].
+         * @author Stanley Wintergreen
+         * @since 0.0.7
+         */
+        fun TypeDimension.toInt(): Int {
+<span class="fc bfc" id="L22" title="All 3 branches covered.">            return when (this) {</span>
+<span class="fc" id="L23">                PIXEL -&gt; TypedValue.COMPLEX_UNIT_PX</span>
+<span class="fc" id="L24">                DEVICE_INDEPENDENT -&gt; TypedValue.COMPLEX_UNIT_DIP</span>
+<span class="fc" id="L25">                SCALED_PIXEL -&gt; TypedValue.COMPLEX_UNIT_SP</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
