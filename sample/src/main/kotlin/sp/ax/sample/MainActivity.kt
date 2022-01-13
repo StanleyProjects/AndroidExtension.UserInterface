@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.ViewGroup
 import sp.ax.ui.entity.Orientation
 import sp.ax.ui.text.onTextChanged
+import sp.ax.ui.view.group.editText
 import sp.ax.ui.view.group.linearLayout
 import sp.ax.ui.view.group.textView
-import sp.ax.ui.view.group.editText
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
