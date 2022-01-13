@@ -9,6 +9,23 @@ fun Any?.exhaustive() {
     // ignored
 }
 
+inline fun <reified T : Any> T.getPrivateInt(name: String): Int {
+    val field = T::class.java.getDeclaredField(name)
+    check(Modifier.isPrivate(field.modifiers))
+    field.isAccessible = true
+    return field.getInt(this)
+}
+
+inline fun <reified T : Any, reified U : Any> T.getPrivateList(name: String): List<U> {
+    val field = T::class.java.getDeclaredField(name)
+    check(Modifier.isPrivate(field.modifiers))
+    field.isAccessible = true
+    val result = field.get(this)
+    check(result is List<*>)
+    check(result.all { it is U })
+    return result as List<U>
+}
+
 fun <T : KClass<*>> T.onFields(block: (Field) -> Unit) {
     val fields = java.declaredFields
     Assert.assertFalse(fields.isEmpty())

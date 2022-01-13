@@ -1,0 +1,44 @@
+name: Pull request to snapshot
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - snapshot
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_OWNER: StanleyProjects
+      GITHUB_REPO: AndroidExtension.UserInterface
+      MAVEN_ARTIFACT_ID: ${{env.GITHUB_REPO}}
+      MAVEN_GROUP_ID: com.github.kepocnhh
+      MAVEN_USERNAME: ${{secrets.MAVEN_USERNAME}}
+      MAVEN_PASSWORD: ${{secrets.MAVEN_PASSWORD}}
+      RESOURCES_PATH: buildSrc/src/main/resources
+    steps:
+      - run: |
+          echo "HOME=$(echo ~)" >> $GITHUB_ENV
+          echo "DOCKER_PREFIX=docker_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}" >> $GITHUB_ENV
+          echo "ASSEMBLY_PATH=$HOME/assembly_${GITHUB_RUN_NUMBER}_${GITHUB_RUN_ID}" >> $GITHUB_ENV
+          echo "PR_NUMBER=$(jq -r .pull_request.number   $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+          echo "PR_SOURCE_BRANCH=$(jq -r .pull_request.base.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+          echo "GIT_SOURCE_BRANCH=$(jq -r .pull_request.head.ref $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$(jq -r .pull_request.head.sha $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+      - run: if test "$GIT_SOURCE_BRANCH" != dev; then echo "Source branch is \"$GIT_SOURCE_BRANCH\", but it is not \"dev\"!"; exit 1; fi
+      - working-directory: ${{env.HOME}}/repository
+        run: |
+          git init
+          git remote add origin https://$GITHUB_PAT@github.com/$GITHUB_OWNER/$GITHUB_REPO.git
+          git fetch origin $GIT_SOURCE_BRANCH
+          git fetch origin $PR_SOURCE_BRANCH
+          git checkout $GIT_SOURCE_BRANCH
+      - working-directory: ${{env.HOME}}/repository
+        run: |
+          /bin/bash $RESOURCES_PATH/bash/workflow/assemble/vcs.sh
+          /bin/bash $RESOURCES_PATH/bash/workflow/prepare.sh
+          /bin/bash $RESOURCES_PATH/bash/workflow/verify.sh
+          /bin/bash $RESOURCES_PATH/bash/workflow/assemble/common.sh
+          /bin/bash $RESOURCES_PATH/bash/workflow/pr/snapshot/assemble/artifact.sh
+          /bin/bash $RESOURCES_PATH/bash/workflow/pr/snapshot/deploy.sh
