@@ -34,6 +34,8 @@ if test -f "$ASSEMBLY_PATH/diagnostics/summary.json"; then
    POSTFIX="see the unit test issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
   "COVERAGE_VERIFICATION")
    POSTFIX="see the coverage verification issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
+  "README")
+   POSTFIX="see the readme issues [report]($GITHUB_PAGES/$RELATIVE_PATH/$REPORT_TYPE/index.html)";;
   *) echo "Report type \"$REPORT_TYPE\" is not supported!"; exit 103;;
  esac
  COMMENT_BODY="${COMMENT_BODY}"$'\n'"- $POSTFIX"
