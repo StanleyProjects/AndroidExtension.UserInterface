@@ -229,6 +229,22 @@ fun KClass<LinearLayout.LayoutParams>.wrapped(
     )
 }
 
+/**
+ * Builds an instance of [TextView] by parameters or default and adds to [LinearLayout] receiver if [needToAdd] == `true`. Sample:
+ * ```
+ * fun foo(context: Context) {
+ *     val bar = linearLayout(context) {
+ *         textView(
+ *             width = 256,
+ *             height = 128,
+ *             text = "baz"
+ *         )
+ *     }
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.10
+ */
 fun LinearLayout.textView(
     context: Context = this.context,
     width: Int = LinearLayoutDefault.LayoutParams.width,
@@ -290,6 +306,22 @@ fun LinearLayout.textView(
     return result
 }
 
+/**
+ * Builds an instance of [EditText] by parameters or default and adds to [LinearLayout] receiver if [needToAdd] == `true`. Sample:
+ * ```
+ * fun foo(context: Context) {
+ *     val bar = linearLayout(context) {
+ *         editText(
+ *             width = 256,
+ *             height = 128,
+ *             textWatchers = setOf(onTextChanged { println(it) })
+ *         )
+ *     }
+ * }
+ * ```
+ * @author Stanley Wintergreen
+ * @since 0.0.10
+ */
 fun LinearLayout.editText(
     context: Context = this.context,
     width: Int = LinearLayoutDefault.LayoutParams.width,
