@@ -139,10 +139,7 @@ class LinearLayoutUtilTest {
         val root = LinearLayout(context)
         val view = root.view()
         view.assertDefault(
-            layoutParams = LinearLayout.LayoutParams::class.wrapped(
-                weight = LinearLayoutDefault.LayoutParams.weight,
-                margin = LinearLayoutDefault.LayoutParams.margin
-            )
+            layoutParams = LinearLayoutDefault.Child.getLayoutParams()
         )
         assertEquals("Child count is not 1!", 1, root.childCount)
     }
@@ -242,7 +239,9 @@ class LinearLayoutUtilTest {
     @Test
     fun textViewDefaultTest() {
         val root = LinearLayout(context)
-        TODO()
+        root.textView(text = "foo").assertDefault(
+            layoutParams = LinearLayoutDefault.Child.getLayoutParams()
+        )
         assertEquals("Child count is not 1!", 1, root.childCount)
     }
 }

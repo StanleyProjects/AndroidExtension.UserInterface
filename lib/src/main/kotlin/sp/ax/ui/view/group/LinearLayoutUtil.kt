@@ -70,11 +70,20 @@ internal object LinearLayoutDefault {
     val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams::class.matched()
     val orientation: Orientation = Orientation.HORIZONTAL
     val gravity: Gravity = Gravity.TOP_LEFT
-    object LayoutParams {
+    object Child {
         const val width: Int = ViewGroup.LayoutParams.WRAP_CONTENT
         const val height: Int = ViewGroup.LayoutParams.WRAP_CONTENT
         const val weight: Float = 0f
         val margin: Insets = insets()
+
+        fun getLayoutParams(): LinearLayout.LayoutParams {
+            return LinearLayout::class.layoutParams(
+                width = width,
+                height = height,
+                weight = weight,
+                margin = margin
+            )
+        }
     }
 }
 
@@ -167,10 +176,10 @@ fun KClass<LinearLayout>.layoutParams(
  */
 fun LinearLayout.view(
     context: Context = this.context,
-    width: Int = LinearLayoutDefault.LayoutParams.width,
-    height: Int = LinearLayoutDefault.LayoutParams.height,
-    weight: Float = LinearLayoutDefault.LayoutParams.weight,
-    margin: Insets = LinearLayoutDefault.LayoutParams.margin,
+    width: Int = LinearLayoutDefault.Child.width,
+    height: Int = LinearLayoutDefault.Child.height,
+    weight: Float = LinearLayoutDefault.Child.weight,
+    margin: Insets = LinearLayoutDefault.Child.margin,
     id: Int = ViewDefault.id,
     background: Drawable = ViewDefault.background,
     visibility: Visibility = ViewDefault.visibility,
@@ -247,10 +256,10 @@ fun KClass<LinearLayout.LayoutParams>.wrapped(
  */
 fun LinearLayout.textView(
     context: Context = this.context,
-    width: Int = LinearLayoutDefault.LayoutParams.width,
-    height: Int = LinearLayoutDefault.LayoutParams.height,
-    weight: Float = LinearLayoutDefault.LayoutParams.weight,
-    margin: Insets = LinearLayoutDefault.LayoutParams.margin,
+    width: Int = LinearLayoutDefault.Child.width,
+    height: Int = LinearLayoutDefault.Child.height,
+    weight: Float = LinearLayoutDefault.Child.weight,
+    margin: Insets = LinearLayoutDefault.Child.margin,
     id: Int = ViewDefault.id,
     background: Drawable = ViewDefault.background,
     visibility: Visibility = ViewDefault.visibility,
@@ -324,10 +333,10 @@ fun LinearLayout.textView(
  */
 fun LinearLayout.editText(
     context: Context = this.context,
-    width: Int = LinearLayoutDefault.LayoutParams.width,
-    height: Int = LinearLayoutDefault.LayoutParams.height,
-    weight: Float = LinearLayoutDefault.LayoutParams.weight,
-    margin: Insets = LinearLayoutDefault.LayoutParams.margin,
+    width: Int = LinearLayoutDefault.Child.width,
+    height: Int = LinearLayoutDefault.Child.height,
+    weight: Float = LinearLayoutDefault.Child.weight,
+    margin: Insets = LinearLayoutDefault.Child.margin,
     id: Int = ViewDefault.id,
     background: Drawable = ViewDefault.background,
     visibility: Visibility = ViewDefault.visibility,
